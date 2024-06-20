@@ -23,7 +23,7 @@ class FileCache {
     }
     
     func save(to filename: String) {
-        guard let fileURL = getDocumentsDirectory()?.appendingPathComponent(filename) else {
+        guard let fileURL = getDocumentsDirectory()?.appending(component: filename) else {
             return
         }
         
@@ -39,7 +39,7 @@ class FileCache {
     }
     
     func load(from filename: String) throws {
-        guard let fileURL = getDocumentsDirectory()?.appendingPathComponent(filename) else {
+        guard let fileURL = getDocumentsDirectory()?.appending(component: filename) else {
             return
         }
         
@@ -59,6 +59,6 @@ class FileCache {
     }
     
     private func getDocumentsDirectory() -> URL? {
-        return fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
+        return fileManager.urls(for: .applicationDirectory, in: .userDomainMask).first
     }
 }
