@@ -14,6 +14,7 @@
 		0D87649C2C21C6B900C70F20 /* ToDoAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D87649B2C21C6B900C70F20 /* ToDoAppTests.swift */; };
 		0D8764A62C21C6B900C70F20 /* ToDoAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8764A52C21C6B900C70F20 /* ToDoAppUITests.swift */; };
 		0D8764A82C21C6B900C70F20 /* ToDoAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8764A72C21C6B900C70F20 /* ToDoAppUITestsLaunchTests.swift */; };
+		0DE4E62C2C242E8D0097A2CE /* TodoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE4E62B2C242E8D0097A2CE /* TodoItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		0D8764A12C21C6B900C70F20 /* ToDoAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ToDoAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D8764A52C21C6B900C70F20 /* ToDoAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoAppUITests.swift; sourceTree = "<group>"; };
 		0D8764A72C21C6B900C70F20 /* ToDoAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		0DE4E62B2C242E8D0097A2CE /* TodoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +96,7 @@
 		0D8764892C21C6B800C70F20 /* ToDoApp */ = {
 			isa = PBXGroup;
 			children = (
+				0DE4E62A2C242E730097A2CE /* structs */,
 				0D87648A2C21C6B800C70F20 /* ToDoAppApp.swift */,
 				0D87648C2C21C6B800C70F20 /* ContentView.swift */,
 				0D87648E2C21C6B800C70F20 /* Assets.xcassets */,
@@ -125,6 +128,14 @@
 				0D8764A72C21C6B900C70F20 /* ToDoAppUITestsLaunchTests.swift */,
 			);
 			path = ToDoAppUITests;
+			sourceTree = "<group>";
+		};
+		0DE4E62A2C242E730097A2CE /* structs */ = {
+			isa = PBXGroup;
+			children = (
+				0DE4E62B2C242E8D0097A2CE /* TodoItem.swift */,
+			);
+			path = structs;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -259,6 +270,7 @@
 			files = (
 				0D87648D2C21C6B800C70F20 /* ContentView.swift in Sources */,
 				0D87648B2C21C6B800C70F20 /* ToDoAppApp.swift in Sources */,
+				0DE4E62C2C242E8D0097A2CE /* TodoItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
