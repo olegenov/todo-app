@@ -141,4 +141,21 @@ final class TodoItemTests: XCTestCase {
     XCTAssertEqual(parsedItem?.isDone, isDone)
     XCTAssertEqual(parsedItem?.createdAt.timeIntervalSince1970, createdAt.timeIntervalSince1970)
   }
+  
+  func testCSVParsingSpecifics() {
+    let id = ""
+    let text = "Hello, World!"
+    let importance = ""
+    let deadline = ""
+    let createdAt = ""
+    let isDone = ""
+    
+    let csvString = "\(id),\"\(text)\",\(importance)," +
+    "\(deadline),\(isDone),\(createdAt)"
+    
+    let parsedItem = TodoItem.parse(csv: csvString)
+    
+    XCTAssertNotNil(parsedItem)
+    XCTAssertEqual(parsedItem?.text, text)
+  }
 }
