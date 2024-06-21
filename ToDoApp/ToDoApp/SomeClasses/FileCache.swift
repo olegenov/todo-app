@@ -24,9 +24,9 @@ class FileCache {
     todoItems.removeAll { $0.id == id }
   }
   
-  func save(to filename: String) {
+  func save(to filename: String) throws {
     guard let fileURL = getDocumentsDirectory()?.appending(component: filename) else {
-      return
+      throw NSError(domain: "InvalidFilename", code: 0)
     }
     
     var dataArray = Data()
@@ -41,7 +41,7 @@ class FileCache {
     do {
       try dataArray.write(to: fileURL)
     } catch {
-      return
+      throw NSError(domain: "WriteFailure", code: 0)
     }
   }
   
@@ -59,7 +59,7 @@ class FileCache {
       for jsonObject in jsonObjects {
         if let parsedItem = TodoItem.parse(json: jsonObject) {
           if todoItems.contains(where: { $0.id == parsedItem.id }) {
-            return
+            continue
           }
           
           loadedItems.append(parsedItem)
@@ -69,7 +69,7 @@ class FileCache {
       todoItems = loadedItems
       
     } catch {
-      return
+      throw NSError(domain: "loadingFailure", code: 0)
     }
   }
   
