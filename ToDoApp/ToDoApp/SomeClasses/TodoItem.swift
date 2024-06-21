@@ -139,14 +139,14 @@ extension TodoItem {
       id = UUID().uuidString
     }
     
-    var importance = Importance(rawValue: importanceRaw) ?? .medium
+    let importance = Importance(rawValue: importanceRaw) ?? .medium
     var deadline: Date? = nil
     
     if let timeInterval = TimeInterval(deadlineRaw) {
       deadline = Date(timeIntervalSince1970: timeInterval)
     }
     
-    var isDone = Bool(isDoneRaw) ?? false
+    let isDone = Bool(isDoneRaw) ?? false
     var createdAt: Date = Date.now
     
     if let timeInterval = TimeInterval(createdAtRaw) {
