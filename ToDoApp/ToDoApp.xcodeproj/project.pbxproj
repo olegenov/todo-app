@@ -98,7 +98,7 @@
 		0D8764892C21C6B800C70F20 /* ToDoApp */ = {
 			isa = PBXGroup;
 			children = (
-				0DE4E62A2C242E730097A2CE /* some classes */,
+				0DE4E62A2C242E730097A2CE /* SomeClasses */,
 				0D87648A2C21C6B800C70F20 /* ToDoAppApp.swift */,
 				0D87648C2C21C6B800C70F20 /* ContentView.swift */,
 				0D87648E2C21C6B800C70F20 /* Assets.xcassets */,
@@ -132,13 +132,13 @@
 			path = ToDoAppUITests;
 			sourceTree = "<group>";
 		};
-		0DE4E62A2C242E730097A2CE /* some classes */ = {
+		0DE4E62A2C242E730097A2CE /* SomeClasses */ = {
 			isa = PBXGroup;
 			children = (
 				0DE4E62B2C242E8D0097A2CE /* TodoItem.swift */,
 				0DE4E6402C24844E0097A2CE /* FileCache.swift */,
 			);
-			path = "some classes";
+			path = SomeClasses;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
