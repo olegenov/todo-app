@@ -144,7 +144,7 @@ final class TodoItemTests: XCTestCase {
   
   func testCSVParsingSpecifics() {
     let id = ""
-    let text = "Hello, World!"
+    let text = "Hello, \"World!"
     let importance = ""
     let deadline = ""
     let createdAt = ""
