@@ -7,7 +7,13 @@
 
 import Foundation
 
-class FileCache {
+final class FileCache {
+  enum FileCacheError: Error {
+    case invalidFilename
+    case writeFailure
+    case loadFailure
+  }
+  
   private(set) var todoItems: [TodoItem] = []
   private let fileManager = FileManager.default
   private let encoder = JSONEncoder()
@@ -25,8 +31,8 @@ class FileCache {
   }
   
   func save(to filename: String) throws {
-    guard let fileURL = getDocumentsDirectory()?.appending(component: filename) else {
-      throw NSError(domain: "InvalidFilename", code: 0)
+    guard let fileURL = applicationDirectory?.appending(component: filename) else {
+      throw FileCacheError.invalidFilename
     }
     
     var dataArray = Data()
@@ -41,13 +47,13 @@ class FileCache {
     do {
       try dataArray.write(to: fileURL)
     } catch {
-      throw NSError(domain: "WriteFailure", code: 0)
+      throw FileCacheError.writeFailure
     }
   }
   
   func load(from filename: String) throws {
-    guard let fileURL = getDocumentsDirectory()?.appending(component: filename) else {
-      return
+    guard let fileURL = applicationDirectory?.appending(component: filename) else {
+      throw FileCacheError.invalidFilename
     }
     
     do {
@@ -67,13 +73,12 @@ class FileCache {
       }
       
       todoItems = loadedItems
-      
     } catch {
-      throw NSError(domain: "loadingFailure", code: 0)
+      throw FileCacheError.loadFailure
     }
   }
   
-  private func getDocumentsDirectory() -> URL? {
+  private var applicationDirectory: URL? {
     return fileManager.urls(for: .applicationDirectory, in: .userDomainMask).first
   }
 }

@@ -20,10 +20,15 @@ struct TodoItem {
   let createdAt: Date
   let changedAt: Date?
   
-  init(id: String = UUID().uuidString, text: String,
-       importance: Importance, deadline: Date? = nil,
-       isDone: Bool = false, createdAt: Date = Date(),
-       changedAt: Date? = nil) {
+  init(
+    id: String = UUID().uuidString,
+    text: String,
+    importance: Importance,
+    deadline: Date? = nil,
+    isDone: Bool = false,
+    createdAt: Date = Date(),
+    changedAt: Date? = nil
+  ) {
     self.id = id
     self.text = text
     self.importance = importance
@@ -34,6 +39,7 @@ struct TodoItem {
   }
 }
 
+// MARK: - JSON Serializing Extension
 extension TodoItem {
   init?(from dictionary: [String: Any]) {
     guard let id = dictionary["id"] as? String,
@@ -49,14 +55,11 @@ extension TodoItem {
     self.isDone = isDone
     self.createdAt = Date(timeIntervalSince1970: createdAtRaw)
     
-    let importanceString = dictionary["importance"] as? String ?? ""
+    let importanceString = dictionary["importance"] as? String ?? Importance.medium.rawValue
     
-    switch importanceString {
-    case Importance.low.rawValue:
-      importance = .low
-    case Importance.high.rawValue:
-      importance = .high
-    default:
+    if let importanceEnum = Importance(rawValue: importanceString) {
+      importance = importanceEnum
+    } else {
       importance = .medium
     }
     
@@ -119,6 +122,7 @@ extension TodoItem {
   }
 }
 
+// MARK: - CSV Serializing Extension
 extension TodoItem {
   static func parse(csv: String) -> TodoItem? {
     var elements: [String] = []
@@ -128,14 +132,20 @@ extension TodoItem {
     for char in csv {
       switch char {
       case ",":
-        if insideQuotes {
+        if insideQuotes && currentField.last != nil && currentField.last != "\"" {
           currentField.append(char)
+        } else if insideQuotes {
+          elements.append(String(currentField.dropLast(1).dropFirst(1)))
+          currentField = ""
+          insideQuotes = false
         } else {
           elements.append(currentField)
           currentField = ""
+          insideQuotes = false
         }
       case "\"":
-        insideQuotes.toggle()
+        currentField.append(char)
+        insideQuotes = true
       default:
         currentField.append(char)
       }
