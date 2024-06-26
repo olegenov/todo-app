@@ -9,9 +9,9 @@ import SwiftUI
 
 @main
 struct ToDoAppApp: App {
-    var body: some Scene {
-        WindowGroup {
-            ContentView()
-        }
+  var body: some Scene {
+    WindowGroup {
+      TodoListDetails()
     }
+  }
 }
