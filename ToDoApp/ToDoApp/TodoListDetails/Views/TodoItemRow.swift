@@ -12,7 +12,7 @@ struct TodoItemRow: View {
     Image(systemName: !item.isDone ? "circle" : "checkmark.circle.fill")
       .resizable()
       .frame(width: 24, height: 24)
-      .foregroundColor(!item.isDone ? Color(red: 0, green: 0, blue: 0, opacity: 0.2) : Color.green)
+      .foregroundColor(!item.isDone ? Color.iconColor : Color.green)
   }
   
   var rowText: some View {
@@ -24,7 +24,7 @@ struct TodoItemRow: View {
     Image(systemName: "calendar")
       .resizable()
       .frame(width: 13, height: 12)
-      .foregroundColor(Color(red: 0, green: 0, blue: 0, opacity: 0.3))
+      .foregroundColor(Color.iconColor)
       .frame(width: 16, height: 16)
   }
   

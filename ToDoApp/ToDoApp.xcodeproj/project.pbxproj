@@ -23,6 +23,7 @@
 		0D8764A62C21C6B900C70F20 /* ToDoAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8764A52C21C6B900C70F20 /* ToDoAppUITests.swift */; };
 		0D8764A82C21C6B900C70F20 /* ToDoAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8764A72C21C6B900C70F20 /* ToDoAppUITestsLaunchTests.swift */; };
 		0DBEAF442C2C8909006E6336 /* TodoItemsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DBEAF432C2C8909006E6336 /* TodoItemsList.swift */; };
+		0DBEAF482C2C9699006E6336 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DBEAF472C2C9699006E6336 /* ColorExtension.swift */; };
 		0DE4E62C2C242E8D0097A2CE /* TodoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE4E62B2C242E8D0097A2CE /* TodoItem.swift */; };
 		0DE4E6412C24844E0097A2CE /* FileCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE4E6402C24844E0097A2CE /* FileCache.swift */; };
 /* End PBXBuildFile section */
@@ -64,6 +65,7 @@
 		0D8764A52C21C6B900C70F20 /* ToDoAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoAppUITests.swift; sourceTree = "<group>"; };
 		0D8764A72C21C6B900C70F20 /* ToDoAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		0DBEAF432C2C8909006E6336 /* TodoItemsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoItemsList.swift; sourceTree = "<group>"; };
+		0DBEAF472C2C9699006E6336 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		0DE4E62B2C242E8D0097A2CE /* TodoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoItem.swift; sourceTree = "<group>"; };
 		0DE4E6402C24844E0097A2CE /* FileCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileCache.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -106,6 +108,7 @@
 			isa = PBXGroup;
 			children = (
 				0D548FB02C2C29CA000950D5 /* DateExtension.swift */,
+				0DBEAF472C2C9699006E6336 /* ColorExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -351,6 +354,7 @@
 				0D548FB12C2C29CA000950D5 /* DateExtension.swift in Sources */,
 				0D548FC02C2C5834000950D5 /* ListItemNewText.swift in Sources */,
 				0D548FB42C2C29E5000950D5 /* TodoItemRow.swift in Sources */,
+				0DBEAF482C2C9699006E6336 /* ColorExtension.swift in Sources */,
 				0D548FC52C2C5AF3000950D5 /* ListItemSpecs.swift in Sources */,
 				0D548FB92C2C56F3000950D5 /* ListToolbarText.swift in Sources */,
 				0D548FBE2C2C57E5000950D5 /* ListItemText.swift in Sources */,

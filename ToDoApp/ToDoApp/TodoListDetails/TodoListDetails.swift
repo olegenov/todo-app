@@ -8,6 +8,7 @@ import SwiftUI
 struct TodoListDetails: View {
   @StateObject private var todoItemsList = TodoItemsList()
   @State private var showCompleted: Bool = false
+  @Environment(\.colorScheme) var colorScheme
 
   var addNewCell: some View {
     Text("Новое")
@@ -41,11 +42,14 @@ struct TodoListDetails: View {
           if !item.isDone || showCompleted {
             TodoItemRow(item: item)
               .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
+              .listRowBackground(Color.listRowBackground)
+
           }
         }
         
         addNewCell
           .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
+          .listRowBackground(Color.listRowBackground)
       } header: {
         HStack {
           completeCounter
@@ -70,10 +74,10 @@ struct TodoListDetails: View {
           .padding(.horizontal, -16)
           .navigationTitle("Мои дела")
       }
-      .background(Color(red: 247/255, green: 246/255, blue: 242/255))
+      .background(Color.backgroundColor)
     }
     .padding(.horizontal, 16)
-    .background(Color(red: 247/255, green: 246/255, blue: 242/255))
+    .background(Color.backgroundColor)
   }
   
   private func toggleComplited(for item: TodoItemModel) {
