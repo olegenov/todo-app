@@ -21,12 +21,13 @@ struct TodoItemDetails: View {
   
   var saveButton: some View {
     Button("Сохранить") {
-      
+      viewModel.saveData()
     }
   }
   
   var cancelButton: some View {
     Button("Отменить") {
+      
     }
   }
   
