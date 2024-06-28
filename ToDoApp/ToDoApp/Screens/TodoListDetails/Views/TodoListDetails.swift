@@ -6,9 +6,8 @@
 import SwiftUI
 
 struct TodoListDetails: View {
-  @StateObject private var todoItemsList = TodoItemsList()
+  @ObservedObject var viewModel: TodoListDetailsViewModel
   @State private var showCompleted: Bool = false
-  @Environment(\.colorScheme) var colorScheme
   
   var addNewCell: some View {
     Text("Новое")
@@ -18,7 +17,7 @@ struct TodoListDetails: View {
   }
   
   var completedTasksCount: Int {
-    todoItemsList.items.filter { $0.isDone }.count
+    viewModel.items.filter { $0.isDone }.count
   }
   
   var completeCounter: some View {
@@ -52,21 +51,20 @@ struct TodoListDetails: View {
           .frame(width: 44, height: 44)
           .foregroundColor(Color.blue)
       }
-      .shadow(color: Color(UIColor(red: 0/255, green: 73/255, blue: 153/255, alpha: 0.6)), radius: 20, x: 0, y: 8)
+      .shadow(color: Color(UIColor(red: 0/255, green: 73/255, blue: 153/255, alpha: 0.3)), radius: 20, x: 0, y: 8)
     }
   }
   
   var todoList: some View {
     List {
       Section {
-        ForEach(todoItemsList.items) { item in
-          if !item.isDone || showCompleted {
-            TodoItemRow(item: item)
-              .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
-              .listRowBackground(Color.listRowBackground)
-            
-          }
-        }
+//        ForEach(viewModel.items) { item in
+//          if !item.isDone || showCompleted {
+//            TodoItemRow(item: item)
+//              .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
+//              .listRowBackground(Color.listRowBackground)
+//          }
+//        }
         
         addNewCell
           .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
@@ -83,7 +81,6 @@ struct TodoListDetails: View {
       }
     }
     .listStyle(.insetGrouped)
-    .cornerRadius(16)
     .scrollClipDisabled(false)
     .scrollContentBackground(.hidden)
   }
@@ -105,14 +102,12 @@ struct TodoListDetails: View {
     }
     .padding(.horizontal, 16)
     .background(Color.backgroundColor)
-    
+    .onDisappear {
+      viewModel.saveCache()
+    }
   }
   
   private func toggleComplited(for item: TodoItemModel) {
-    todoItemsList.toggleComplited(for: item)
+    viewModel.toggleComplited(for: item)
   }
-}
-
-#Preview {
-  TodoListDetails()
 }

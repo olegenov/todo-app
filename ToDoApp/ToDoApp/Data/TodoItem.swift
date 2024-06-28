@@ -5,7 +5,7 @@
 
 import Foundation
 
-struct TodoItem {
+struct TodoItem: TodoItemData {
   enum Importance: String {
     case low = "неважная"
     case medium = "обычная"

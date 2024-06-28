@@ -47,14 +47,14 @@ struct TodoItemRow: View {
         VStack(alignment: .leading, spacing: 1) {
           rowText
           
-          if let deadline = item.deadline {
-            HStack(spacing: 2) {
-              calendarImage
-              
-              Text(deadline.toString())
-                .modifier(ListItemSpecs())
-            }
-          }
+//          if let deadline = item.deadline {
+//            HStack(spacing: 2) {
+//              calendarImage
+//              
+//              Text(deadline.toString())
+//                .modifier(ListItemSpecs())
+//            }
+//          }
         }
       }
       

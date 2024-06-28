@@ -2,8 +2,6 @@
 //  ToDoAppApp.swift
 //  ToDoApp
 //
-//  Created by Никита Китаев on 18.06.2024.
-//
 
 import SwiftUI
 
@@ -11,7 +9,7 @@ import SwiftUI
 struct ToDoAppApp: App {
   var body: some Scene {
     WindowGroup {
-      TodoListDetails()
+      TodoItemDetailsAssembly.build(item: TodoItemModel(id: "123", text: "Lorem ipsum dolor sit amet", importance: .low, deadline: Date.tomorrow(), isDone: false))
     }
   }
 }
