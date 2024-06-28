@@ -33,6 +33,7 @@
 		0DBEAF6E2C2F107E006E6336 /* DeadlineField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DBEAF6D2C2F107E006E6336 /* DeadlineField.swift */; };
 		0DBEAF712C2F1278006E6336 /* TodoItemDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DBEAF702C2F1278006E6336 /* TodoItemDetailsViewModel.swift */; };
 		0DBEAF742C2F1977006E6336 /* TodoItemDetailsAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DBEAF732C2F1977006E6336 /* TodoItemDetailsAssembly.swift */; };
+		0DBEAF772C2F1F41006E6336 /* AdaptiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DBEAF762C2F1F41006E6336 /* AdaptiveView.swift */; };
 		0DE4E62C2C242E8D0097A2CE /* TodoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE4E62B2C242E8D0097A2CE /* TodoItem.swift */; };
 		0DE4E6412C24844E0097A2CE /* FileCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE4E6402C24844E0097A2CE /* FileCache.swift */; };
 /* End PBXBuildFile section */
@@ -84,6 +85,7 @@
 		0DBEAF6D2C2F107E006E6336 /* DeadlineField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeadlineField.swift; sourceTree = "<group>"; };
 		0DBEAF702C2F1278006E6336 /* TodoItemDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoItemDetailsViewModel.swift; sourceTree = "<group>"; };
 		0DBEAF732C2F1977006E6336 /* TodoItemDetailsAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoItemDetailsAssembly.swift; sourceTree = "<group>"; };
+		0DBEAF762C2F1F41006E6336 /* AdaptiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptiveView.swift; sourceTree = "<group>"; };
 		0DE4E62B2C242E8D0097A2CE /* TodoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoItem.swift; sourceTree = "<group>"; };
 		0DE4E6402C24844E0097A2CE /* FileCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileCache.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -226,6 +228,7 @@
 		0DBEAF4B2C2D919E006E6336 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				0DBEAF752C2F1F32006E6336 /* Views */,
 				0DBEAF4D2C2D91D4006E6336 /* Models */,
 			);
 			path = Shared;
@@ -325,6 +328,14 @@
 				0DBEAF6D2C2F107E006E6336 /* DeadlineField.swift */,
 			);
 			path = Fields;
+			sourceTree = "<group>";
+		};
+		0DBEAF752C2F1F32006E6336 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0DBEAF762C2F1F41006E6336 /* AdaptiveView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		0DE4E62A2C242E730097A2CE /* SomeClasses */ = {
@@ -478,6 +489,7 @@
 				0D548FC02C2C5834000950D5 /* ListItemNewText.swift in Sources */,
 				0DBEAF712C2F1278006E6336 /* TodoItemDetailsViewModel.swift in Sources */,
 				0D548FB42C2C29E5000950D5 /* TodoItemRow.swift in Sources */,
+				0DBEAF772C2F1F41006E6336 /* AdaptiveView.swift in Sources */,
 				0DBEAF482C2C9699006E6336 /* ColorExtension.swift in Sources */,
 				0D548FC52C2C5AF3000950D5 /* ListItemSpecs.swift in Sources */,
 				0D548FB92C2C56F3000950D5 /* ListToolbarText.swift in Sources */,

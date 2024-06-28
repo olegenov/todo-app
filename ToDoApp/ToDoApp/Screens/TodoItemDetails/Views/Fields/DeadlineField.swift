@@ -15,13 +15,17 @@ struct DeadlineField: View {
       
       if data.isDeadlineEnabled {
         Button(data.deadline.toString()) {
-          showCalendar.toggle()
+          withAnimation {
+            showCalendar.toggle()
+          }
         }
       }
     }
     .onChange(of: data.isDeadlineEnabled) { oldValue, newValue in
       if oldValue {
-        showCalendar = false
+        withAnimation {
+          showCalendar = false
+        }
       }
     }
   }

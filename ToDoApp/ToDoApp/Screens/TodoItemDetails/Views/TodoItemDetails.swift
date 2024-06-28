@@ -7,6 +7,9 @@ import SwiftUI
 
 struct TodoItemDetails: View {
   @StateObject var viewModel: TodoItemDetailsViewModel
+  @State var isEditingTextField = false
+  @Environment(\.horizontalSizeClass) var horizontalSizeClass
+  @Environment(\.verticalSizeClass) var verticalSizeClass
   
   var textInputField: some View {
     TextField("Что надо сделать?", text: $viewModel.data.text, axis: .vertical)
@@ -40,12 +43,38 @@ struct TodoItemDetails: View {
     .foregroundStyle(viewModel.data.text.isEmpty ? Color.secondary : Color.red)
   }
   
-  var body: some View {
-    NavigationView {
+  var portraitFormView: some View {
+    ScrollView(showsIndicators: false) {
+      VStack(spacing: 16) {
+        textInputField
+        
+        VStack {
+          ImportanceField(data: $viewModel.data)
+          Divider()
+          DeadlineField(data: $viewModel.data)
+        }
+        .padding(16)
+        .background(Color.listRowBackground)
+        .clipShape(.rect(cornerRadius: 16))
+        
+        deleteButton
+      }
+    }
+  }
+  
+  var landscapeFormView: some View {
+    HStack(alignment: .top, spacing: 16) {
+      ScrollView(showsIndicators: false) {
+        textInputField
+          .onTapGesture {
+            withAnimation {
+              isEditingTextField = true
+            }
+          }
+      }
+      
       ScrollView(showsIndicators: false) {
         VStack(spacing: 16) {
-          textInputField
-          
           VStack {
             ImportanceField(data: $viewModel.data)
             Divider()
@@ -57,20 +86,58 @@ struct TodoItemDetails: View {
           
           deleteButton
         }
-        .padding(16)
-        
-        Spacer()
       }
+    }
+  }
+  
+  var body: some View {
+    NavigationView {
+      Group {
+        if horizontalSizeClass == .compact && verticalSizeClass == .regular {
+          portraitFormView
+        } else {
+          if isEditingTextField {
+            textInputField
+              .frame(maxWidth: .infinity, maxHeight: .infinity)
+              .edgesIgnoringSafeArea(.all)
+          } else {
+            landscapeFormView
+          }
+        }
+      }
+      .padding(16)
+      .background(Color.backgroundColor)
       .navigationBarTitle("Дело", displayMode: .inline)
       .navigationBarItems(
         leading: cancelButton,
         trailing: saveButton
           .disabled(viewModel.data.text.isEmpty || !viewModel.hasChanged)
       )
-      .background(Color.background)
-    }
-    .onAppear() {
-      viewModel.loadData()
+      .onAppear() {
+        viewModel.loadData()
+      }
+      .gesture(
+        DragGesture().onChanged{ _ in
+          UIApplication.shared.sendAction(
+            #selector(UIResponder.resignFirstResponder),
+            to: nil,
+            from: nil,
+            for: nil
+          )
+          isEditingTextField = false
+        }
+      )
     }
   }
+}
+
+#Preview {
+  TodoItemDetailsAssembly.build(
+    item: TodoItemModel(
+      id: "123",
+      text: "Some task",
+      importance: .low,
+      isDone: false
+    )
+  )
 }

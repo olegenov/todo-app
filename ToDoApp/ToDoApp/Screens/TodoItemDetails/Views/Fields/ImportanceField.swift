@@ -32,9 +32,13 @@ struct ImportanceField: View {
       
       Picker("Важность", selection: $data.importance) {
         arrowDownIcon.tag(TodoItem.Importance.low)
-        noImportanceLabel.tag(TodoItem.Importance.medium)
+          .foregroundStyle(Color.red)
+        Text("нет")
+          .bold()
+          .tag(TodoItem.Importance.medium)
           .foregroundStyle(Color.red)
         doubleExlamationLabel.tag(TodoItem.Importance.high)
+          .foregroundStyle(Color.red)
       }
       .pickerStyle(.palette)
       .frame(maxWidth: 150, alignment: .trailing)
