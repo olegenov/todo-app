@@ -6,8 +6,9 @@
 import SwiftUI
 
 struct TodoItemDetails: View {
-  @StateObject var viewModel: TodoItemDetailsViewModel
+  @ObservedObject var viewModel: TodoItemDetailsViewModel
   @State var isEditingTextField = false
+  
   @Environment(\.horizontalSizeClass) var horizontalSizeClass
   @Environment(\.verticalSizeClass) var verticalSizeClass
   
@@ -16,18 +17,25 @@ struct TodoItemDetails: View {
       .padding(16)
       .background(Color.listRowBackground)
       .lineLimit(4...50)
+      .overlay(
+        Rectangle()
+          .fill(viewModel.data.color)
+          .frame(width: 5, height: nil),
+        alignment: .trailing
+      )
       .clipShape(.rect(cornerRadius: 16))
   }
   
   var saveButton: some View {
     Button("Сохранить") {
       viewModel.saveData()
+      viewModel.close()
     }
   }
   
   var cancelButton: some View {
     Button("Отменить") {
-      
+      viewModel.close()
     }
   }
   
@@ -49,10 +57,12 @@ struct TodoItemDetails: View {
       VStack(spacing: 16) {
         textInputField
         
-        VStack {
+        VStack(alignment: .leading) {
           ImportanceField(data: $viewModel.data)
           Divider()
           DeadlineField(data: $viewModel.data)
+          Divider()
+          ColorPickerField(data: $viewModel.data)
         }
         .padding(16)
         .background(Color.listRowBackground)
@@ -130,15 +140,4 @@ struct TodoItemDetails: View {
       )
     }
   }
-}
-
-#Preview {
-  TodoItemDetailsAssembly.build(
-    item: TodoItemModel(
-      id: "123",
-      text: "Some task",
-      importance: .low,
-      isDone: false
-    )
-  )
 }

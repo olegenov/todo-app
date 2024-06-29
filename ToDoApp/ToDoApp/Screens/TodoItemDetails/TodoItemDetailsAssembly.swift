@@ -6,20 +6,18 @@
 import SwiftUI
 
 enum TodoItemDetailsAssembly {
-  static func build(item: TodoItemModel) -> TodoItemDetails {
-    let viewModel = TodoItemDetailsViewModel(item: item)
+  static func build(item: TodoItemModel?,
+                    presentedAsModal: Binding<Bool>,
+                    listViewModel: TodoListDetailsViewModel) -> TodoItemDetails {
     
+    guard let itemDetails = item else {
+      let viewModel = TodoItemDetailsViewModel(
+        item: TodoItemModel(id: UUID().uuidString), listViewModel: listViewModel)
+      
+      return TodoItemDetails(viewModel: viewModel)
+    }
+    
+    let viewModel = TodoItemDetailsViewModel(item: itemDetails, listViewModel: listViewModel)
     return TodoItemDetails(viewModel: viewModel)
   }
-}
-
-#Preview {
-  TodoItemDetailsAssembly.build(
-    item: TodoItemModel(
-      id: "123",
-      text: "Some task",
-      importance: .low,
-      isDone: false
-    )
-  )
 }

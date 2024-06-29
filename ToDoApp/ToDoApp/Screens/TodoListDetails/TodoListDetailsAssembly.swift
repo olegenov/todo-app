@@ -13,12 +13,9 @@ enum TodoListDetailsAssembly {
   }
   
   static func build() -> TodoListDetails {
-    let cache = FileCache()
+    let viewModel = TodoListDetailsViewModel()
     
-    let service = TodoItemService(cache: cache)
-    let viewModel = TodoListDetailsViewModel(service: service)
-    
-    viewModel.loadCache()
+    viewModel.addTodoItem(TodoItemModel(id: "123", text: "123", importance: .high, isDone: false))
     
     return TodoListDetails(viewModel: viewModel)
   }

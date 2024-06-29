@@ -17,7 +17,10 @@ struct TodoItemRow: View {
   
   var rowText: some View {
     Text(item.text)
-      .modifier(ListItemText(completed: item.isDone))
+      .font(.system(size: 17))
+      .frame(height: 22)
+      .opacity(item.isDone ? 0.3 : 1)
+      .strikethrough(item.isDone)
   }
   
   var calendarImage: some View {
@@ -43,18 +46,26 @@ struct TodoItemRow: View {
     HStack {
       HStack(spacing: 16) {
         chackmarkImage
-        
+
         VStack(alignment: .leading, spacing: 1) {
-          rowText
-          
-//          if let deadline = item.deadline {
-//            HStack(spacing: 2) {
-//              calendarImage
-//              
-//              Text(deadline.toString())
-//                .modifier(ListItemSpecs())
-//            }
-//          }
+          if let deadline = item.deadline {
+            rowText
+              .lineLimit(1)
+            
+            HStack(spacing: 2) {
+              
+              calendarImage
+              
+              Text(deadline.toString())
+                .font(.system(size: 15))
+                .opacity(0.4)
+                .frame(height: 20)
+                .lineLimit(1...3)
+            }
+          } else {
+            rowText
+              .lineLimit(1...3)
+          }
         }
       }
       

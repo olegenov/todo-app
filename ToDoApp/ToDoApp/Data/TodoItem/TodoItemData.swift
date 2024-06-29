@@ -12,4 +12,5 @@ protocol TodoItemData: Identifiable {
   var deadline: Date? { get }
   var isDone: Bool { get }
   var importance: TodoItem.Importance { get }
+  var createdAt: Date { get }
 }

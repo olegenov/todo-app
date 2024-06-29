@@ -7,7 +7,6 @@ import SwiftUI
 
 final class TodoItemService {
   enum TodoItemManagerError: Error {
-    case creationFailure
     case cacheLoadingFailure
     case updateFailure
     case cacheSavingFailure
@@ -36,9 +35,13 @@ final class TodoItemService {
   }
   
   func addTodoItem(_ item: any TodoItemData) throws {
-    guard let newItem = item as? TodoItem else {
-      throw TodoItemManagerError.creationFailure
-    }
+    let newItem = TodoItem(
+      id: item.id,
+      text: item.text,
+      importance: item.importance,
+      isDone: item.isDone,
+      createdAt: item.createdAt
+    )
     
     cache.addTodoItem(newItem)
   }
@@ -52,9 +55,14 @@ final class TodoItemService {
   }
   
   func updateTodoItem(_ item: any TodoItemData) throws {
-    guard let updatedItem = item as? TodoItem else {
-      throw TodoItemManagerError.creationFailure
-    }
+    let updatedItem = TodoItem(
+      id: item.id,
+      text: item.text,
+      importance: item.importance,
+      isDone: item.isDone,
+      createdAt: item.createdAt,
+      changedAt: Date.now
+    )
     
     cache.removeTodoItem(by: updatedItem.id)
     cache.addTodoItem(updatedItem)
