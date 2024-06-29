@@ -2,10 +2,8 @@
 //  FileCache.swift
 //  ToDoApp
 //
-//  Created by Никита Китаев on 20.06.2024.
-//
 
-import Foundation
+import SwiftUI
 
 final class FileCache {
   enum FileCacheError: Error {
