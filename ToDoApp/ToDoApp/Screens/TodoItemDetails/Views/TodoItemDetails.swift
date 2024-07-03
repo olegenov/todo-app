@@ -140,4 +140,10 @@ struct TodoItemDetails: View {
       )
     }
   }
+  
+  private func scrollToTextField(scrollView: ScrollViewProxy) {
+    DispatchQueue.main.async {
+      scrollView.scrollTo("textField", anchor: .bottom)
+    }
+  }
 }

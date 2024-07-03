@@ -15,8 +15,7 @@ struct ImportanceField: View {
   }
   
   var doubleExlamationLabel: some View {
-    Text("!!")
-      .foregroundStyle(Color.red)
+    Text("‼️")
   }
   
   var noImportanceLabel: Text {
@@ -31,14 +30,13 @@ struct ImportanceField: View {
       Spacer()
       
       Picker("Важность", selection: $data.importance) {
-        arrowDownIcon.tag(TodoItem.Importance.low)
-          .foregroundStyle(Color.red)
-        Text("нет")
+        arrowDownIcon
+          .tag(TodoItem.Importance.low)
+        noImportanceLabel
           .bold()
           .tag(TodoItem.Importance.medium)
-          .foregroundStyle(Color.red)
-        doubleExlamationLabel.tag(TodoItem.Importance.high)
-          .foregroundStyle(Color.red)
+        doubleExlamationLabel
+          .tag(TodoItem.Importance.high)
       }
       .pickerStyle(.palette)
       .frame(maxWidth: 150, alignment: .trailing)

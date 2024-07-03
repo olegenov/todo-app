@@ -11,22 +11,21 @@ struct ColorPickerField: View {
 
   var body: some View {
     VStack(alignment: .leading) {
-      HStack {
+      HStack(spacing: 8) {
         Circle()
           .fill(data.color)
           .frame(width: 24, height: 24)
         Text("Цвет задачи")
-          .padding(.leading, 8)
         
         Image(systemName: "chevron.down")
           .rotationEffect(.degrees(isExpanded ? 180 : 0))
-          .padding(.leading, 8)
           .onTapGesture {
             withAnimation {
               isExpanded.toggle()
             }
           }
       }
+      .padding(.vertical, 8)
       if isExpanded {
         CustomColorPicker(data: $data)
       }

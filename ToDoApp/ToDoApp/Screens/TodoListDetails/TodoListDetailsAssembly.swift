@@ -15,8 +15,6 @@ enum TodoListDetailsAssembly {
   static func build() -> TodoListDetails {
     let viewModel = TodoListDetailsViewModel()
     
-    viewModel.addTodoItem(TodoItemModel(id: "123", text: "123", importance: .high, isDone: false))
-    
     return TodoListDetails(viewModel: viewModel)
   }
 }
