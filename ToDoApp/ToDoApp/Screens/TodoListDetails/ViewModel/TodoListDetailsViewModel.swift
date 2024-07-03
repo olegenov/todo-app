@@ -40,6 +40,7 @@ class TodoListDetailsViewModel: ObservableObject {
       id: item.id,
       text: item.text,
       importance: item.importance,
+      deadline: item.deadline,
       isDone: item.isDone,
       createdAt: item.createdAt
     )

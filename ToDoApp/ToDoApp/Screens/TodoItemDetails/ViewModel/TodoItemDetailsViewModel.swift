@@ -82,7 +82,8 @@ class TodoItemDetailsViewModel: ObservableObject {
     item.deadline = nil
     item.importance = .medium
     
-    loadData()
+    listViewModel.removeTodoItem(by: item.id)
+    close()
   }
   
   func close() {

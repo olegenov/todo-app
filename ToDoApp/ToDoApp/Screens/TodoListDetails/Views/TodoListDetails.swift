@@ -86,16 +86,19 @@ struct TodoListDetails: View {
       Section {
         ForEach(viewModel.items) { item in
           if !item.isDone || showCompleted {
-            TodoItemRow(item: item)
+            TodoItemRow(
+              item: item,
+              checkMarkAction: viewModel.toggleComplited,
+              editAction: viewModel.openEditItemModal
+            )
               .listRowBackground(Color.listRowBackground)
-              .background(Color.getColor(hex: item.color)
-                .offset(x: -16)
-                .edgesIgnoringSafeArea(.vertical)
-                .frame(width: 2), alignment: .leading
+              .background(
+                RoundedRectangle(cornerRadius: 2)
+                  .foregroundStyle(Color.getColor(hex: item.color) ?? Color.clear)
+                  .offset(x: -12)
+                  .frame(width: 4),
+                alignment: .leading
               )
-              .onTapGesture {
-                viewModel.openEditItemModal(for: item)
-              }
               .swipeActions(edge: .trailing, allowsFullSwipe: true) {
                 Button(role: .destructive) {
                   viewModel.removeTodoItem(by: item.id)
