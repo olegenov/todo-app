@@ -9,9 +9,9 @@ class CategoryManager {
   static let shared = CategoryManager()
 
   var categories: [CategoryModel] = [
-    CategoryModel(name: "work", color: "#D04747"),
-    CategoryModel(name: "study", color: "#4755D0"),
-    CategoryModel(name: "hobby", color: "#5BD047"),
+    CategoryModel(name: "Работа", color: "#D04747"),
+    CategoryModel(name: "Учеба", color: "#4755D0"),
+    CategoryModel(name: "Хобби", color: "#5BD047"),
   ]
   
   func addCategory(name: String, color: String) {

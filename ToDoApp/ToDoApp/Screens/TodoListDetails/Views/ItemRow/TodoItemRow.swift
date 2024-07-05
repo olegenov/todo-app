@@ -55,7 +55,9 @@ struct TodoItemRow: View {
       HStack(spacing: 16) {
         chackmarkImage
           .onTapGesture {
-            checkMarkAction(item)
+            withAnimation {
+              checkMarkAction(item)
+            }
           }
         HStack(spacing: 4) {
           if item.importance != .medium {

@@ -6,7 +6,7 @@
 import SwiftUI
 
 struct CustomColorPicker: View {
-  @Binding var data: TodoItemFormData
+  @Binding var data: Color
   @State var dragPosition: Double = 16
   @State var brightness: Double = 1.0
   @State var hue: Double = 0.0
@@ -61,6 +61,6 @@ struct CustomColorPicker: View {
   }
   
   private func updateColor() {
-    data.color = Color(hue: hue, saturation: 1.0, brightness: brightness)
+    data = Color(hue: hue, saturation: 1.0, brightness: brightness)
   }
 }

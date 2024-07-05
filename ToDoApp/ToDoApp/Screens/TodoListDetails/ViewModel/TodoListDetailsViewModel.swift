@@ -8,6 +8,7 @@ import SwiftUI
 class TodoListDetailsViewModel: ObservableObject {
   @Published var items: [TodoItemModel] = []
   @Published var isModalPresented: Bool = false
+  @Published var isSettingsPresented: Bool = false
   @Published var selectedItem: TodoItemModel?
   
   var calendarView: CalendarDetailsVCRepresentable? = nil
@@ -32,7 +33,8 @@ class TodoListDetailsViewModel: ObservableObject {
       importance: item.importance,
       deadline: item.deadline,
       isDone: !item.isDone,
-      createdAt: item.createdAt
+      createdAt: item.createdAt,
+      color: item.color
     )
     
     removeTodoItem(by: item.id)
@@ -46,7 +48,9 @@ class TodoListDetailsViewModel: ObservableObject {
       importance: item.importance,
       deadline: item.deadline,
       isDone: true,
-      createdAt: item.createdAt
+      createdAt: item.createdAt,
+      color: item.color,
+      category: item.category
     )
     
     removeTodoItem(by: item.id)
@@ -60,7 +64,9 @@ class TodoListDetailsViewModel: ObservableObject {
       importance: item.importance,
       deadline: item.deadline,
       isDone: false,
-      createdAt: item.createdAt
+      createdAt: item.createdAt,
+      color: item.color,
+      category: item.category
     )
     
     removeTodoItem(by: item.id)
@@ -74,7 +80,9 @@ class TodoListDetailsViewModel: ObservableObject {
       importance: item.importance,
       deadline: item.deadline,
       isDone: item.isDone,
-      createdAt: item.createdAt
+      createdAt: item.createdAt,
+      color: item.color,
+      category: item.category
     )
     
     removeTodoItem(by: item.id)
@@ -105,6 +113,10 @@ class TodoListDetailsViewModel: ObservableObject {
       item: item,
       listViewModel: self
     )
+  }
+  
+  func getSettingsView() -> SettingsView {
+    SettingsScreenAssembly.build()
   }
   
   func getCalendarView() -> CalendarDetailsVCRepresentable? {

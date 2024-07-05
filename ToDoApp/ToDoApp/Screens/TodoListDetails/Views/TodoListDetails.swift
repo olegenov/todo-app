@@ -172,6 +172,13 @@ struct TodoListDetails: View {
             Image(systemName: "calendar")
           }
         }
+        ToolbarItem(placement: .topBarTrailing) {
+          Button(action: {
+            viewModel.isSettingsPresented.toggle()
+          }) {
+            Image(systemName: "gear")
+          }
+        }
         ToolbarItem(placement: .bottomBar) {
           addButton
         }
@@ -182,6 +189,23 @@ struct TodoListDetails: View {
     .sheet(isPresented: $viewModel.isModalPresented) {
       if let item = viewModel.selectedItem {
         viewModel.getModalView(for: item)
+      }
+    }
+    .fullScreenCover(isPresented: $viewModel.isSettingsPresented) {
+      NavigationStack {
+        viewModel.getSettingsView()
+          .navigationTitle("Настройки")
+          .navigationBarTitleDisplayMode(.inline)
+          .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+              Button(action: {
+                viewModel.isSettingsPresented.toggle()
+              }) {
+                Image(systemName: "chevron.backward")
+                  .padding(16)
+              }
+            }
+          }
       }
     }
     .fullScreenCover(isPresented: $showCalendarView) {
@@ -197,6 +221,7 @@ struct TodoListDetails: View {
                 showCalendarView.toggle()
               }) {
                 Image(systemName: "chevron.backward")
+                  .padding(.horizontal, 16)
               }
             }
           }

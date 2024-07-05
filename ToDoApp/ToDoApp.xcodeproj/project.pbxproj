@@ -22,6 +22,10 @@
 		0D1E9B912C3877E900141FC0 /* CategoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1E9B902C3877E900141FC0 /* CategoryManager.swift */; };
 		0D1E9B932C38782900141FC0 /* CategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1E9B922C38782900141FC0 /* CategoryModel.swift */; };
 		0D1E9B952C3888C100141FC0 /* CategoryField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1E9B942C3888C100141FC0 /* CategoryField.swift */; };
+		0D1E9B992C38A5EE00141FC0 /* SettingsScreenAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1E9B982C38A5EE00141FC0 /* SettingsScreenAssembly.swift */; };
+		0D1E9B9B2C38A61800141FC0 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1E9B9A2C38A61800141FC0 /* SettingsView.swift */; };
+		0D1E9B9E2C38A68700141FC0 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1E9B9D2C38A68700141FC0 /* SettingsViewModel.swift */; };
+		0D1E9BA12C38ADA900141FC0 /* CategoryFormData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1E9BA02C38ADA800141FC0 /* CategoryFormData.swift */; };
 		0D548FAE2C2C29A4000950D5 /* TodoItemData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D548FAD2C2C29A4000950D5 /* TodoItemData.swift */; };
 		0D548FB12C2C29CA000950D5 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D548FB02C2C29CA000950D5 /* DateExtension.swift */; };
 		0D548FB42C2C29E5000950D5 /* TodoItemRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D548FB32C2C29E5000950D5 /* TodoItemRow.swift */; };
@@ -82,6 +86,10 @@
 		0D1E9B902C3877E900141FC0 /* CategoryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryManager.swift; sourceTree = "<group>"; };
 		0D1E9B922C38782900141FC0 /* CategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryModel.swift; sourceTree = "<group>"; };
 		0D1E9B942C3888C100141FC0 /* CategoryField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryField.swift; sourceTree = "<group>"; };
+		0D1E9B982C38A5EE00141FC0 /* SettingsScreenAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScreenAssembly.swift; sourceTree = "<group>"; };
+		0D1E9B9A2C38A61800141FC0 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		0D1E9B9D2C38A68700141FC0 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		0D1E9BA02C38ADA800141FC0 /* CategoryFormData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryFormData.swift; sourceTree = "<group>"; };
 		0D548FAD2C2C29A4000950D5 /* TodoItemData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoItemData.swift; sourceTree = "<group>"; };
 		0D548FB02C2C29CA000950D5 /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		0D548FB32C2C29E5000950D5 /* TodoItemRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoItemRow.swift; sourceTree = "<group>"; };
@@ -219,6 +227,49 @@
 			path = Managers;
 			sourceTree = "<group>";
 		};
+		0D1E9B962C38A5C900141FC0 /* SettingsScreen */ = {
+			isa = PBXGroup;
+			children = (
+				0D1E9B9C2C38A67E00141FC0 /* ViewModel */,
+				0D1E9B9F2C38AD9200141FC0 /* Dto */,
+				0D1E9B972C38A5DB00141FC0 /* Views */,
+				0D1E9B982C38A5EE00141FC0 /* SettingsScreenAssembly.swift */,
+			);
+			path = SettingsScreen;
+			sourceTree = "<group>";
+		};
+		0D1E9B972C38A5DB00141FC0 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0D1E9B9A2C38A61800141FC0 /* SettingsView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		0D1E9B9C2C38A67E00141FC0 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				0D1E9B9D2C38A68700141FC0 /* SettingsViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		0D1E9B9F2C38AD9200141FC0 /* Dto */ = {
+			isa = PBXGroup;
+			children = (
+				0D1E9BA02C38ADA800141FC0 /* CategoryFormData.swift */,
+			);
+			path = Dto;
+			sourceTree = "<group>";
+		};
+		0D1E9BA22C38B4B900141FC0 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0DBEAF7E2C2FAB34006E6336 /* CustomColorPicker.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		0D548FAF2C2C29B8000950D5 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -310,6 +361,7 @@
 		0DBEAF4B2C2D919E006E6336 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				0D1E9BA22C38B4B900141FC0 /* Views */,
 				0D1E9B8F2C3877D700141FC0 /* Managers */,
 				0DBEAF4D2C2D91D4006E6336 /* Models */,
 			);
@@ -354,6 +406,7 @@
 			isa = PBXGroup;
 			children = (
 				0DBEAF4B2C2D919E006E6336 /* Shared */,
+				0D1E9B962C38A5C900141FC0 /* SettingsScreen */,
 				0D1E9B682C37123900141FC0 /* CalendarDetails */,
 				0DBEAF5F2C2DFD09006E6336 /* TodoItemDetails */,
 				0D548FC12C2C589B000950D5 /* TodoListDetails */,
@@ -383,7 +436,6 @@
 		0DBEAF6A2C2F104D006E6336 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				0DBEAF7D2C2FAB29006E6336 /* ColorPicker */,
 				0DBEAF722C2F18FC006E6336 /* Fields */,
 				0DBEAF612C2DFD2A006E6336 /* TodoItemDetails.swift */,
 			);
@@ -432,14 +484,6 @@
 				0DE4E6402C24844E0097A2CE /* FileCache.swift */,
 			);
 			path = Cache;
-			sourceTree = "<group>";
-		};
-		0DBEAF7D2C2FAB29006E6336 /* ColorPicker */ = {
-			isa = PBXGroup;
-			children = (
-				0DBEAF7E2C2FAB34006E6336 /* CustomColorPicker.swift */,
-			);
-			path = ColorPicker;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -572,10 +616,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0D1E9B992C38A5EE00141FC0 /* SettingsScreenAssembly.swift in Sources */,
 				0D87648D2C21C6B800C70F20 /* TodoListDetails.swift in Sources */,
 				0D1E9B6D2C37136B00141FC0 /* CalendarDetailsViewController.swift in Sources */,
 				0DBEAF6E2C2F107E006E6336 /* DeadlineField.swift in Sources */,
 				0D1E9B7A2C3744E200141FC0 /* TodoItemTable.swift in Sources */,
+				0D1E9B9E2C38A68700141FC0 /* SettingsViewModel.swift in Sources */,
 				0DBEAF852C2FB697006E6336 /* ColorPickerField.swift in Sources */,
 				0D1E9B912C3877E900141FC0 /* CategoryManager.swift in Sources */,
 				0D1E9B6F2C3724C100141FC0 /* UIColorExtension.swift in Sources */,
@@ -583,6 +629,7 @@
 				0D1E9B6B2C37126D00141FC0 /* CalendarDetailsVCRepresentable.swift in Sources */,
 				0DBEAF6C2C2F1070006E6336 /* ImportanceField.swift in Sources */,
 				0DBEAF502C2D9440006E6336 /* TodoItemService.swift in Sources */,
+				0D1E9BA12C38ADA900141FC0 /* CategoryFormData.swift in Sources */,
 				0DBEAF742C2F1977006E6336 /* TodoItemDetailsAssembly.swift in Sources */,
 				0D1E9B752C37377C00141FC0 /* DateCollectionViewCell.swift in Sources */,
 				0D548FB12C2C29CA000950D5 /* DateExtension.swift in Sources */,
@@ -596,6 +643,7 @@
 				0D1E9B932C38782900141FC0 /* CategoryModel.swift in Sources */,
 				0DBEAF482C2C9699006E6336 /* ColorExtension.swift in Sources */,
 				0D1E9B772C373B1200141FC0 /* NoDateViewCell.swift in Sources */,
+				0D1E9B9B2C38A61800141FC0 /* SettingsView.swift in Sources */,
 				0DBEAF7F2C2FAB34006E6336 /* CustomColorPicker.swift in Sources */,
 				0D87648B2C21C6B800C70F20 /* ToDoAppApp.swift in Sources */,
 				0D1E9B952C3888C100141FC0 /* CategoryField.swift in Sources */,
