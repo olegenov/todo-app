@@ -7,7 +7,7 @@ import SwiftUI
 
 extension Color {
   static let backgroundColor = Color("BackgroundColor")
-  static let listRowBackgound = Color("ListRowBackgound")
+  static let listRow = Color("ListRowBackground")
   static let iconColor = Color("IconColor")
   
   static func getColor(hex: String?) -> Color? {

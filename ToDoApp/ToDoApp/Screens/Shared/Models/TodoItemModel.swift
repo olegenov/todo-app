@@ -13,4 +13,5 @@ struct TodoItemModel: TodoItemData {
   var isDone: Bool = false
   var createdAt: Date = Date.now
   var color: String?
+  var category: CategoryModel = .empty
 }

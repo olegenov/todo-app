@@ -27,7 +27,7 @@ struct ColorPickerField: View {
       }
       .padding(.vertical, 8)
       if isExpanded {
-        CustomColorPicker(data: $data)
+        CustomColorPicker(data: $data.color)
       }
     }
   }

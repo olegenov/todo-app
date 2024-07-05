@@ -63,6 +63,8 @@ struct TodoItemDetails: View {
           DeadlineField(data: $viewModel.data)
           Divider()
           ColorPickerField(data: $viewModel.data)
+          Divider()
+          CategoryField(data: $viewModel.data)
         }
         .padding(16)
         .background(Color.listRowBackground)
@@ -124,9 +126,6 @@ struct TodoItemDetails: View {
         trailing: saveButton
           .disabled(viewModel.data.text.isEmpty || !viewModel.hasChanged)
       )
-      .onAppear() {
-        viewModel.loadData()
-      }
       .gesture(
         DragGesture().onChanged{ _ in
           UIApplication.shared.sendAction(

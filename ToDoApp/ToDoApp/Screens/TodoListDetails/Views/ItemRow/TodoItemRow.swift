@@ -55,7 +55,9 @@ struct TodoItemRow: View {
       HStack(spacing: 16) {
         chackmarkImage
           .onTapGesture {
-            checkMarkAction(item)
+            withAnimation {
+              checkMarkAction(item)
+            }
           }
         HStack(spacing: 4) {
           if item.importance != .medium {
@@ -91,10 +93,18 @@ struct TodoItemRow: View {
       
       Spacer()
       
-      buttonForward
-        .onTapGesture {
-          editAction(item)
+      HStack(spacing: 16) {
+        if item.category != .empty {
+          Circle()
+            .fill(Color.getColor(hex: item.category.color) ?? Color.clear)
+            .frame(width: 24, height: 24)
         }
+        
+        buttonForward
+          .onTapGesture {
+            editAction(item)
+          }
+      }
     }
     .padding(.vertical, 8)
   }

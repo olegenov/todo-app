@@ -8,7 +8,7 @@ import SwiftUI
 struct TodoListDetails: View {
   @ObservedObject var viewModel: TodoListDetailsViewModel
   @State private var showCompleted: Bool = false
-  @State var presentingModal = false
+  @State private var showCalendarView = false
   
   var addNewCell: some View {
     Text("Новое")
@@ -91,46 +91,46 @@ struct TodoListDetails: View {
               checkMarkAction: viewModel.toggleComplited,
               editAction: viewModel.openEditItemModal
             )
-              .listRowBackground(Color.listRowBackground)
-              .background(
-                RoundedRectangle(cornerRadius: 2)
-                  .foregroundStyle(Color.getColor(hex: item.color) ?? Color.clear)
-                  .offset(x: -12)
-                  .frame(width: 4),
-                alignment: .leading
-              )
-              .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                Button(role: .destructive) {
-                  viewModel.removeTodoItem(by: item.id)
-                } label: {
-                  deleteLabel
-                }
+            .listRowBackground(Color.listRowBackground)
+            .background(
+              RoundedRectangle(cornerRadius: 2)
+                .foregroundStyle(Color.getColor(hex: item.color) ?? Color.clear)
+                .offset(x: -12)
+                .frame(width: 4),
+              alignment: .leading
+            )
+            .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+              Button(role: .destructive) {
+                viewModel.removeTodoItem(by: item.id)
+              } label: {
+                deleteLabel
               }
-              .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+            }
+            .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+              Button {
+                viewModel.openEditItemModal(for: item)
+              } label: {
+                infoLabel
+              }
+              .tint(.gray)
+            }
+            .swipeActions(edge: .leading, allowsFullSwipe: true) {
+              if !item.isDone {
                 Button {
-                  viewModel.openEditItemModal(for: item)
+                  toggleComplited(for: item)
                 } label: {
-                  infoLabel
+                  doneLabel
+                }
+                .tint(.green)
+              } else {
+                Button {
+                  toggleComplited(for: item)
+                } label: {
+                  undoneLabel
                 }
                 .tint(.gray)
               }
-              .swipeActions(edge: .leading, allowsFullSwipe: true) {
-                if !item.isDone {
-                  Button {
-                    toggleComplited(for: item)
-                  } label: {
-                    doneLabel
-                  }
-                  .tint(.green)
-                } else {
-                  Button {
-                    toggleComplited(for: item)
-                  } label: {
-                    undoneLabel
-                  }
-                  .tint(.gray)
-                }
-              }
+            }
           }
         }
         
@@ -165,6 +165,20 @@ struct TodoListDetails: View {
       .background(Color.backgroundColor)
       
       .toolbar {
+        ToolbarItem(placement: .topBarLeading) {
+          Button(action: {
+            showCalendarView.toggle()
+          }) {
+            Image(systemName: "calendar")
+          }
+        }
+        ToolbarItem(placement: .topBarTrailing) {
+          Button(action: {
+            viewModel.isSettingsPresented.toggle()
+          }) {
+            Image(systemName: "gear")
+          }
+        }
         ToolbarItem(placement: .bottomBar) {
           addButton
         }
@@ -174,21 +188,49 @@ struct TodoListDetails: View {
     .background(Color.backgroundColor)
     .sheet(isPresented: $viewModel.isModalPresented) {
       if let item = viewModel.selectedItem {
-        getModalView(for: item)
+        viewModel.getModalView(for: item)
+      }
+    }
+    .fullScreenCover(isPresented: $viewModel.isSettingsPresented) {
+      NavigationStack {
+        viewModel.getSettingsView()
+          .navigationTitle("Настройки")
+          .navigationBarTitleDisplayMode(.inline)
+          .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+              Button(action: {
+                viewModel.isSettingsPresented.toggle()
+              }) {
+                Image(systemName: "chevron.backward")
+                  .padding(16)
+              }
+            }
+          }
+      }
+    }
+    .fullScreenCover(isPresented: $showCalendarView) {
+      
+      NavigationStack {
+        viewModel.getCalendarView()
+          .background(Color.backgroundColor)
+          .navigationTitle("Мои дела")
+          .navigationBarTitleDisplayMode(.inline)
+          .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+              Button(action: {
+                showCalendarView.toggle()
+              }) {
+                Image(systemName: "chevron.backward")
+                  .padding(.horizontal, 16)
+              }
+            }
+          }
       }
     }
   }
   
   private func toggleComplited(for item: TodoItemModel) {
     viewModel.toggleComplited(for: item)
-  }
-  
-  func getModalView(for item: TodoItemModel) -> TodoItemDetails {
-    TodoItemDetailsAssembly.build(
-      item: item,
-      presentedAsModal: self.$presentingModal,
-      listViewModel: self.viewModel
-    )
   }
 }
 
