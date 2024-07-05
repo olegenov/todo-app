@@ -35,6 +35,9 @@ class TodoItemTable: UITableView {
   }
   
   func configureUI() {
+    showsVerticalScrollIndicator = false
+    showsHorizontalScrollIndicator = false
+    
     backgroundColor = UIColor.backgroundColor
     allowsSelection = false
     translatesAutoresizingMaskIntoConstraints = false
@@ -43,6 +46,37 @@ class TodoItemTable: UITableView {
 
 // MARK: - UITableViewDelegate, UITableViewDataSource
 extension TodoItemTable: UITableViewDelegate, UITableViewDataSource {
+  func getMask(for index: Int, sectionHeight: Int, bounds: CGRect) -> CALayer {
+    let cornerRadius = 16
+    var corners: UIRectCorner = []
+    
+    if index == 0
+    {
+      corners.update(with: .topLeft)
+      corners.update(with: .topRight)
+    }
+    
+    if index == sectionHeight - 1
+    {
+      corners.update(with: .bottomLeft)
+      corners.update(with: .bottomRight)
+    }
+    
+    let mask = CAShapeLayer()
+    
+    mask.path = UIBezierPath(roundedRect: bounds,
+                             byRoundingCorners: corners,
+                             cornerRadii: CGSize(width: cornerRadius, height: cornerRadius)).cgPath
+    
+    return mask
+  }
+  
+  func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    let sectionHeight = tableView.numberOfRows(inSection: indexPath.section)
+    let mask = getMask(for: indexPath.row, sectionHeight: sectionHeight, bounds: cell.bounds)
+    cell.layer.mask = mask
+  }
+  
   func numberOfSections(in tableView: UITableView) -> Int {
     return data.count
   }
@@ -77,6 +111,16 @@ extension TodoItemTable: UITableViewDelegate, UITableViewDataSource {
     } else {
       cell.crossedOut = false
       cell.completeCrossOut(text: task.text)
+    }
+    
+    cell.layer.mask = getMask(
+      for: indexPath.row,
+      sectionHeight: tableView.numberOfRows(inSection: indexPath.section),
+      bounds: cell.frame
+    )
+    
+    if !task.category.isEmpty {
+      cell.setCategoryColor(UIColor.getColor(hex: task.category) ?? UIColor.red)
     }
     
     return cell

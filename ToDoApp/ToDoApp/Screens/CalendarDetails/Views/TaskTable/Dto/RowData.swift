@@ -10,4 +10,5 @@ struct RowData {
   let text: String
   let date: Date?
   var isDone: Bool
+  var category: String
 }

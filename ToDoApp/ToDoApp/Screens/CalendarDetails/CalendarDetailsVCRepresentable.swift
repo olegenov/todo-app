@@ -28,8 +28,8 @@ struct CalendarDetailsVCRepresentable: UIViewControllerRepresentable {
     if !listViewModel.isModalPresented && viewModel.isAddModalPresented {
       uiViewController.dismiss(animated: true)
       viewModel.isAddModalPresented = false
+      
+      uiViewController.configureData()
     }
-    
-    uiViewController.configureData()
   }
 }

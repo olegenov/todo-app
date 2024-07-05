@@ -48,7 +48,8 @@ class CalendarDetailsViewController: UIViewController {
               id: item.id,
               text: item.text,
               date: item.deadline,
-              isDone: item.isDone
+              isDone: item.isDone,
+              category: item.category.color
             )]
           )
         )
@@ -61,7 +62,8 @@ class CalendarDetailsViewController: UIViewController {
           id: item.id,
           text: item.text,
           date: item.deadline,
-          isDone: item.isDone
+          isDone: item.isDone,
+          category: item.category.color
         )
       )
     }
@@ -101,11 +103,13 @@ class CalendarDetailsViewController: UIViewController {
   }
   
   func configureTable() {
+    table.contentInset.bottom = 100
+    
     view.addSubview(table)
     
     NSLayoutConstraint.activate([
-      table.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-      table.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+      table.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+      table.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
       table.topAnchor.constraint(equalTo: sectionsView.bottomAnchor, constant: 8),
       table.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
     ])

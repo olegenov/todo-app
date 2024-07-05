@@ -17,11 +17,12 @@ class TodoItemDetailsViewModel: ObservableObject {
       text: item.text,
       importance: item.importance,
       deadline: item.deadline,
-      color: item.color
+      color: item.color,
+      category: item.category
     )
     self.listViewModel = listViewModel
   }
-
+  
   var hasChanged: Bool {
     var dateChanged = false
     
@@ -37,25 +38,11 @@ class TodoItemDetailsViewModel: ObservableObject {
     
     return item.text != data.text || (
       data.importance != item.importance
-    ) || dateChanged || data.color.toHexString() != item.color
-  }
-  
-  func loadData() {
-    data.text = item.text
-    data.isDeadlineEnabled = false
-    
-    if let deadline = item.deadline {
-      data.deadline = deadline
-      data.isDeadlineEnabled = true
-    }
-    
-    data.importance = item.importance
-    
-    if let color = item.color {
-      data.color = Color.getColor(hex: color) ?? Color.clear
-    } else {
-      data.color = Color.gray
-    }
+    ) || dateChanged || (
+      data.color.toHexString() != item.color
+    ) || (
+      data.category.id != item.category.id
+    )
   }
   
   func saveData() {
@@ -69,6 +56,7 @@ class TodoItemDetailsViewModel: ObservableObject {
     
     item.importance = data.importance
     item.color = data.color.toHexString()
+    item.category = data.category
     
     if listViewModel.items.contains(where: { $0.id == item.id }) {
       listViewModel.updateTodoItem(with: item)
