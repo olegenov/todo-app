@@ -35,6 +35,32 @@ class TodoListDetailsViewModel: ObservableObject {
     addTodoItem(updatedItem)
   }
   
+  func completeItem(for item: TodoItemModel) {
+    let updatedItem = TodoItemModel(
+      id: item.id,
+      text: item.text,
+      importance: item.importance,
+      isDone: true,
+      createdAt: item.createdAt
+    )
+    
+    removeTodoItem(by: item.id)
+    addTodoItem(updatedItem)
+  }
+  
+  func uncompleteItem(for item: TodoItemModel) {
+    let updatedItem = TodoItemModel(
+      id: item.id,
+      text: item.text,
+      importance: item.importance,
+      isDone: false,
+      createdAt: item.createdAt
+    )
+    
+    removeTodoItem(by: item.id)
+    addTodoItem(updatedItem)
+  }
+  
   func updateTodoItem(with item: TodoItemModel) {
     let updatedItem = TodoItemModel(
       id: item.id,
