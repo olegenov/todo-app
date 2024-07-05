@@ -71,7 +71,7 @@ class TaskCell: UITableViewCell {
       )
       attributeString.addAttribute(
         .foregroundColor,
-        value: UIColor.textColor,
+        value: UIColor.textColor ?? UIColor.clear,
         range: NSMakeRange(0, attributeString.length)
       )
     }

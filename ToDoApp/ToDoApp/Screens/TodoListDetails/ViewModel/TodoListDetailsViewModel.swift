@@ -3,12 +3,15 @@
 //  ToDoApp
 //
 
-import Foundation
+import SwiftUI
 
 class TodoListDetailsViewModel: ObservableObject {
   @Published var items: [TodoItemModel] = []
   @Published var isModalPresented: Bool = false
   @Published var selectedItem: TodoItemModel?
+  
+  var calendarView: CalendarDetailsVCRepresentable? = nil
+
   
   func addTodoItem(_ item: TodoItemModel) {
     if items.contains(where: { $0.id == item.id }) {
@@ -27,6 +30,7 @@ class TodoListDetailsViewModel: ObservableObject {
       id: item.id,
       text: item.text,
       importance: item.importance,
+      deadline: item.deadline,
       isDone: !item.isDone,
       createdAt: item.createdAt
     )
@@ -40,6 +44,7 @@ class TodoListDetailsViewModel: ObservableObject {
       id: item.id,
       text: item.text,
       importance: item.importance,
+      deadline: item.deadline,
       isDone: true,
       createdAt: item.createdAt
     )
@@ -53,6 +58,7 @@ class TodoListDetailsViewModel: ObservableObject {
       id: item.id,
       text: item.text,
       importance: item.importance,
+      deadline: item.deadline,
       isDone: false,
       createdAt: item.createdAt
     )
@@ -92,5 +98,24 @@ class TodoListDetailsViewModel: ObservableObject {
   
   func deleteItem(at offsets: IndexSet) {
     items.remove(atOffsets: offsets)
+  }
+  
+  func getModalView(for item: TodoItemModel) -> TodoItemDetails {
+    TodoItemDetailsAssembly.build(
+      item: item,
+      listViewModel: self
+    )
+  }
+  
+  func getCalendarView() -> CalendarDetailsVCRepresentable? {
+    if self.calendarView != nil {
+      return calendarView
+    }
+    
+    let view = CalendarDetailsVCRepresentable(listViewModel: self)
+    
+    self.calendarView = view
+    
+    return calendarView
   }
 }

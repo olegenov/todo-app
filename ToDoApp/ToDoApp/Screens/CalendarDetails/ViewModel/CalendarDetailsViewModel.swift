@@ -3,10 +3,21 @@
 //  ToDoApp
 //
 
-import Foundation
+import SwiftUI
 
 class CalendarDetailsViewModel {
   var listViewModel: TodoListDetailsViewModel?
+  var closeModalAction: (() -> Void)?
+  
+  var isModalPresented: Bool = false {
+    didSet {
+      if !isModalPresented {
+        closeModalAction?()
+      }
+    }
+  }
+  
+  var isAddModalPresented: Bool = false
   
   var items: [TodoItemModel] {
     return listViewModel?.items ?? []
@@ -26,5 +37,17 @@ class CalendarDetailsViewModel {
     }
     
     listViewModel?.uncompleteItem(for: item)
+  }
+  
+  func getAddModal() -> UIViewController {
+    guard let viewModel = listViewModel else {
+      return UIViewController()
+    }
+    
+    let view = TodoItemDetailsAssembly.build(item: TodoItemModel(id: UUID().uuidString), listViewModel: viewModel)
+    
+    let hostingController = UIHostingController(rootView: view)
+    
+    return hostingController
   }
 }

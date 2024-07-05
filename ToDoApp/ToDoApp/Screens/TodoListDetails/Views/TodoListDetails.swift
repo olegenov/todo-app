@@ -8,7 +8,6 @@ import SwiftUI
 struct TodoListDetails: View {
   @ObservedObject var viewModel: TodoListDetailsViewModel
   @State private var showCompleted: Bool = false
-  @State var presentingModal = false
   @State private var showCalendarView = false
   
   var addNewCell: some View {
@@ -182,12 +181,13 @@ struct TodoListDetails: View {
     .background(Color.backgroundColor)
     .sheet(isPresented: $viewModel.isModalPresented) {
       if let item = viewModel.selectedItem {
-        getModalView(for: item)
+        viewModel.getModalView(for: item)
       }
     }
     .fullScreenCover(isPresented: $showCalendarView) {
+      
       NavigationStack {
-        CalendarDetailsVCRepresentable(listViewModel: viewModel)
+        viewModel.getCalendarView()
           .background(Color.backgroundColor)
           .navigationTitle("Мои дела")
           .navigationBarTitleDisplayMode(.inline)
@@ -206,14 +206,6 @@ struct TodoListDetails: View {
   
   private func toggleComplited(for item: TodoItemModel) {
     viewModel.toggleComplited(for: item)
-  }
-  
-  func getModalView(for item: TodoItemModel) -> TodoItemDetails {
-    TodoItemDetailsAssembly.build(
-      item: item,
-      presentedAsModal: self.$presentingModal,
-      listViewModel: self.viewModel
-    )
   }
 }
 

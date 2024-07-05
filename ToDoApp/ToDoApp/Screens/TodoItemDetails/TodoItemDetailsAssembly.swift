@@ -7,7 +7,6 @@ import SwiftUI
 
 enum TodoItemDetailsAssembly {
   static func build(item: TodoItemModel?,
-                    presentedAsModal: Binding<Bool>,
                     listViewModel: TodoListDetailsViewModel) -> TodoItemDetails {
     
     guard let itemDetails = item else {

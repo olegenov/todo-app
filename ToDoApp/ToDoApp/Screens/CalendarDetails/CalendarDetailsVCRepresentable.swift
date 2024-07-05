@@ -6,7 +6,8 @@
 import SwiftUI
 
 struct CalendarDetailsVCRepresentable: UIViewControllerRepresentable {
-  let listViewModel: TodoListDetailsViewModel
+  @ObservedObject var listViewModel: TodoListDetailsViewModel
+  @State var showsModal: Bool = false
   
   func makeUIViewController(
     context: Context
@@ -20,6 +21,15 @@ struct CalendarDetailsVCRepresentable: UIViewControllerRepresentable {
     _ uiViewController: CalendarDetailsViewController,
     context: Context
   ) {
-    // …
+    guard let viewModel = uiViewController.viewModel else {
+      return
+    }
+    
+    if !listViewModel.isModalPresented && viewModel.isAddModalPresented {
+      uiViewController.dismiss(animated: true)
+      viewModel.isAddModalPresented = false
+    }
+    
+    uiViewController.configureData()
   }
 }
