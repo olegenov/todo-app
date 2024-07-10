@@ -18,7 +18,6 @@
 		0D1E9B7F2C37494000141FC0 /* DateCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1E9B7E2C37494000141FC0 /* DateCollection.swift */; };
 		0D1E9B872C37759E00141FC0 /* TaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1E9B862C37759E00141FC0 /* TaskCell.swift */; };
 		0D1E9B8A2C37797000141FC0 /* CalendarDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1E9B892C37797000141FC0 /* CalendarDetailsViewModel.swift */; };
-		0D1E9B8C2C383DBF00141FC0 /* ModalState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1E9B8B2C383DBF00141FC0 /* ModalState.swift */; };
 		0D1E9B912C3877E900141FC0 /* CategoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1E9B902C3877E900141FC0 /* CategoryManager.swift */; };
 		0D1E9B932C38782900141FC0 /* CategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1E9B922C38782900141FC0 /* CategoryModel.swift */; };
 		0D1E9B952C3888C100141FC0 /* CategoryField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1E9B942C3888C100141FC0 /* CategoryField.swift */; };
@@ -82,7 +81,6 @@
 		0D1E9B7E2C37494000141FC0 /* DateCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateCollection.swift; sourceTree = "<group>"; };
 		0D1E9B862C37759E00141FC0 /* TaskCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCell.swift; sourceTree = "<group>"; };
 		0D1E9B892C37797000141FC0 /* CalendarDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDetailsViewModel.swift; sourceTree = "<group>"; };
-		0D1E9B8B2C383DBF00141FC0 /* ModalState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalState.swift; sourceTree = "<group>"; };
 		0D1E9B902C3877E900141FC0 /* CategoryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryManager.swift; sourceTree = "<group>"; };
 		0D1E9B922C38782900141FC0 /* CategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryModel.swift; sourceTree = "<group>"; };
 		0D1E9B942C3888C100141FC0 /* CategoryField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryField.swift; sourceTree = "<group>"; };
@@ -214,7 +212,6 @@
 			isa = PBXGroup;
 			children = (
 				0D1E9B892C37797000141FC0 /* CalendarDetailsViewModel.swift */,
-				0D1E9B8B2C383DBF00141FC0 /* ModalState.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -648,7 +645,6 @@
 				0D87648B2C21C6B800C70F20 /* ToDoAppApp.swift in Sources */,
 				0D1E9B952C3888C100141FC0 /* CategoryField.swift in Sources */,
 				0DBEAF442C2C8909006E6336 /* TodoListDetailsViewModel.swift in Sources */,
-				0D1E9B8C2C383DBF00141FC0 /* ModalState.swift in Sources */,
 				0DE4E6412C24844E0097A2CE /* FileCache.swift in Sources */,
 				0D1E9B7F2C37494000141FC0 /* DateCollection.swift in Sources */,
 				0DE4E62C2C242E8D0097A2CE /* TodoItem.swift in Sources */,

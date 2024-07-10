@@ -73,6 +73,7 @@ class CalendarDetailsViewController: UIViewController {
     
     
     table.updateData(sortedData)
+    sectionsView.reloadData()
   }
   
   func configureTableActions() {

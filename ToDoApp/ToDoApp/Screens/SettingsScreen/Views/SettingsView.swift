@@ -20,7 +20,6 @@ struct SettingsView: View {
           doneCreation()
         }
       }
-      .disabled(viewModel.data.text.isEmpty)
   }
   
   var cancelIcon: some View {
@@ -48,7 +47,7 @@ struct SettingsView: View {
   }
   
   var form: some View {
-    VStack(alignment: .leading, spacing: 8) {
+    VStack(alignment: .leading) {
       HStack(spacing: 8) {
         Circle()
           .frame(width: 24, height: 24)
@@ -62,17 +61,20 @@ struct SettingsView: View {
         TextField("Новая категория", text: $viewModel.data.text, axis: .horizontal)
           .lineLimit(1)
         
-        Spacer()
-        
         HStack(spacing: 8) {
           doneIcon
+            .disabled(viewModel.data.text.isEmpty)
           
           cancelIcon
         }
       }
+      .padding(8)
       
       if (pickerShown) {
-        CustomColorPicker(data: $viewModel.data.color)
+        CustomColorPicker(data: $viewModel.data.color, width: UIScreen.main.bounds.width - 2 * 48)
+          .frame(height: 30)
+          .padding(.horizontal, 8)
+          .padding(.vertical, 16)
       }
     }
   }
@@ -96,7 +98,6 @@ struct SettingsView: View {
             additionRow
           } else {
             form
-              .padding(8)
           }
         }
         .listRowBackground(Color.listRowBackground)

@@ -88,10 +88,14 @@ struct TodoItemDetails: View {
       
       ScrollView(showsIndicators: false) {
         VStack(spacing: 16) {
-          VStack {
+          VStack(alignment: .leading) {
             ImportanceField(data: $viewModel.data)
             Divider()
             DeadlineField(data: $viewModel.data)
+            Divider()
+            ColorPickerField(data: $viewModel.data)
+            Divider()
+            CategoryField(data: $viewModel.data)
           }
           .padding(16)
           .background(Color.listRowBackground)

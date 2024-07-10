@@ -10,8 +10,7 @@ struct CustomColorPicker: View {
   @State var dragPosition: Double = 16
   @State var brightness: Double = 1.0
   @State var hue: Double = 0.0
-  
-  let width = UIScreen.main.bounds.width - 2 * 32
+  var width: Double
   
   var hueBackground: some View {
     LinearGradient(
@@ -37,12 +36,12 @@ struct CustomColorPicker: View {
         hueBackground
         
         pickerCircle
-          .position(x: 16 + width * hue, y: 14)
+          .position(x: 15 + width * hue, y: 15)
           .gesture(
             DragGesture()
               .onChanged { value in
-                if value.location.x >= 16 && value.location.x <= width - 16 {
-                  let newValue = (value.location.x - 16) / width
+                if value.location.x >= 15 && value.location.x <= width - 15 {
+                  let newValue = (value.location.x - 15) / width
                   hue = min(max(newValue, 0), 1)
                   updateColor()
                 }

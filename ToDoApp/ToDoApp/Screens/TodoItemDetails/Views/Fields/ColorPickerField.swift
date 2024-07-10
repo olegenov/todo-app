@@ -27,7 +27,7 @@ struct ColorPickerField: View {
       }
       .padding(.vertical, 8)
       if isExpanded {
-        CustomColorPicker(data: $data.color)
+        CustomColorPicker(data: $data.color, width: UIScreen.main.bounds.width - 2 * 32)
       }
     }
   }
