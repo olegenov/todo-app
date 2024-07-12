@@ -11,7 +11,7 @@ struct CustomColorPicker: View {
   @State var brightness: Double = 1.0
   @State var hue: Double = 0.0
   var width: Double
-  
+
   var hueBackground: some View {
     LinearGradient(
       gradient: Gradient(colors: stride(from: 0.0, to: 1.0, by: 0.01).map {
@@ -23,18 +23,18 @@ struct CustomColorPicker: View {
     .frame(height: 30)
     .clipShape(.rect(cornerRadius: 16))
   }
-  
+
   var pickerCircle: some View {
     Circle()
       .fill(Color.white)
       .frame(width: 30, height: 30)
   }
-  
+
   var body: some View {
     VStack {
       ZStack {
         hueBackground
-        
+
         pickerCircle
           .position(x: 15 + width * hue, y: 15)
           .gesture(
@@ -48,7 +48,7 @@ struct CustomColorPicker: View {
               }
           )
       }
-      
+
       Slider(value: Binding<Double>(
         get: { brightness },
         set: { newValue in
@@ -58,7 +58,7 @@ struct CustomColorPicker: View {
       ), in: 0...1, step: 0.01)
     }
   }
-  
+
   private func updateColor() {
     data = Color(hue: hue, saturation: 1.0, brightness: brightness)
   }

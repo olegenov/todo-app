@@ -12,7 +12,7 @@ struct TodoItemFormData {
   var isDeadlineEnabled: Bool = false
   var color: Color = .gray
   var category: CategoryModel = .empty
-  
+
   init(text: String, importance: TodoItem.Importance, deadline: Date?, color: String?, category: CategoryModel) {
     self.text = text
     self.importance = importance
@@ -21,6 +21,6 @@ struct TodoItemFormData {
     self.color = Color.getColor(hex: color) ?? Color.clear
     self.category = category
   }
-  
+
   init() { }
 }

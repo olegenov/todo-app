@@ -9,25 +9,25 @@ struct TodoListDetails: View {
   @ObservedObject var viewModel: TodoListDetailsViewModel
   @State private var showCompleted: Bool = false
   @State private var showCalendarView = false
-  
+
   var addNewCell: some View {
     Text("Новое")
       .opacity(0.3)
       .padding([.leading], 40)
       .padding(.vertical, 8)
   }
-  
+
   var completedTasksCount: Int {
     viewModel.items.filter { $0.isDone }.count
   }
-  
+
   var completeCounter: some View {
     Text("Выполнено — \(completedTasksCount)")
       .font(.system(size: 15))
       .frame(height: 20)
       .textCase(nil)
   }
-  
+
   var openButton: some View {
     Button {
       withAnimation {
@@ -39,7 +39,7 @@ struct TodoListDetails: View {
         .font(.system(size: 15, weight: Font.Weight.bold))
     }
   }
-  
+
   var addButton: some View {
     Button(action: {
       viewModel.openNewItemModal()
@@ -50,37 +50,37 @@ struct TodoListDetails: View {
           .resizable()
           .frame(width: 44, height: 44)
           .foregroundColor(Color.white)
-        
+
         Image(systemName: "plus.circle.fill")
           .renderingMode(.template)
           .resizable()
           .frame(width: 44, height: 44)
           .foregroundColor(Color.blue)
       }
-      .shadow(color: Color(UIColor(red: 0/255, green: 73/255, blue: 153/255, alpha: 0.3)), radius: 20, x: 0, y: 8)
+      .shadow(color: Color(UIColor(red: 0 / 255, green: 73 / 255, blue: 153 / 255, alpha: 0.3)), radius: 20, x: 0, y: 8)
     }
   }
-  
+
   var deleteLabel: some View {
     Label("delete", systemImage: "trash.fill")
       .labelStyle(.iconOnly)
   }
-  
+
   var infoLabel: some View {
     Label("info", systemImage: "info.circle.fill")
       .labelStyle(.iconOnly)
   }
-  
+
   var doneLabel: some View {
     Label("done", systemImage: "checkmark.circle.fill")
       .labelStyle(.iconOnly)
   }
-  
+
   var undoneLabel: some View {
     Label("undone", systemImage: "xmark.circle.fill")
       .labelStyle(.iconOnly)
   }
-  
+
   var todoList: some View {
     List {
       Section {
@@ -133,7 +133,7 @@ struct TodoListDetails: View {
             }
           }
         }
-        
+
         addNewCell
           .listRowBackground(Color.listRowBackground)
           .onTapGesture {
@@ -153,7 +153,7 @@ struct TodoListDetails: View {
     .listStyle(.insetGrouped)
     .scrollContentBackground(.hidden)
   }
-  
+
   var body: some View {
     NavigationStack {
       ZStack {
@@ -162,7 +162,7 @@ struct TodoListDetails: View {
           .navigationTitle("Мои дела")
       }
       .background(Color.backgroundColor)
-      
+
       .toolbar {
         ToolbarItem(placement: .topBarLeading) {
           Button(action: {
@@ -208,7 +208,6 @@ struct TodoListDetails: View {
       }
     }
     .fullScreenCover(isPresented: $showCalendarView) {
-      
       NavigationStack {
         viewModel.getCalendarView()
           .background(Color.backgroundColor)
@@ -233,7 +232,7 @@ struct TodoListDetails: View {
       Logger.shared.logInfo("TodoListDetails view disappeared")
     }
   }
-  
+
   private func toggleComplited(for item: TodoItemModel) {
     viewModel.toggleComplited(for: item)
   }

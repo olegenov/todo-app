@@ -11,7 +11,7 @@ struct ToDoAppApp: App {
   init() {
     Logger.shared.logInfo("App started")
   }
-  
+
   var body: some Scene {
     WindowGroup {
       TodoListDetailsAssembly.build()
