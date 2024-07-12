@@ -38,7 +38,7 @@ struct ImportanceField: View {
         doubleExlamationLabel
           .tag(TodoItem.Importance.high)
       }
-      .pickerStyle(.palette)
+      .pickerStyle(.segmented)
       .frame(maxWidth: 150, alignment: .trailing)
     }
   }

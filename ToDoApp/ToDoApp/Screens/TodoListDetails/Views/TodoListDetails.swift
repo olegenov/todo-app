@@ -151,7 +151,6 @@ struct TodoListDetails: View {
       }
     }
     .listStyle(.insetGrouped)
-    .scrollClipDisabled(false)
     .scrollContentBackground(.hidden)
   }
   
