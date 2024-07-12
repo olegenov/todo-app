@@ -10,6 +10,8 @@ enum TodoItemDetailsAssembly {
                     listViewModel: TodoListDetailsViewModel) -> TodoItemDetails {
     
     guard let itemDetails = item else {
+      Logger.shared.logWarning("TodoItemDetails view got nil item")
+      
       let viewModel = TodoItemDetailsViewModel(
         item: TodoItemModel(id: UUID().uuidString), listViewModel: listViewModel)
       

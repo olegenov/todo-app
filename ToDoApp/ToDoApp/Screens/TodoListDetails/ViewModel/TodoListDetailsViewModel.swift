@@ -16,6 +16,8 @@ class TodoListDetailsViewModel: ObservableObject {
   
   func addTodoItem(_ item: TodoItemModel) {
     if items.contains(where: { $0.id == item.id }) {
+      Logger.shared.logWarning("Failed to add existing TodoItem with id \(item.id) to FileCache list")
+      
       return
     }
     

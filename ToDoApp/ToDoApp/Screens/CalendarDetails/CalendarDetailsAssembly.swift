@@ -4,6 +4,7 @@
 //
 
 import Foundation
+import CocoaLumberjack
 
 enum CalendarDetailsAssembly {
   static func build(listViewModel: TodoListDetailsViewModel) -> CalendarDetailsViewController {

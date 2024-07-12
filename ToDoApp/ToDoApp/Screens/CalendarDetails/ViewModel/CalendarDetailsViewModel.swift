@@ -25,6 +25,8 @@ class CalendarDetailsViewModel {
   
   func completed(for id: String) {
     guard let item = listViewModel?.items.first(where: { $0.id == id }) else {
+      Logger.shared.logError("Failed to find item for id: \(id)")
+      
       return
     }
     
@@ -33,6 +35,8 @@ class CalendarDetailsViewModel {
   
   func uncompleted(for id: String) {
     guard let item = listViewModel?.items.first(where: { $0.id == id }) else {
+      Logger.shared.logError("Failed to find item for id: \(id)")
+      
       return
     }
     
@@ -41,6 +45,8 @@ class CalendarDetailsViewModel {
   
   func getAddModal() -> UIViewController {
     guard let viewModel = listViewModel else {
+      Logger.shared.logError("Failed to get viewModel from TodoListDetails")
+      
       return UIViewController()
     }
     

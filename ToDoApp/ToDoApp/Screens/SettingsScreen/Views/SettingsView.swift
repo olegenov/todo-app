@@ -118,6 +118,12 @@ struct SettingsView: View {
         )
       }
     )
+    .onAppear {
+      Logger.shared.logInfo("Settings view appeared")
+    }
+    .onDisappear() {
+      Logger.shared.logInfo("Settings view disappeared")
+    }
   }
   
   func doneCreation() {

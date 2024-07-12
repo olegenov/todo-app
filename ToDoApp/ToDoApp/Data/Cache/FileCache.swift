@@ -18,6 +18,8 @@ final class FileCache {
   
   func addTodoItem(_ item: TodoItem) {
     if todoItems.contains(where: { $0.id == item.id }) {
+      Logger.shared.logWarning("Failed to add existing TodoItem with id \(item.id) to FileCache list")
+      
       return
     }
     
@@ -30,6 +32,8 @@ final class FileCache {
   
   func save(to filename: String) throws {
     guard let fileURL = applicationDirectory?.appending(component: filename) else {
+      Logger.shared.logError("Failed to create url for path: \(filename)")
+      
       throw FileCacheError.invalidFilename
     }
     
@@ -45,12 +49,16 @@ final class FileCache {
     do {
       try dataArray.write(to: fileURL)
     } catch {
+      Logger.shared.logError("Failed to write data to FileCache file: \(fileURL)")
+      
       throw FileCacheError.writeFailure
     }
   }
   
   func load(from filename: String) throws {
     guard let fileURL = applicationDirectory?.appending(component: filename) else {
+      Logger.shared.logError("Failed to create url for path: \(filename)")
+      
       throw FileCacheError.invalidFilename
     }
     
@@ -72,6 +80,8 @@ final class FileCache {
       
       todoItems = loadedItems
     } catch {
+      Logger.shared.logError("Failed to read data from FileCache file: \(fileURL)")
+      
       throw FileCacheError.loadFailure
     }
   }

@@ -142,6 +142,12 @@ struct TodoItemDetails: View {
         }
       )
     }
+    .onAppear {
+      Logger.shared.logInfo("TodoItemDetails view appeared")
+    }
+    .onDisappear() {
+      Logger.shared.logInfo("TodoItemDetails view disappeared")
+    }
   }
   
   private func scrollToTextField(scrollView: ScrollViewProxy) {

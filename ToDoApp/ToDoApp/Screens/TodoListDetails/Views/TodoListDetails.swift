@@ -227,6 +227,12 @@ struct TodoListDetails: View {
           }
       }
     }
+    .onAppear {
+      Logger.shared.logInfo("TodoListDetails view appeared")
+    }
+    .onDisappear {
+      Logger.shared.logInfo("TodoListDetails view disappeared")
+    }
   }
   
   private func toggleComplited(for item: TodoItemModel) {

@@ -22,6 +22,8 @@ struct CalendarDetailsVCRepresentable: UIViewControllerRepresentable {
     context: Context
   ) {
     guard let viewModel = uiViewController.viewModel else {
+      Logger.shared.logInfo("Failed to update Calendar view")
+      
       return
     }
     

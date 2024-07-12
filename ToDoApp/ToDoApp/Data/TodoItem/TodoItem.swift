@@ -78,16 +78,22 @@ extension TodoItem {
   
   static func parse(json: Any) -> TodoItem? {
     guard let data = json as? Data else {
+      Logger.shared.logError("Failed to parse data from json")
+      
       return nil
     }
     
     do {
       guard let item = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
+        Logger.shared.logError("Failed to create TodoItem object")
+        
         return nil
       }
       
       return TodoItem(from: item)
     } catch {
+      Logger.shared.logError("Failed to serialize object from data")
+      
       return nil
     }
   }
@@ -117,6 +123,8 @@ extension TodoItem {
       
       return jsonData
     } catch {
+      Logger.shared.logError("Failed to create json data for object \(self.id)")
+      
       return Data()
     }
   }
@@ -154,6 +162,8 @@ extension TodoItem {
     elements.append(currentField)
     
     guard elements.count >= 6 else {
+      Logger.shared.logError("Failed to parse data from csv: \(csv)")
+      
       return nil
     }
     

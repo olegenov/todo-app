@@ -159,4 +159,12 @@ class CalendarDetailsViewController: UIViewController {
     
     present(vc, animated: true)
   }
+  
+  override func viewDidAppear(_ animated: Bool) {
+    Logger.shared.logInfo("CalendarDetails view appeared")
+  }
+  
+  override func viewDidDisappear(_ animated: Bool) {
+    Logger.shared.logInfo("CalendarDetails view disappeared")
+  }
 }
