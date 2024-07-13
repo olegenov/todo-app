@@ -33,6 +33,8 @@
 		0D548FB42C2C29E5000950D5 /* TodoItemRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D548FB32C2C29E5000950D5 /* TodoItemRow.swift */; };
 		0D6DEDFC2C41C3FA004F8529 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D6DEDFB2C41C3FA004F8529 /* Logger.swift */; };
 		0D6DEE002C41DF14004F8529 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 0D6DEDFF2C41DF14004F8529 /* .swiftlint.yml */; };
+		0D6DEE1E2C41EF9C004F8529 /* URLSessionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D6DEE1D2C41EF9C004F8529 /* URLSessionExtension.swift */; };
+		0D6DEE202C420BDF004F8529 /* URLSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D6DEE1F2C420BDF004F8529 /* URLSessionTests.swift */; };
 		0D87648B2C21C6B800C70F20 /* ToDoAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D87648A2C21C6B800C70F20 /* ToDoAppApp.swift */; };
 		0D87648D2C21C6B800C70F20 /* TodoListDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D87648C2C21C6B800C70F20 /* TodoListDetails.swift */; };
 		0D87648F2C21C6B800C70F20 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D87648E2C21C6B800C70F20 /* Assets.xcassets */; };
@@ -102,8 +104,10 @@
 		0D6DEDFB2C41C3FA004F8529 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		0D6DEDFF2C41DF14004F8529 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		0D6DEE042C41EC2B004F8529 /* ToDoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		0D6DEE172C41EE5A004F8529 /* ToDoAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = ToDoAppTests.xctest; path = "/Users/olegenov/Dev/todo-app/ToDoApp/build/Debug-iphoneos/ToDoAppTests.xctest"; sourceTree = "<absolute>"; };
-		0D6DEE182C41EE5A004F8529 /* ToDoAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = ToDoAppUITests.xctest; path = "/Users/olegenov/Dev/todo-app/ToDoApp/build/Debug-iphoneos/ToDoAppUITests.xctest"; sourceTree = "<absolute>"; };
+		0D6DEE1B2C41EEB0004F8529 /* ToDoAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ToDoAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0D6DEE1C2C41EEB0004F8529 /* ToDoAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ToDoAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0D6DEE1D2C41EF9C004F8529 /* URLSessionExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionExtension.swift; sourceTree = "<group>"; };
+		0D6DEE1F2C420BDF004F8529 /* URLSessionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionTests.swift; sourceTree = "<group>"; };
 		0D87648A2C21C6B800C70F20 /* ToDoAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoAppApp.swift; sourceTree = "<group>"; };
 		0D87648C2C21C6B800C70F20 /* TodoListDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListDetails.swift; sourceTree = "<group>"; };
 		0D87648E2C21C6B800C70F20 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -298,6 +302,7 @@
 				0D548FB02C2C29CA000950D5 /* DateExtension.swift */,
 				0DBEAF472C2C9699006E6336 /* ColorExtension.swift */,
 				0D1E9B6E2C3724C100141FC0 /* UIColorExtension.swift */,
+				0D6DEE1D2C41EF9C004F8529 /* URLSessionExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -339,6 +344,8 @@
 				0D6DEE042C41EC2B004F8529 /* ToDoApp.app */,
 				40E7510CC6BA8C07C71FC160 /* Pods */,
 				4895002C9F5AA4495276EC4D /* Frameworks */,
+				0D6DEE1B2C41EEB0004F8529 /* ToDoAppTests.xctest */,
+				0D6DEE1C2C41EEB0004F8529 /* ToDoAppUITests.xctest */,
 			);
 			sourceTree = "<group>";
 		};
@@ -369,6 +376,7 @@
 			isa = PBXGroup;
 			children = (
 				0D87649B2C21C6B900C70F20 /* TodoItemTests.swift */,
+				0D6DEE1F2C420BDF004F8529 /* URLSessionTests.swift */,
 			);
 			path = ToDoAppTests;
 			sourceTree = "<group>";
@@ -520,7 +528,6 @@
 				4EBB13DD3A49B356FAA1233B /* Pods-ToDoAppTests.debug.xcconfig */,
 				84B82EE289BEC8D73787709B /* Pods-ToDoAppTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -577,7 +584,7 @@
 			);
 			name = ToDoAppTests;
 			productName = ToDoAppTests;
-			productReference = 0D6DEE172C41EE5A004F8529 /* ToDoAppTests.xctest */;
+			productReference = 0D6DEE1B2C41EEB0004F8529 /* ToDoAppTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		0D8764A02C21C6B900C70F20 /* ToDoAppUITests */ = {
@@ -596,7 +603,7 @@
 			);
 			name = ToDoAppUITests;
 			productName = ToDoAppUITests;
-			productReference = 0D6DEE182C41EE5A004F8529 /* ToDoAppUITests.xctest */;
+			productReference = 0D6DEE1C2C41EEB0004F8529 /* ToDoAppUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -764,6 +771,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0D6DEE1E2C41EF9C004F8529 /* URLSessionExtension.swift in Sources */,
 				0D1E9B992C38A5EE00141FC0 /* SettingsScreenAssembly.swift in Sources */,
 				0D87648D2C21C6B800C70F20 /* TodoListDetails.swift in Sources */,
 				0D1E9B6D2C37136B00141FC0 /* CalendarDetailsViewController.swift in Sources */,
@@ -810,6 +818,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0D6DEE202C420BDF004F8529 /* URLSessionTests.swift in Sources */,
 				0D87649C2C21C6B900C70F20 /* TodoItemTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -985,6 +994,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = olegenovCodes.ToDoApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1017,6 +1027,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = olegenovCodes.ToDoApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
