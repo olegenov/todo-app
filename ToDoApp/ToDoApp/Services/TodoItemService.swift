@@ -11,21 +11,21 @@ final class TodoItemService {
     case updateFailure
     case cacheSavingFailure
   }
-  
+
   private var cacheFilePath: String = "ToDoApp/cache/data.json"
-  
+
   private let cache: FileCache
-  
+
   init(cache: FileCache) {
     self.cache = cache
-    
+
     do {
       try cache.load(from: cacheFilePath)
     } catch {
       return
     }
   }
-  
+
   func loadCache() throws {
     do {
       try cache.load(from: cacheFilePath)
@@ -33,7 +33,7 @@ final class TodoItemService {
       throw TodoItemManagerError.cacheLoadingFailure
     }
   }
-  
+
   func addTodoItem(_ item: any TodoItemData) throws {
     let newItem = TodoItem(
       id: item.id,
@@ -42,18 +42,18 @@ final class TodoItemService {
       isDone: item.isDone,
       createdAt: item.createdAt
     )
-    
+
     cache.addTodoItem(newItem)
   }
-  
+
   func removeTodoItem(by id: String) {
     cache.removeTodoItem(by: id)
   }
-  
+
   func getAllTodoItems() -> [any TodoItemData] {
     return cache.todoItems
   }
-  
+
   func updateTodoItem(_ item: any TodoItemData) throws {
     let updatedItem = TodoItem(
       id: item.id,
@@ -63,11 +63,11 @@ final class TodoItemService {
       createdAt: item.createdAt,
       changedAt: Date.now
     )
-    
+
     cache.removeTodoItem(by: updatedItem.id)
     cache.addTodoItem(updatedItem)
   }
-  
+
   func saveCache() throws {
     do {
       try cache.save(to: cacheFilePath)

@@ -8,10 +8,10 @@ import SwiftUI
 struct TodoItemDetails: View {
   @ObservedObject var viewModel: TodoItemDetailsViewModel
   @State var isEditingTextField = false
-  
+
   @Environment(\.horizontalSizeClass) var horizontalSizeClass
   @Environment(\.verticalSizeClass) var verticalSizeClass
-  
+
   var textInputField: some View {
     TextField("Что надо сделать?", text: $viewModel.data.text, axis: .vertical)
       .padding(16)
@@ -25,20 +25,20 @@ struct TodoItemDetails: View {
       )
       .clipShape(.rect(cornerRadius: 16))
   }
-  
+
   var saveButton: some View {
     Button("Сохранить") {
       viewModel.saveData()
       viewModel.close()
     }
   }
-  
+
   var cancelButton: some View {
     Button("Отменить") {
       viewModel.close()
     }
   }
-  
+
   var deleteButton: some View {
     Button(action: {
       viewModel.deleteData()
@@ -51,12 +51,12 @@ struct TodoItemDetails: View {
     }
     .foregroundStyle(viewModel.data.text.isEmpty ? Color.secondary : Color.red)
   }
-  
+
   var portraitFormView: some View {
     ScrollView(showsIndicators: false) {
       VStack(spacing: 16) {
         textInputField
-        
+
         VStack(alignment: .leading) {
           ImportanceField(data: $viewModel.data)
           Divider()
@@ -69,12 +69,12 @@ struct TodoItemDetails: View {
         .padding(16)
         .background(Color.listRowBackground)
         .clipShape(.rect(cornerRadius: 16))
-        
+
         deleteButton
       }
     }
   }
-  
+
   var landscapeFormView: some View {
     HStack(alignment: .top, spacing: 16) {
       ScrollView(showsIndicators: false) {
@@ -85,7 +85,7 @@ struct TodoItemDetails: View {
             }
           }
       }
-      
+
       ScrollView(showsIndicators: false) {
         VStack(spacing: 16) {
           VStack(alignment: .leading) {
@@ -100,13 +100,13 @@ struct TodoItemDetails: View {
           .padding(16)
           .background(Color.listRowBackground)
           .clipShape(.rect(cornerRadius: 16))
-          
+
           deleteButton
         }
       }
     }
   }
-  
+
   var body: some View {
     NavigationView {
       Group {
@@ -131,7 +131,7 @@ struct TodoItemDetails: View {
           .disabled(viewModel.data.text.isEmpty || !viewModel.hasChanged)
       )
       .gesture(
-        DragGesture().onChanged{ _ in
+        DragGesture().onChanged { _ in
           UIApplication.shared.sendAction(
             #selector(UIResponder.resignFirstResponder),
             to: nil,
@@ -142,8 +142,14 @@ struct TodoItemDetails: View {
         }
       )
     }
+    .onAppear {
+      Logger.shared.logInfo("TodoItemDetails view appeared")
+    }
+    .onDisappear {
+      Logger.shared.logInfo("TodoItemDetails view disappeared")
+    }
   }
-  
+
   private func scrollToTextField(scrollView: ScrollViewProxy) {
     DispatchQueue.main.async {
       scrollView.scrollTo("textField", anchor: .bottom)

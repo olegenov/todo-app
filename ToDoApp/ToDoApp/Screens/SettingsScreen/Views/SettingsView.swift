@@ -9,7 +9,7 @@ struct SettingsView: View {
   @ObservedObject var viewModel: SettingsViewModel
   @State var creationMode: Bool = false
   @State var pickerShown: Bool = false
-  
+
   var doneIcon: some View {
     Image(systemName: "checkmark.circle.fill")
       .resizable()
@@ -21,7 +21,7 @@ struct SettingsView: View {
         }
       }
   }
-  
+
   var cancelIcon: some View {
     Image(systemName: "x.circle.fill")
       .resizable()
@@ -33,7 +33,7 @@ struct SettingsView: View {
         }
       }
   }
-  
+
   var additionRow: some View {
     Text("Добавить категорию")
       .opacity(0.3)
@@ -45,7 +45,7 @@ struct SettingsView: View {
         }
       }
   }
-  
+
   var form: some View {
     VStack(alignment: .leading) {
       HStack(spacing: 8) {
@@ -57,20 +57,20 @@ struct SettingsView: View {
               pickerShown.toggle()
             }
           }
-        
+
         TextField("Новая категория", text: $viewModel.data.text, axis: .horizontal)
           .lineLimit(1)
-        
+
         HStack(spacing: 8) {
           doneIcon
             .disabled(viewModel.data.text.isEmpty)
-          
+
           cancelIcon
         }
       }
       .padding(8)
-      
-      if (pickerShown) {
+
+      if pickerShown {
         CustomColorPicker(data: $viewModel.data.color, width: UIScreen.main.bounds.width - 2 * 48)
           .frame(height: 30)
           .padding(.horizontal, 8)
@@ -78,7 +78,7 @@ struct SettingsView: View {
       }
     }
   }
-  
+
   var body: some View {
     VStack {
       List {
@@ -88,12 +88,12 @@ struct SettingsView: View {
               Circle()
                 .frame(width: 24, height: 24)
                 .foregroundStyle(Color.getColor(hex: category.color) ?? Color.clear)
-              
+
               Text(category.name)
             }
             .padding(8)
           }
-          
+
           if !creationMode {
             additionRow
           } else {
@@ -109,7 +109,7 @@ struct SettingsView: View {
     .scrollClipDisabled(false)
     .scrollContentBackground(.hidden)
     .gesture(
-      DragGesture().onChanged{ _ in
+      DragGesture().onChanged { _ in
         UIApplication.shared.sendAction(
           #selector(UIResponder.resignFirstResponder),
           to: nil,
@@ -118,21 +118,26 @@ struct SettingsView: View {
         )
       }
     )
+    .onAppear {
+      Logger.shared.logInfo("Settings view appeared")
+    }
+    .onDisappear {
+      Logger.shared.logInfo("Settings view disappeared")
+    }
   }
-  
+
   func doneCreation() {
     viewModel.saveCategory()
     viewModel.clear()
-    
+
     creationMode = false
     pickerShown = false
   }
-  
+
   func cancelCreation() {
     viewModel.clear()
-    
+
     creationMode = false
     pickerShown = false
   }
 }
-

@@ -16,7 +16,7 @@ struct ColorPickerField: View {
           .fill(data.color)
           .frame(width: 24, height: 24)
         Text("Цвет задачи")
-        
+
         Image(systemName: "chevron.down")
           .rotationEffect(.degrees(isExpanded ? 180 : 0))
           .onTapGesture {

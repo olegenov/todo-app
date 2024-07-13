@@ -11,7 +11,7 @@ struct TodoItemModel: TodoItemData {
   var importance: TodoItem.Importance = .medium
   var deadline: Date?
   var isDone: Bool = false
-  var createdAt: Date = Date.now
+  var createdAt = Date.now
   var color: String?
   var category: CategoryModel = .empty
 }

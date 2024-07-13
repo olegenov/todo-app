@@ -11,7 +11,7 @@ struct TodoItem: TodoItemData {
     case medium = "обычная"
     case high = "важная"
   }
-  
+
   let id: String
   let text: String
   let importance: Importance
@@ -19,7 +19,7 @@ struct TodoItem: TodoItemData {
   let isDone: Bool
   let createdAt: Date
   let changedAt: Date?
-  
+
   init(
     id: String = UUID().uuidString,
     text: String,
@@ -49,49 +49,55 @@ extension TodoItem {
     else {
       return nil
     }
-    
+
     self.id = id
     self.text = text
     self.isDone = isDone
     self.createdAt = Date(timeIntervalSince1970: createdAtRaw)
-    
+
     let importanceString = dictionary["importance"] as? String ?? Importance.medium.rawValue
-    
+
     if let importanceEnum = Importance(rawValue: importanceString) {
       importance = importanceEnum
     } else {
       importance = .medium
     }
-    
+
     if let deadlineRaw = dictionary["deadline"] as? TimeInterval {
       deadline = Date(timeIntervalSince1970: deadlineRaw)
     } else {
       deadline = nil
     }
-    
+
     if let changedAtRaw = dictionary["changedAt"] as? TimeInterval {
       changedAt = Date(timeIntervalSince1970: changedAtRaw)
     } else {
       changedAt = nil
     }
   }
-  
+
   static func parse(json: Any) -> TodoItem? {
     guard let data = json as? Data else {
+      Logger.shared.logError("Failed to parse data from json")
+
       return nil
     }
-    
+
     do {
       guard let item = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
+        Logger.shared.logError("Failed to create TodoItem object")
+
         return nil
       }
-      
+
       return TodoItem(from: item)
     } catch {
+      Logger.shared.logError("Failed to serialize object from data")
+
       return nil
     }
   }
-  
+
   var json: Any {
     var properties: [String: Any] = [
       "id": id,
@@ -99,24 +105,26 @@ extension TodoItem {
       "isDone": isDone,
       "createdAt": createdAt.timeIntervalSince1970
     ]
-    
+
     if importance != .medium {
       properties["importance"] = importance.rawValue
     }
-    
+
     if let deadline = deadline {
       properties["deadline"] = deadline.timeIntervalSince1970
     }
-    
+
     if let changedAt = changedAt {
       properties["changedAt"] = changedAt.timeIntervalSince1970
     }
-    
+
     do {
       let jsonData = try JSONSerialization.data(withJSONObject: properties)
-      
+
       return jsonData
     } catch {
+      Logger.shared.logError("Failed to create json data for object \(self.id)")
+
       return Data()
     }
   }
@@ -128,7 +136,7 @@ extension TodoItem {
     var elements: [String] = []
     var currentField = ""
     var insideQuotes = false
-    
+
     for char in csv {
       switch char {
       case ",":
@@ -150,13 +158,15 @@ extension TodoItem {
         currentField.append(char)
       }
     }
-    
+
     elements.append(currentField)
-    
+
     guard elements.count >= 6 else {
+      Logger.shared.logError("Failed to parse data from csv: \(csv)")
+
       return nil
     }
-    
+
     var id = elements[0]
     let text = elements[1]
     let importanceRaw = elements[2]
@@ -164,42 +174,42 @@ extension TodoItem {
     let isDoneRaw = elements[4]
     let createdAtRaw = elements[5]
     let changedAtRaw = elements.count > 6 ? elements[6] : nil
-    
+
     if id.isEmpty {
       id = UUID().uuidString
     }
-    
+
     let importance = Importance(rawValue: importanceRaw) ?? .medium
-    var deadline: Date? = nil
-    
+    var deadline: Date?
+
     if let timeInterval = TimeInterval(deadlineRaw) {
       deadline = Date(timeIntervalSince1970: timeInterval)
     }
-    
+
     let isDone = Bool(isDoneRaw) ?? false
-    var createdAt: Date = Date.now
-    
+    var createdAt = Date.now
+
     if let timeInterval = TimeInterval(createdAtRaw) {
       createdAt = Date(timeIntervalSince1970: timeInterval)
     }
-    
-    var changedAt: Date? = nil
-    
+
+    var changedAt: Date?
+
     if let rawValue = changedAtRaw,
        let timeInterval = TimeInterval(rawValue) {
       changedAt = Date(timeIntervalSince1970: timeInterval)
     }
-    
+
     return TodoItem(id: id, text: text,
                     importance: importance, deadline: deadline,
                     isDone: isDone, createdAt: createdAt,
                     changedAt: changedAt)
   }
-  
+
   func csv() -> String {
     let deadlineString = deadline?.timeIntervalSince1970.description ?? ""
     let changedAtString = changedAt?.timeIntervalSince1970.description ?? ""
-    
+
     return "\(id),\(text),\(importance.rawValue),\(deadlineString),\(isDone),\(createdAt.timeIntervalSince1970)\(changedAt != nil ? ",\(changedAtString)" : "")"
   }
 }

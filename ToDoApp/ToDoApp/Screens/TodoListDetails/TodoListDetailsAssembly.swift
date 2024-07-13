@@ -11,10 +11,10 @@ enum TodoListDetailsAssembly {
   enum TodoListDetailsAssemblyError: Error {
     case serviceCreationError
   }
-  
+
   static func build() -> TodoListDetails {
     let viewModel = TodoListDetailsViewModel()
-    
+
     return TodoListDetails(viewModel: viewModel)
   }
 }
