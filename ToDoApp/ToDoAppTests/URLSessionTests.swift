@@ -30,7 +30,7 @@ final class URLSessionTests: XCTestCase {
   func testRequestWithError() async {
     var testUrl = "https://somethingDoesNotExist.com"
 
-    let expectedErrorCode = -1003
+    let expectedErrorCode = URLError.cannotFindHost.rawValue
     let session = URLSession.shared
 
     let urlRequest = URLRequest(url: URL(string: testUrl)!)
