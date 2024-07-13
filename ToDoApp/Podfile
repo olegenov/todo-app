@@ -6,8 +6,6 @@ target 'ToDoApp' do
   # Pods for ToDoApp
   pod 'SwiftLint'
   
-  pod 'FileCache', :path => './FileCache'
-  
   target 'ToDoAppTests' do
     inherit! :search_paths
     # Pods for testing
