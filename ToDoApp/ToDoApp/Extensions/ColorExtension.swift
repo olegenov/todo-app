@@ -43,6 +43,11 @@ extension Color {
     let green = components[1]
     let blue = components[2]
 
-    return String(format: "#%02lX%02lX%02lX", lroundf(Float(red * 255)), lroundf(Float(green * 255)), lroundf(Float(blue * 255)))
+    return String(
+      format: "#%02lX%02lX%02lX",
+      lroundf(Float(red * 255)),
+      lroundf(Float(green * 255)),
+      lroundf(Float(blue * 255))
+    )
   }
 }

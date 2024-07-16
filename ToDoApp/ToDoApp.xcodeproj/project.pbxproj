@@ -538,7 +538,6 @@
 				8F8A6FE384D1C74500A3C874 /* Pods-ToDoAppTests.debug.xcconfig */,
 				37B3408CE771BD4D7CA37F8A /* Pods-ToDoAppTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -683,6 +682,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		0D6DEE012C41E25A004F8529 /* SwiftLint Script */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -697,7 +697,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "${PODS_ROOT}/SwiftLint/swiftlint --fix\n${PODS_ROOT}/SwiftLint/swiftlint\n";
+			shellScript = "git status --porcelain | grep -v '^ \\?D' | cut -c 4- | sed 's/.* -> //' | tr -d '\"' | while read file \ndo\n    if [[ \"$file\" == *.swift ]]; then\n        ${PODS_ROOT}/SwiftLint/swiftlint \"$file\" --fix\n    fi\ndone\n\n${PODS_ROOT}/SwiftLint/swiftlint\n";
 		};
 		1CF7BCFD6CA4BEC1F1AF908B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

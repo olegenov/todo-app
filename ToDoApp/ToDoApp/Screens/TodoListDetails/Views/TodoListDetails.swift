@@ -41,24 +41,39 @@ struct TodoListDetails: View {
   }
 
   var addButton: some View {
-    Button(action: {
-      viewModel.openNewItemModal()
-    }) {
-      ZStack {
-        Image(systemName: "circle.fill")
-          .renderingMode(.template)
-          .resizable()
-          .frame(width: 44, height: 44)
-          .foregroundColor(Color.white)
+    Button(
+      action: {
+        viewModel.openNewItemModal()
+      },
+      label: {
+        ZStack {
+          Image(systemName: "circle.fill")
+            .renderingMode(.template)
+            .resizable()
+            .frame(width: 44, height: 44)
+            .foregroundColor(Color.white)
 
-        Image(systemName: "plus.circle.fill")
-          .renderingMode(.template)
-          .resizable()
-          .frame(width: 44, height: 44)
-          .foregroundColor(Color.blue)
+          Image(systemName: "plus.circle.fill")
+            .renderingMode(.template)
+            .resizable()
+            .frame(width: 44, height: 44)
+            .foregroundColor(Color.blue)
+        }
+        .shadow(
+          color: Color(
+            UIColor(
+              red: 0 / 255,
+              green: 73 / 255,
+              blue: 153 / 255,
+              alpha: 0.3
+            )
+          ),
+          radius: 20,
+          x: 0,
+          y: 8
+        )
       }
-      .shadow(color: Color(UIColor(red: 0 / 255, green: 73 / 255, blue: 153 / 255, alpha: 0.3)), radius: 20, x: 0, y: 8)
-    }
+    )
   }
 
   var deleteLabel: some View {
@@ -165,18 +180,24 @@ struct TodoListDetails: View {
 
       .toolbar {
         ToolbarItem(placement: .topBarLeading) {
-          Button(action: {
-            showCalendarView.toggle()
-          }) {
-            Image(systemName: "calendar")
-          }
+          Button(
+            action: {
+              showCalendarView.toggle()
+            },
+            label: {
+              Image(systemName: "calendar")
+            }
+          )
         }
         ToolbarItem(placement: .topBarTrailing) {
-          Button(action: {
-            viewModel.isSettingsPresented.toggle()
-          }) {
-            Image(systemName: "gear")
-          }
+          Button(
+            action: {
+              viewModel.isSettingsPresented.toggle()
+            },
+            label: {
+              Image(systemName: "gear")
+            }
+          )
         }
         ToolbarItem(placement: .bottomBar) {
           addButton
@@ -197,12 +218,15 @@ struct TodoListDetails: View {
           .navigationBarTitleDisplayMode(.inline)
           .toolbar {
             ToolbarItem(placement: .topBarLeading) {
-              Button(action: {
-                viewModel.isSettingsPresented.toggle()
-              }) {
-                Image(systemName: "chevron.backward")
-                  .padding(16)
-              }
+              Button(
+                action: {
+                  viewModel.isSettingsPresented.toggle()
+                },
+                label: {
+                  Image(systemName: "chevron.backward")
+                    .padding(16)
+                }
+              )
             }
           }
       }
@@ -215,12 +239,15 @@ struct TodoListDetails: View {
           .navigationBarTitleDisplayMode(.inline)
           .toolbar {
             ToolbarItem(placement: .topBarLeading) {
-              Button(action: {
-                showCalendarView.toggle()
-              }) {
-                Image(systemName: "chevron.backward")
-                  .padding(.horizontal, 16)
-              }
+              Button(
+                action: {
+                  showCalendarView.toggle()
+                },
+                label: {
+                  Image(systemName: "chevron.backward")
+                    .padding(.horizontal, 16)
+                }
+              )
             }
           }
       }

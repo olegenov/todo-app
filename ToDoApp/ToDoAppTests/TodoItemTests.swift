@@ -44,7 +44,6 @@ final class TodoItemTests: XCTestCase {
   func testJsonSerializationSpecifics() {
     let text = "Finish Mobile School homework 1"
     let importance = TodoItem.Importance.medium
-    let createdAt = Date.now
 
     let item = TodoItem(text: text, importance: importance)
 

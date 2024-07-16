@@ -14,7 +14,11 @@ class Logger {
   }
 
   private func congifureLogger() {
-    DDLog.add(DDTTYLogger.sharedInstance!)
+    guard let logger = DDTTYLogger.sharedInstance else {
+      return
+    }
+
+    DDLog.add(logger)
   }
 
   func logInfo(_ message: String) {

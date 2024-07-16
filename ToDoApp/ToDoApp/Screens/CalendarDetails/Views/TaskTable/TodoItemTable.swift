@@ -11,7 +11,7 @@ class TodoItemTable: UITableView {
   var leftSwipeAction: ((String) -> Void)?
   var sectionScrollAction: ((Int) -> Void)?
 
-  var data = [(Date?, [RowData])]()
+  var data: [(Date?, [RowData])] = []
 
   func updateData(_ data: [(Date?, [RowData])]) {
     self.data = data
@@ -46,7 +46,11 @@ class TodoItemTable: UITableView {
 
 // MARK: - UITableViewDelegate, UITableViewDataSource
 extension TodoItemTable: UITableViewDelegate, UITableViewDataSource {
-  func getMask(for index: Int, sectionHeight: Int, bounds: CGRect) -> CALayer {
+  func getMask(
+    for index: Int,
+    sectionHeight: Int,
+    bounds: CGRect
+  ) -> CALayer {
     let cornerRadius = 16
     var corners: UIRectCorner = []
 
@@ -62,16 +66,33 @@ extension TodoItemTable: UITableViewDelegate, UITableViewDataSource {
 
     let mask = CAShapeLayer()
 
-    mask.path = UIBezierPath(roundedRect: bounds,
-                             byRoundingCorners: corners,
-                             cornerRadii: CGSize(width: cornerRadius, height: cornerRadius)).cgPath
+    mask.path = UIBezierPath(
+      roundedRect: bounds,
+      byRoundingCorners: corners,
+      cornerRadii: CGSize(
+        width: cornerRadius,
+        height: cornerRadius
+      )
+    ).cgPath
 
     return mask
   }
 
-  func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-    let sectionHeight = tableView.numberOfRows(inSection: indexPath.section)
-    let mask = getMask(for: indexPath.row, sectionHeight: sectionHeight, bounds: cell.bounds)
+  func tableView(
+    _ tableView: UITableView,
+    willDisplay cell: UITableViewCell,
+    forRowAt indexPath: IndexPath
+  ) {
+    let sectionHeight = tableView.numberOfRows(
+      inSection: indexPath.section
+    )
+
+    let mask = getMask(
+      for: indexPath.row,
+      sectionHeight: sectionHeight,
+      bounds: cell.bounds
+    )
+
     cell.layer.mask = mask
   }
 
@@ -79,11 +100,17 @@ extension TodoItemTable: UITableViewDelegate, UITableViewDataSource {
     return data.count
   }
 
-  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+  func tableView(
+    _ tableView: UITableView,
+    numberOfRowsInSection section: Int
+  ) -> Int {
     return data[section].1.count
   }
 
-  func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+  func tableView(
+    _ tableView: UITableView,
+    titleForHeaderInSection section: Int
+  ) -> String? {
     guard let sectionDate = data[section].0 else {
       return "Другое"
     }
@@ -91,16 +118,29 @@ extension TodoItemTable: UITableViewDelegate, UITableViewDataSource {
     return sectionDate.toString()
   }
 
-  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: "taskCell", for: indexPath) as! TaskCell
+  func tableView(
+    _ tableView: UITableView,
+    cellForRowAt indexPath: IndexPath
+  ) -> UITableViewCell {
+    guard let cell = tableView.dequeueReusableCell(
+      withIdentifier: "taskCell",
+      for: indexPath
+    ) as? TaskCell else {
+      return TaskCell()
+    }
+
     let section = indexPath.section
     let index = indexPath.row
 
     let task = data[section].1[index]
 
     cell.setupSwipe(
-      leftSipeAction: { self.leftSwiped(section: section, index: index) },
-      rightSwipeAction: { self.rightSwiped(section: section, index: index) }
+      leftSipeAction: {
+        self.leftSwiped(section: section, index: index)
+      },
+      rightSwipeAction: {
+        self.rightSwiped(section: section, index: index)
+      }
     )
 
     if task.isDone {
@@ -118,15 +158,19 @@ extension TodoItemTable: UITableViewDelegate, UITableViewDataSource {
     )
 
     if !task.category.isEmpty {
-      cell.setCategoryColor(UIColor.getColor(hex: task.category) ?? UIColor.red)
+      cell.setCategoryColor(
+        UIColor.getColor(hex: task.category) ?? UIColor.red
+      )
     }
 
     return cell
   }
 
-  func tableView(_ tableView: UITableView,
-                 didEndDisplayingHeaderView view: UIView,
-                 forSection section: Int) {
+  func tableView(
+    _ tableView: UITableView,
+    didEndDisplayingHeaderView view: UIView,
+    forSection section: Int
+  ) {
     if section == selectedDateIndex {
       let currentSection = section + 1 < data.count ? section + 1 : 0
       selectedDateIndex = currentSection
@@ -134,9 +178,11 @@ extension TodoItemTable: UITableViewDelegate, UITableViewDataSource {
     }
   }
 
-  func tableView(_ tableView: UITableView,
-                 willDisplayHeaderView view: UIView,
-                 forSection section: Int) {
+  func tableView(
+    _ tableView: UITableView,
+    willDisplayHeaderView view: UIView,
+    forSection section: Int
+  ) {
     if section < selectedDateIndex {
       selectedDateIndex = section
       sectionScrollAction?(section)

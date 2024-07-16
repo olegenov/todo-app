@@ -43,9 +43,9 @@ struct TodoItem: TodoItemData {
 extension TodoItem {
   init?(from dictionary: [String: Any]) {
     guard let id = dictionary["id"] as? String,
-          let text = dictionary["text"] as? String,
-          let isDone = dictionary["isDone"] as? Bool,
-          let createdAtRaw = dictionary["createdAt"] as? TimeInterval
+      let text = dictionary["text"] as? String,
+      let isDone = dictionary["isDone"] as? Bool,
+      let createdAtRaw = dictionary["createdAt"] as? TimeInterval
     else {
       return nil
     }
@@ -55,21 +55,29 @@ extension TodoItem {
     self.isDone = isDone
     self.createdAt = Date(timeIntervalSince1970: createdAtRaw)
 
-    let importanceString = dictionary["importance"] as? String ?? Importance.medium.rawValue
+    let importanceString = dictionary[
+      "importance"
+    ] as? String ?? Importance.medium.rawValue
 
-    if let importanceEnum = Importance(rawValue: importanceString) {
+    if let importanceEnum = Importance(
+      rawValue: importanceString
+    ) {
       importance = importanceEnum
     } else {
       importance = .medium
     }
 
-    if let deadlineRaw = dictionary["deadline"] as? TimeInterval {
+    if let deadlineRaw = dictionary[
+      "deadline"
+    ] as? TimeInterval {
       deadline = Date(timeIntervalSince1970: deadlineRaw)
     } else {
       deadline = nil
     }
 
-    if let changedAtRaw = dictionary["changedAt"] as? TimeInterval {
+    if let changedAtRaw = dictionary[
+      "changedAt"
+    ] as? TimeInterval {
       changedAt = Date(timeIntervalSince1970: changedAtRaw)
     } else {
       changedAt = nil
@@ -78,21 +86,29 @@ extension TodoItem {
 
   static func parse(json: Any) -> TodoItem? {
     guard let data = json as? Data else {
-      Logger.shared.logError("Failed to parse data from json")
+      Logger.shared.logError(
+        "Failed to parse data from json"
+      )
 
       return nil
     }
 
     do {
-      guard let item = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
-        Logger.shared.logError("Failed to create TodoItem object")
+      guard let item = try JSONSerialization.jsonObject(
+        with: data
+      ) as? [String: Any] else {
+        Logger.shared.logError(
+          "Failed to create TodoItem object"
+        )
 
         return nil
       }
 
       return TodoItem(from: item)
     } catch {
-      Logger.shared.logError("Failed to serialize object from data")
+      Logger.shared.logError(
+        "Failed to serialize object from data"
+      )
 
       return nil
     }
@@ -111,11 +127,15 @@ extension TodoItem {
     }
 
     if let deadline = deadline {
-      properties["deadline"] = deadline.timeIntervalSince1970
+      properties[
+        "deadline"
+      ] = deadline.timeIntervalSince1970
     }
 
     if let changedAt = changedAt {
-      properties["changedAt"] = changedAt.timeIntervalSince1970
+      properties[
+        "changedAt"
+      ] = changedAt.timeIntervalSince1970
     }
 
     do {
@@ -123,7 +143,9 @@ extension TodoItem {
 
       return jsonData
     } catch {
-      Logger.shared.logError("Failed to create json data for object \(self.id)")
+      Logger.shared.logError(
+        "Failed to create json data for object \(self.id)"
+      )
 
       return Data()
     }
@@ -196,20 +218,30 @@ extension TodoItem {
     var changedAt: Date?
 
     if let rawValue = changedAtRaw,
-       let timeInterval = TimeInterval(rawValue) {
+      let timeInterval = TimeInterval(rawValue) {
       changedAt = Date(timeIntervalSince1970: timeInterval)
     }
 
-    return TodoItem(id: id, text: text,
-                    importance: importance, deadline: deadline,
-                    isDone: isDone, createdAt: createdAt,
-                    changedAt: changedAt)
+    return TodoItem(
+      id: id,
+      text: text,
+      importance: importance,
+      deadline: deadline,
+      isDone: isDone,
+      createdAt: createdAt,
+      changedAt: changedAt
+    )
   }
 
   func csv() -> String {
     let deadlineString = deadline?.timeIntervalSince1970.description ?? ""
     let changedAtString = changedAt?.timeIntervalSince1970.description ?? ""
 
-    return "\(id),\(text),\(importance.rawValue),\(deadlineString),\(isDone),\(createdAt.timeIntervalSince1970)\(changedAt != nil ? ",\(changedAtString)" : "")"
+    return """
+    \(id),\(text),\(importance.rawValue),\
+    \(deadlineString),\(isDone),\
+    \(createdAt.timeIntervalSince1970)\
+    \(changedAt != nil ? ",\(changedAtString)" : "")
+    """
   }
 }

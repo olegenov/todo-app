@@ -12,9 +12,9 @@ struct CalendarDetailsVCRepresentable: UIViewControllerRepresentable {
   func makeUIViewController(
     context: Context
   ) -> CalendarDetailsViewController {
-    let vc = CalendarDetailsAssembly.build(listViewModel: listViewModel)
+    let viewController = CalendarDetailsAssembly.build(listViewModel: listViewModel)
 
-    return vc
+    return viewController
   }
 
   func updateUIViewController(

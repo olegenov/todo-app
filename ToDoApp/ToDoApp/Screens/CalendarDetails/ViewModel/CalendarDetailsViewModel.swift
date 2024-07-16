@@ -43,7 +43,8 @@ class CalendarDetailsViewModel {
     listViewModel?.uncompleteItem(for: item)
   }
 
-  @MainActor func getAddModal() -> UIViewController {
+  @MainActor
+  func getAddModal() -> UIViewController {
     guard let viewModel = listViewModel else {
       Logger.shared.logError("Failed to get viewModel from TodoListDetails")
 
