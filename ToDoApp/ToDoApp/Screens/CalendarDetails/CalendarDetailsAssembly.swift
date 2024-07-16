@@ -7,13 +7,16 @@ import Foundation
 import CocoaLumberjack
 
 enum CalendarDetailsAssembly {
-  @MainActor static func build(listViewModel: TodoListDetailsViewModel) -> CalendarDetailsViewController {
-    let vc = CalendarDetailsViewController()
+  @MainActor
+  static func build(
+    listViewModel: TodoListDetailsViewModel
+  ) -> CalendarDetailsViewController {
+    let viewController = CalendarDetailsViewController()
     let viewModel = CalendarDetailsViewModel()
     viewModel.listViewModel = listViewModel
 
-    vc.viewModel = viewModel
+    viewController.viewModel = viewModel
 
-    return vc
+    return viewController
   }
 }

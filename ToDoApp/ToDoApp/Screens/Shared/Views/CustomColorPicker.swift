@@ -49,13 +49,17 @@ struct CustomColorPicker: View {
           )
       }
 
-      Slider(value: Binding<Double>(
-        get: { brightness },
-        set: { newValue in
-          brightness = newValue
-          updateColor()
-        }
-      ), in: 0...1, step: 0.01)
+      Slider(
+        value: Binding<Double>(
+          get: { brightness },
+          set: { newValue in
+            brightness = newValue
+            updateColor()
+          }
+        ),
+        in: 0...1,
+        step: 0.01
+      )
     }
   }
 

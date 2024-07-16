@@ -31,8 +31,11 @@ struct DeadlineField: View {
   }
 
   var deadlinePicker: some View {
-    DatePicker("", selection: $data.deadline,
-               displayedComponents: .date)
+    DatePicker(
+      "",
+      selection: $data.deadline,
+      displayedComponents: .date
+    )
     .datePickerStyle(GraphicalDatePickerStyle())
   }
 

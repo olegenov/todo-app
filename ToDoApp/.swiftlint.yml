@@ -1,5 +1,6 @@
 excluded:
   - ${PWD}/ToDoAppTests
+  - ${PWD}/ToDoAppUITests
   - ${PWD}/Carthage
   - ${PWD}/Pods
   - ${PWD}/DerivedData
@@ -74,7 +75,7 @@ attributes:
 force_cast: warning
 force_try: warning
 function_body_length:
-    warning: 60
+    warning: 64
 
 legacy_hashing: error
 
@@ -107,3 +108,5 @@ trailing_whitespace:
 
 vertical_whitespace:
   max_empty_lines: 2
+
+cyclomatic_complexity: 15

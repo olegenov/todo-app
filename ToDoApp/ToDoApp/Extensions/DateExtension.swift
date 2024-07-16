@@ -13,8 +13,12 @@ extension Date {
     dateFormatter.dateFormat = "d MMMM"
     dateFormatter.locale = Locale(identifier: "ru_RU")
 
-    if calendar.component(.year, from: self) != calendar.component(
-      .year, from: Date.now
+    if calendar.component(
+      .year,
+      from: self
+    ) != calendar.component(
+      .year,
+      from: Date.now
     ) {
       dateFormatter.dateFormat = "d MMMM YYYY"
     }
@@ -24,12 +28,14 @@ extension Date {
     return formattedDate
   }
 
-  func toString(_ components: Set<Calendar.Component>) -> [Calendar.Component: String] {
+  func toString(
+    _ components: Set<Calendar.Component>
+  ) -> [Calendar.Component: String] {
     let formatter = DateFormatter()
 
     formatter.locale = Locale(identifier: "ru_RU")
 
-    var result = [Calendar.Component: String]()
+    var result: [Calendar.Component: String] = [:]
 
     for component in components {
       formatter.dateFormat = ""
@@ -45,7 +51,10 @@ extension Date {
         formatter.dateFormat = nil
       }
 
-      result.updateValue(formatter.string(from: self), forKey: component)
+      result.updateValue(
+        formatter.string(from: self),
+        forKey: component
+      )
     }
 
     return result

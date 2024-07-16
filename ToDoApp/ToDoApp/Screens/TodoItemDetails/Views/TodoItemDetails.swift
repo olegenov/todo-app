@@ -9,11 +9,18 @@ struct TodoItemDetails: View {
   @ObservedObject var viewModel: TodoItemDetailsViewModel
   @State var isEditingTextField = false
 
-  @Environment(\.horizontalSizeClass) var horizontalSizeClass
-  @Environment(\.verticalSizeClass) var verticalSizeClass
+  @Environment(\.horizontalSizeClass)
+  var horizontalSizeClass
+
+  @Environment(\.verticalSizeClass)
+  var verticalSizeClass
 
   var textInputField: some View {
-    TextField("Что надо сделать?", text: $viewModel.data.text, axis: .vertical)
+    TextField(
+      "Что надо сделать?",
+      text: $viewModel.data.text,
+      axis: .vertical
+    )
       .padding(16)
       .background(Color.listRowBackground)
       .lineLimit(4...50)
@@ -40,16 +47,21 @@ struct TodoItemDetails: View {
   }
 
   var deleteButton: some View {
-    Button(action: {
-      viewModel.deleteData()
-    }) {
-      Text("Удалить")
-        .padding()
-        .frame(maxWidth: .infinity)
-        .background(Color(UIColor.listRowBackground))
-        .clipShape(.rect(cornerRadius: 16))
-    }
-    .foregroundStyle(viewModel.data.text.isEmpty ? Color.secondary : Color.red)
+    Button(
+      action: {
+        viewModel.deleteData()
+      },
+      label: {
+        Text("Удалить")
+          .padding()
+          .frame(maxWidth: .infinity)
+          .background(Color(UIColor.listRowBackground))
+          .clipShape(.rect(cornerRadius: 16))
+      }
+    )
+    .foregroundStyle(
+      viewModel.data.text.isEmpty ? Color.secondary : Color.red
+    )
   }
 
   var portraitFormView: some View {

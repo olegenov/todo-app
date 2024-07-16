@@ -6,7 +6,7 @@
 import Foundation
 
 struct CategoryModel: Identifiable, Hashable {
-  static var empty = CategoryModel(name: "", color: "")
+  static let empty = CategoryModel(name: "", color: "")
 
   var id: String = UUID().uuidString
 
