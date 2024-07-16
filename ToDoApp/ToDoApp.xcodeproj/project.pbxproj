@@ -57,9 +57,9 @@
 		0DBEAF852C2FB697006E6336 /* ColorPickerField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DBEAF842C2FB697006E6336 /* ColorPickerField.swift */; };
 		0DE4E62C2C242E8D0097A2CE /* TodoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE4E62B2C242E8D0097A2CE /* TodoItem.swift */; };
 		0DE4E6412C24844E0097A2CE /* FileCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE4E6402C24844E0097A2CE /* FileCache.swift */; };
-		62B62B55757887A8025061F8 /* Pods_ToDoApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A41AFE2F466A851603093FE1 /* Pods_ToDoApp.framework */; };
-		94DE7287CDB4F4C785B7E595 /* Pods_ToDoApp_ToDoAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57BE99A2E5D1925EFC0D77FE /* Pods_ToDoApp_ToDoAppUITests.framework */; };
-		A7B6E770D6D2A0CB7F214AD7 /* Pods_ToDoAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4586DE9220858F34E69C8362 /* Pods_ToDoAppTests.framework */; };
+		7674512A956DEF8F4C088A01 /* Pods_ToDoAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BFAA600ABBCF595149141AF /* Pods_ToDoAppTests.framework */; };
+		AC809D387A41EAB2D4F38404 /* Pods_ToDoApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 817EFFD35F5BB4079DAA0894 /* Pods_ToDoApp.framework */; };
+		EA712E6EB5B6840CC953C032 /* Pods_ToDoApp_ToDoAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D5FF5B43199C7575777D077 /* Pods_ToDoApp_ToDoAppUITests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +80,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0B5DE7CD90B8DE9C829CDC55 /* Pods-ToDoApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoApp.release.xcconfig"; path = "Target Support Files/Pods-ToDoApp/Pods-ToDoApp.release.xcconfig"; sourceTree = "<group>"; };
 		0D1E9B6A2C37126D00141FC0 /* CalendarDetailsVCRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDetailsVCRepresentable.swift; sourceTree = "<group>"; };
 		0D1E9B6C2C37136B00141FC0 /* CalendarDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDetailsViewController.swift; sourceTree = "<group>"; };
 		0D1E9B6E2C3724C100141FC0 /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
@@ -104,10 +105,10 @@
 		0D6DEDFB2C41C3FA004F8529 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		0D6DEDFF2C41DF14004F8529 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		0D6DEE042C41EC2B004F8529 /* ToDoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		0D6DEE1B2C41EEB0004F8529 /* ToDoAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ToDoAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		0D6DEE1C2C41EEB0004F8529 /* ToDoAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ToDoAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D6DEE1D2C41EF9C004F8529 /* URLSessionExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionExtension.swift; sourceTree = "<group>"; };
 		0D6DEE1F2C420BDF004F8529 /* URLSessionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionTests.swift; sourceTree = "<group>"; };
+		0D7AA6642C469A0E00CBB722 /* ToDoAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ToDoAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0D7AA6652C469A0E00CBB722 /* ToDoAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ToDoAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D87648A2C21C6B800C70F20 /* ToDoAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoAppApp.swift; sourceTree = "<group>"; };
 		0D87648C2C21C6B800C70F20 /* TodoListDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListDetails.swift; sourceTree = "<group>"; };
 		0D87648E2C21C6B800C70F20 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -130,15 +131,14 @@
 		0DBEAF842C2FB697006E6336 /* ColorPickerField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerField.swift; sourceTree = "<group>"; };
 		0DE4E62B2C242E8D0097A2CE /* TodoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoItem.swift; sourceTree = "<group>"; };
 		0DE4E6402C24844E0097A2CE /* FileCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileCache.swift; sourceTree = "<group>"; };
-		1054FCB7AF5D7A7785439A13 /* Pods-ToDoApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoApp.release.xcconfig"; path = "Target Support Files/Pods-ToDoApp/Pods-ToDoApp.release.xcconfig"; sourceTree = "<group>"; };
-		4586DE9220858F34E69C8362 /* Pods_ToDoAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ToDoAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		4EBB13DD3A49B356FAA1233B /* Pods-ToDoAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoAppTests.debug.xcconfig"; path = "Target Support Files/Pods-ToDoAppTests/Pods-ToDoAppTests.debug.xcconfig"; sourceTree = "<group>"; };
-		57BE99A2E5D1925EFC0D77FE /* Pods_ToDoApp_ToDoAppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ToDoApp_ToDoAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5BBF516AEE468BFE3483184B /* Pods-ToDoApp-ToDoAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoApp-ToDoAppUITests.release.xcconfig"; path = "Target Support Files/Pods-ToDoApp-ToDoAppUITests/Pods-ToDoApp-ToDoAppUITests.release.xcconfig"; sourceTree = "<group>"; };
-		84B82EE289BEC8D73787709B /* Pods-ToDoAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoAppTests.release.xcconfig"; path = "Target Support Files/Pods-ToDoAppTests/Pods-ToDoAppTests.release.xcconfig"; sourceTree = "<group>"; };
-		A41AFE2F466A851603093FE1 /* Pods_ToDoApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ToDoApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		A91BEB7E2B7E8E03642CF1C2 /* Pods-ToDoApp-ToDoAppUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoApp-ToDoAppUITests.debug.xcconfig"; path = "Target Support Files/Pods-ToDoApp-ToDoAppUITests/Pods-ToDoApp-ToDoAppUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		EAE49E08E6CB6D037B52BE69 /* Pods-ToDoApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoApp.debug.xcconfig"; path = "Target Support Files/Pods-ToDoApp/Pods-ToDoApp.debug.xcconfig"; sourceTree = "<group>"; };
+		1D5FF5B43199C7575777D077 /* Pods_ToDoApp_ToDoAppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ToDoApp_ToDoAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BFAA600ABBCF595149141AF /* Pods_ToDoAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ToDoAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		37B3408CE771BD4D7CA37F8A /* Pods-ToDoAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoAppTests.release.xcconfig"; path = "Target Support Files/Pods-ToDoAppTests/Pods-ToDoAppTests.release.xcconfig"; sourceTree = "<group>"; };
+		5008668F6E0EC82C13EDB3BE /* Pods-ToDoApp-ToDoAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoApp-ToDoAppUITests.release.xcconfig"; path = "Target Support Files/Pods-ToDoApp-ToDoAppUITests/Pods-ToDoApp-ToDoAppUITests.release.xcconfig"; sourceTree = "<group>"; };
+		817EFFD35F5BB4079DAA0894 /* Pods_ToDoApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ToDoApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8ADCFB8739D05CC979FEB4D5 /* Pods-ToDoApp-ToDoAppUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoApp-ToDoAppUITests.debug.xcconfig"; path = "Target Support Files/Pods-ToDoApp-ToDoAppUITests/Pods-ToDoApp-ToDoAppUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		8F8A6FE384D1C74500A3C874 /* Pods-ToDoAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoAppTests.debug.xcconfig"; path = "Target Support Files/Pods-ToDoAppTests/Pods-ToDoAppTests.debug.xcconfig"; sourceTree = "<group>"; };
+		A3D2A279BBA136B84B312EBB /* Pods-ToDoApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoApp.debug.xcconfig"; path = "Target Support Files/Pods-ToDoApp/Pods-ToDoApp.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,7 +149,7 @@
 				0D23B9682C3EE4C3009F9566 /* CocoaLumberjackSwift in Frameworks */,
 				0D23B96A2C3EE4C3009F9566 /* CocoaLumberjackSwiftLogBackend in Frameworks */,
 				0D23B9662C3EE4C3009F9566 /* CocoaLumberjack in Frameworks */,
-				62B62B55757887A8025061F8 /* Pods_ToDoApp.framework in Frameworks */,
+				AC809D387A41EAB2D4F38404 /* Pods_ToDoApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -157,7 +157,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A7B6E770D6D2A0CB7F214AD7 /* Pods_ToDoAppTests.framework in Frameworks */,
+				7674512A956DEF8F4C088A01 /* Pods_ToDoAppTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -165,7 +165,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				94DE7287CDB4F4C785B7E595 /* Pods_ToDoApp_ToDoAppUITests.framework in Frameworks */,
+				EA712E6EB5B6840CC953C032 /* Pods_ToDoApp_ToDoAppUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -342,10 +342,10 @@
 				0D87649A2C21C6B900C70F20 /* ToDoAppTests */,
 				0D8764A42C21C6B900C70F20 /* ToDoAppUITests */,
 				0D6DEE042C41EC2B004F8529 /* ToDoApp.app */,
-				40E7510CC6BA8C07C71FC160 /* Pods */,
-				4895002C9F5AA4495276EC4D /* Frameworks */,
-				0D6DEE1B2C41EEB0004F8529 /* ToDoAppTests.xctest */,
-				0D6DEE1C2C41EEB0004F8529 /* ToDoAppUITests.xctest */,
+				0D7AA6642C469A0E00CBB722 /* ToDoAppTests.xctest */,
+				0D7AA6652C469A0E00CBB722 /* ToDoAppUITests.xctest */,
+				CD91793A62E1F306B0701BCA /* Pods */,
+				7C646BFEB6D55AA4554FB320 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -518,27 +518,28 @@
 			path = Cache;
 			sourceTree = "<group>";
 		};
-		40E7510CC6BA8C07C71FC160 /* Pods */ = {
+		7C646BFEB6D55AA4554FB320 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				EAE49E08E6CB6D037B52BE69 /* Pods-ToDoApp.debug.xcconfig */,
-				1054FCB7AF5D7A7785439A13 /* Pods-ToDoApp.release.xcconfig */,
-				A91BEB7E2B7E8E03642CF1C2 /* Pods-ToDoApp-ToDoAppUITests.debug.xcconfig */,
-				5BBF516AEE468BFE3483184B /* Pods-ToDoApp-ToDoAppUITests.release.xcconfig */,
-				4EBB13DD3A49B356FAA1233B /* Pods-ToDoAppTests.debug.xcconfig */,
-				84B82EE289BEC8D73787709B /* Pods-ToDoAppTests.release.xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
-		4895002C9F5AA4495276EC4D /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				A41AFE2F466A851603093FE1 /* Pods_ToDoApp.framework */,
-				57BE99A2E5D1925EFC0D77FE /* Pods_ToDoApp_ToDoAppUITests.framework */,
-				4586DE9220858F34E69C8362 /* Pods_ToDoAppTests.framework */,
+				817EFFD35F5BB4079DAA0894 /* Pods_ToDoApp.framework */,
+				1D5FF5B43199C7575777D077 /* Pods_ToDoApp_ToDoAppUITests.framework */,
+				2BFAA600ABBCF595149141AF /* Pods_ToDoAppTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CD91793A62E1F306B0701BCA /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A3D2A279BBA136B84B312EBB /* Pods-ToDoApp.debug.xcconfig */,
+				0B5DE7CD90B8DE9C829CDC55 /* Pods-ToDoApp.release.xcconfig */,
+				8ADCFB8739D05CC979FEB4D5 /* Pods-ToDoApp-ToDoAppUITests.debug.xcconfig */,
+				5008668F6E0EC82C13EDB3BE /* Pods-ToDoApp-ToDoAppUITests.release.xcconfig */,
+				8F8A6FE384D1C74500A3C874 /* Pods-ToDoAppTests.debug.xcconfig */,
+				37B3408CE771BD4D7CA37F8A /* Pods-ToDoAppTests.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -584,7 +585,7 @@
 			);
 			name = ToDoAppTests;
 			productName = ToDoAppTests;
-			productReference = 0D6DEE1B2C41EEB0004F8529 /* ToDoAppTests.xctest */;
+			productReference = 0D7AA6642C469A0E00CBB722 /* ToDoAppTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		0D8764A02C21C6B900C70F20 /* ToDoAppUITests */ = {
@@ -603,7 +604,7 @@
 			);
 			name = ToDoAppUITests;
 			productName = ToDoAppUITests;
-			productReference = 0D6DEE1C2C41EEB0004F8529 /* ToDoAppUITests.xctest */;
+			productReference = 0D7AA6652C469A0E00CBB722 /* ToDoAppUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -969,7 +970,7 @@
 		};
 		0D8764AC2C21C6B900C70F20 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EAE49E08E6CB6D037B52BE69 /* Pods-ToDoApp.debug.xcconfig */;
+			baseConfigurationReference = A3D2A279BBA136B84B312EBB /* Pods-ToDoApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1002,7 +1003,7 @@
 		};
 		0D8764AD2C21C6B900C70F20 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1054FCB7AF5D7A7785439A13 /* Pods-ToDoApp.release.xcconfig */;
+			baseConfigurationReference = 0B5DE7CD90B8DE9C829CDC55 /* Pods-ToDoApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1035,7 +1036,7 @@
 		};
 		0D8764AF2C21C6B900C70F20 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4EBB13DD3A49B356FAA1233B /* Pods-ToDoAppTests.debug.xcconfig */;
+			baseConfigurationReference = 8F8A6FE384D1C74500A3C874 /* Pods-ToDoAppTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -1056,7 +1057,7 @@
 		};
 		0D8764B02C21C6B900C70F20 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 84B82EE289BEC8D73787709B /* Pods-ToDoAppTests.release.xcconfig */;
+			baseConfigurationReference = 37B3408CE771BD4D7CA37F8A /* Pods-ToDoAppTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -1077,7 +1078,7 @@
 		};
 		0D8764B22C21C6B900C70F20 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A91BEB7E2B7E8E03642CF1C2 /* Pods-ToDoApp-ToDoAppUITests.debug.xcconfig */;
+			baseConfigurationReference = 8ADCFB8739D05CC979FEB4D5 /* Pods-ToDoApp-ToDoAppUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -1096,7 +1097,7 @@
 		};
 		0D8764B32C21C6B900C70F20 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5BBF516AEE468BFE3483184B /* Pods-ToDoApp-ToDoAppUITests.release.xcconfig */;
+			baseConfigurationReference = 5008668F6E0EC82C13EDB3BE /* Pods-ToDoApp-ToDoAppUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
