@@ -69,6 +69,7 @@
 		0DC08EFE2C4AFA77003EC6C0 /* ItemRowActionsModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC08EFD2C4AFA77003EC6C0 /* ItemRowActionsModifier.swift */; };
 		0DC08F022C4B1637003EC6C0 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC08F012C4B1637003EC6C0 /* ActivityIndicator.swift */; };
 		0DC08F0C2C4B2A25003EC6C0 /* Delayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC08F0B2C4B2A25003EC6C0 /* Delayer.swift */; };
+		0DC08F0E2C4B2F39003EC6C0 /* TokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC08F0D2C4B2F39003EC6C0 /* TokenManager.swift */; };
 		0DE4E62C2C242E8D0097A2CE /* TodoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE4E62B2C242E8D0097A2CE /* TodoItem.swift */; };
 		0DE4E6412C24844E0097A2CE /* FileCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE4E6402C24844E0097A2CE /* FileCache.swift */; };
 		7674512A956DEF8F4C088A01 /* Pods_ToDoAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BFAA600ABBCF595149141AF /* Pods_ToDoAppTests.framework */; };
@@ -157,6 +158,7 @@
 		0DC08EFD2C4AFA77003EC6C0 /* ItemRowActionsModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemRowActionsModifier.swift; sourceTree = "<group>"; };
 		0DC08F012C4B1637003EC6C0 /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		0DC08F0B2C4B2A25003EC6C0 /* Delayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Delayer.swift; sourceTree = "<group>"; };
+		0DC08F0D2C4B2F39003EC6C0 /* TokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenManager.swift; sourceTree = "<group>"; };
 		0DE4E62B2C242E8D0097A2CE /* TodoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoItem.swift; sourceTree = "<group>"; };
 		0DE4E6402C24844E0097A2CE /* FileCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileCache.swift; sourceTree = "<group>"; };
 		1D5FF5B43199C7575777D077 /* Pods_ToDoApp_ToDoAppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ToDoApp_ToDoAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -559,6 +561,7 @@
 				0DC08EE72C49785F003EC6C0 /* Reponse */,
 				0DC08EDE2C496E54003EC6C0 /* NetworkingService.swift */,
 				0DC08EE02C496F0F003EC6C0 /* DefaultNetworkingService.swift */,
+				0DC08F0D2C4B2F39003EC6C0 /* TokenManager.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -892,6 +895,7 @@
 				0DBEAF6C2C2F1070006E6336 /* ImportanceField.swift in Sources */,
 				0DBEAF502C2D9440006E6336 /* TodoItemService.swift in Sources */,
 				0D1E9BA12C38ADA900141FC0 /* CategoryFormData.swift in Sources */,
+				0DC08F0E2C4B2F39003EC6C0 /* TokenManager.swift in Sources */,
 				0DC08EDF2C496E54003EC6C0 /* NetworkingService.swift in Sources */,
 				0DBEAF742C2F1977006E6336 /* TodoItemDetailsAssembly.swift in Sources */,
 				0D1E9B752C37377C00141FC0 /* DateCollectionViewCell.swift in Sources */,

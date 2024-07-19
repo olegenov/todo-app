@@ -6,6 +6,10 @@
 import Foundation
 
 class DefaultNetworkingService: NetworkingService {
+  enum Errors: Error {
+    case invalidToken
+  }
+
   private let urlSession: URLSession
   private let baseURL: URL
 
@@ -130,13 +134,18 @@ class DefaultNetworkingService: NetworkingService {
   ) async {
     var requestToPerform = request
 
+    guard let token = TokenManager.shared.retrieve() else {
+      completion(.failure(Errors.invalidToken))
+      return
+    }
+
     requestToPerform.setValue(
-      "Bearer Elured",
+      "Bearer \(token)",
       forHTTPHeaderField: "Authorization"
     )
 
     var currentAttempt = 1
-    let maxRetries = 5
+    let maxRetries = 7
 
     do {
       let (data, _) = try await urlSession.dataTask(for: requestToPerform)
@@ -160,7 +169,7 @@ class DefaultNetworkingService: NetworkingService {
         currentAttempt += 1
 
         do {
-          try await Task.sleep(nanoseconds: delay * 1000000000)
+          try await Task.sleep(nanoseconds: delay * 1_000_000_000)
 
           let (data, _) = try await urlSession.dataTask(for: requestToPerform)
 
@@ -169,7 +178,7 @@ class DefaultNetworkingService: NetworkingService {
           completion(.success(decodedData))
           break
         } catch {
-          Logger.shared.logError("Error delaying the request")
+          Logger.shared.logError("Error in delayed request")
         }
       }
 
