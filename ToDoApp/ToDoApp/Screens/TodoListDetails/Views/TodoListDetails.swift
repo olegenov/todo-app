@@ -9,6 +9,7 @@ struct TodoListDetails: View {
   @ObservedObject var viewModel: TodoListDetailsViewModel
   @State private var showCompleted: Bool = false
   @State private var showCalendarView = false
+  @State private var loaded = false
 
   var addNewCell: some View {
     Text("Новое")
@@ -76,79 +77,34 @@ struct TodoListDetails: View {
     )
   }
 
-  var deleteLabel: some View {
-    Label("delete", systemImage: "trash.fill")
-      .labelStyle(.iconOnly)
-  }
-
-  var infoLabel: some View {
-    Label("info", systemImage: "info.circle.fill")
-      .labelStyle(.iconOnly)
-  }
-
-  var doneLabel: some View {
-    Label("done", systemImage: "checkmark.circle.fill")
-      .labelStyle(.iconOnly)
-  }
-
-  var undoneLabel: some View {
-    Label("undone", systemImage: "xmark.circle.fill")
-      .labelStyle(.iconOnly)
-  }
-
   var todoList: some View {
     List {
       Section {
+        if !loaded {
+          Text("loading...")
+            .foregroundStyle(Color.iconColor)
+        }
+
         ForEach(viewModel.items) { item in
           if !item.isDone || showCompleted {
             TodoItemRow(
               item: item,
-              checkMarkAction: viewModel.toggleComplited,
+              checkMarkAction: { item in
+                viewModel.toggleComplited(for: item)
+              },
               editAction: viewModel.openEditItemModal
             )
-            .listRowBackground(Color.listRowBackground)
-            .background(
-              RoundedRectangle(cornerRadius: 2)
-                .foregroundStyle(Color.getColor(hex: item.color) ?? Color.clear)
-                .offset(x: -12)
-                .frame(width: 4),
-              alignment: .leading
+            .modifier(
+              ItemRowActionsModifier(
+                item: item,
+                deleteAction: { viewModel.removeTodoItem(by: item.id) },
+                editAction: { viewModel.openEditItemModal(for: item) },
+                toggleAction: { viewModel.toggleComplited(for: item) }
+              )
             )
-            .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-              Button(role: .destructive) {
-                viewModel.removeTodoItem(by: item.id)
-              } label: {
-                deleteLabel
-              }
-            }
-            .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-              Button {
-                viewModel.openEditItemModal(for: item)
-              } label: {
-                infoLabel
-              }
-              .tint(.gray)
-            }
-            .swipeActions(edge: .leading, allowsFullSwipe: true) {
-              if !item.isDone {
-                Button {
-                  toggleComplited(for: item)
-                } label: {
-                  doneLabel
-                }
-                .tint(.green)
-              } else {
-                Button {
-                  toggleComplited(for: item)
-                } label: {
-                  undoneLabel
-                }
-                .tint(.gray)
-              }
-            }
+            .listRowBackground(Color.listRowBackground)
           }
         }
-
         addNewCell
           .listRowBackground(Color.listRowBackground)
           .onTapGesture {
@@ -169,6 +125,14 @@ struct TodoListDetails: View {
     .scrollContentBackground(.hidden)
   }
 
+  var errorsStack: some View {
+    VStack {
+      ForEach(viewModel.errors) { error in
+        ErrorView(text: error.message)
+      }
+    }
+  }
+
   var body: some View {
     NavigationStack {
       ZStack {
@@ -178,31 +142,38 @@ struct TodoListDetails: View {
       }
       .background(Color.backgroundColor)
 
-      .toolbar {
-        ToolbarItem(placement: .topBarLeading) {
-          Button(
-            action: {
-              showCalendarView.toggle()
-            },
-            label: {
-              Image(systemName: "calendar")
-            }
-          )
+      errorsStack
+
+        .toolbar {
+          ToolbarItem(placement: .topBarLeading) {
+            Button(
+              action: {
+                showCalendarView.toggle()
+              },
+              label: {
+                Image(systemName: "calendar")
+              }
+            )
+          }
+
+          ToolbarItem(placement: .topBarTrailing) {
+            Button(
+              action: {
+                viewModel.isSettingsPresented.toggle()
+              },
+              label: {
+                Image(systemName: "gear")
+              }
+            )
+          }
+
+          ToolbarItem(placement: .bottomBar) {
+            addButton
+          }
         }
-        ToolbarItem(placement: .topBarTrailing) {
-          Button(
-            action: {
-              viewModel.isSettingsPresented.toggle()
-            },
-            label: {
-              Image(systemName: "gear")
-            }
-          )
-        }
-        ToolbarItem(placement: .bottomBar) {
-          addButton
-        }
-      }
+    }
+    .refreshable {
+      await viewModel.loadTodoItems()
     }
     .padding(.horizontal, 16)
     .background(Color.backgroundColor)
@@ -258,10 +229,10 @@ struct TodoListDetails: View {
     .onDisappear {
       Logger.shared.logInfo("TodoListDetails view disappeared")
     }
-  }
-
-  private func toggleComplited(for item: TodoItemModel) {
-    viewModel.toggleComplited(for: item)
+    .task {
+      await viewModel.loadTodoItems()
+      self.loaded = true
+    }
   }
 }
 

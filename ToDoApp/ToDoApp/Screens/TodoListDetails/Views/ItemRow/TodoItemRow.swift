@@ -106,5 +106,12 @@ struct TodoItemRow: View {
       }
     }
     .padding(.vertical, 8)
+    .background(
+      RoundedRectangle(cornerRadius: 2)
+        .foregroundStyle(Color.getColor(hex: item.color) ?? Color.clear)
+        .offset(x: -12)
+        .frame(width: 4),
+      alignment: .leading
+    )
   }
 }

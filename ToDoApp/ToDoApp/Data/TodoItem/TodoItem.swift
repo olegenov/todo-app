@@ -7,9 +7,9 @@ import Foundation
 
 struct TodoItem: TodoItemData {
   enum Importance: String {
-    case low = "неважная"
-    case medium = "обычная"
-    case high = "важная"
+    case low = "low"
+    case medium = "basic"
+    case high = "important"
   }
 
   let id: String
@@ -19,6 +19,7 @@ struct TodoItem: TodoItemData {
   let isDone: Bool
   let createdAt: Date
   let changedAt: Date?
+  let color: String?
 
   init(
     id: String = UUID().uuidString,
@@ -27,7 +28,8 @@ struct TodoItem: TodoItemData {
     deadline: Date? = nil,
     isDone: Bool = false,
     createdAt: Date = Date(),
-    changedAt: Date? = nil
+    changedAt: Date? = nil,
+    color: String? = nil
   ) {
     self.id = id
     self.text = text
@@ -36,6 +38,7 @@ struct TodoItem: TodoItemData {
     self.isDone = isDone
     self.createdAt = createdAt
     self.changedAt = changedAt
+    self.color = color
   }
 }
 
@@ -45,7 +48,7 @@ extension TodoItem {
     guard let id = dictionary["id"] as? String,
       let text = dictionary["text"] as? String,
       let isDone = dictionary["isDone"] as? Bool,
-      let createdAtRaw = dictionary["createdAt"] as? TimeInterval
+      let createdAtRaw = dictionary["created_at"] as? TimeInterval
     else {
       return nil
     }
@@ -76,11 +79,19 @@ extension TodoItem {
     }
 
     if let changedAtRaw = dictionary[
-      "changedAt"
+      "changed_at"
     ] as? TimeInterval {
       changedAt = Date(timeIntervalSince1970: changedAtRaw)
     } else {
       changedAt = nil
+    }
+
+    if let colorString = dictionary[
+      "color"
+    ] as? String {
+      color = colorString
+    } else {
+      color = nil
     }
   }
 
@@ -118,8 +129,8 @@ extension TodoItem {
     var properties: [String: Any] = [
       "id": id,
       "text": text,
-      "isDone": isDone,
-      "createdAt": createdAt.timeIntervalSince1970
+      "done": isDone,
+      "created_at": createdAt.timeIntervalSince1970
     ]
 
     if importance != .medium {
@@ -134,7 +145,7 @@ extension TodoItem {
 
     if let changedAt = changedAt {
       properties[
-        "changedAt"
+        "changed_at"
       ] = changedAt.timeIntervalSince1970
     }
 

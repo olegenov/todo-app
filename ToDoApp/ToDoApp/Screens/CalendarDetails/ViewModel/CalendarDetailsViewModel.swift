@@ -23,6 +23,7 @@ class CalendarDetailsViewModel {
     return listViewModel?.items ?? []
   }
 
+  @MainActor
   func completed(for id: String) {
     guard let item = listViewModel?.items.first(where: { $0.id == id }) else {
       Logger.shared.logError("Failed to find item for id: \(id)")
@@ -33,6 +34,7 @@ class CalendarDetailsViewModel {
     listViewModel?.completeItem(for: item)
   }
 
+  @MainActor
   func uncompleted(for id: String) {
     guard let item = listViewModel?.items.first(where: { $0.id == id }) else {
       Logger.shared.logError("Failed to find item for id: \(id)")
