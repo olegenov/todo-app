@@ -128,7 +128,13 @@ struct TodoListDetails: View {
   var errorsStack: some View {
     VStack {
       ForEach(viewModel.errors) { error in
-        ErrorView(text: error.message)
+        ErrorView(
+          text: error.message
+        ) {
+          withAnimation {
+            viewModel.errors = []
+          }
+        }
       }
     }
   }
@@ -165,6 +171,10 @@ struct TodoListDetails: View {
                 Image(systemName: "gear")
               }
             )
+          }
+
+          ToolbarItem(placement: .navigation) {
+            ActivityIndicator(amountOfRequests: $viewModel.amountOfRequests)
           }
 
           ToolbarItem(placement: .bottomBar) {

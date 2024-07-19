@@ -135,6 +135,9 @@ class DefaultNetworkingService: NetworkingService {
       forHTTPHeaderField: "Authorization"
     )
 
+    var currentAttempt = 1
+    let maxRetries = 5
+
     do {
       let (data, _) = try await urlSession.dataTask(for: requestToPerform)
 
@@ -144,6 +147,30 @@ class DefaultNetworkingService: NetworkingService {
     } catch {
       if let error = error as? URLError {
         Logger.shared.logError(error.localizedDescription)
+      }
+
+      while currentAttempt < maxRetries {
+        guard let delay = Delayer.countDelay(attempt: currentAttempt) else {
+          completion(.failure(error))
+          return
+        }
+
+        Logger.shared.logInfo("Current delay: \(delay)")
+
+        currentAttempt += 1
+
+        do {
+          try await Task.sleep(nanoseconds: delay * 1000000000)
+
+          let (data, _) = try await urlSession.dataTask(for: requestToPerform)
+
+          let decodedData = try JSONDecoder().decode(T.self, from: data)
+
+          completion(.success(decodedData))
+          break
+        } catch {
+          Logger.shared.logError("Error delaying the request")
+        }
       }
 
       completion(.failure(error))

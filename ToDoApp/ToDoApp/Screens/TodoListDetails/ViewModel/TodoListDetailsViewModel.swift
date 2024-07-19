@@ -15,6 +15,8 @@ class TodoListDetailsViewModel: ObservableObject {
   @Published var isSettingsPresented: Bool = false
   @Published var selectedItem: TodoItemModel?
   @Published var errors: [ErrorModel] = []
+  @Published var isDirty: Bool = false
+  @Published var amountOfRequests = 0
 
   var service: TodoItemService?
 
@@ -23,23 +25,14 @@ class TodoListDetailsViewModel: ObservableObject {
   func loadTodoItems() async {
     guard let loadedItems = await service?.getList() else {
       await showErrors(messages: ["Ошибка загрузки с сервера"])
-
+      await makeDirtyFlag()
       return
     }
 
     var newList: [TodoItemModel] = []
 
     for item in loadedItems {
-      let itemModel = TodoItemModel(
-        id: item.id,
-        text: item.text,
-        importance: item.importance,
-        deadline: item.deadline,
-        isDone: item.isDone,
-        createdAt: item.createdAt,
-        color: item.color,
-        category: .empty
-      )
+      let itemModel = TodoItemModel(from: item)
 
       newList.append(itemModel)
     }
@@ -57,8 +50,20 @@ class TodoListDetailsViewModel: ObservableObject {
 
     items.append(item)
 
+    let itemObject = item.getSource()
+
     Task {
-      await sendTodoItemCreationReponse(item)
+      if isDirty {
+        synchronizeData()
+      }
+
+      startRequest()
+      let item = await service?.createItem(item: itemObject)
+      closeRequest()
+
+      if item == nil {
+        isDirty = true
+      }
     }
   }
 
@@ -67,7 +72,19 @@ class TodoListDetailsViewModel: ObservableObject {
     items.removeAll { $0.id == id }
 
     Task {
-      await service?.deleteItem(by: id)
+      if isDirty {
+        synchronizeData()
+      }
+
+      startRequest()
+
+      let item = await service?.deleteItem(by: id)
+
+      closeRequest()
+
+      if item == nil {
+        isDirty = true
+      }
     }
   }
 
@@ -184,36 +201,26 @@ class TodoListDetailsViewModel: ObservableObject {
 
     items[index] = item
 
-    let itemObject = TodoItem(
-      id: item.id,
-      text: item.text,
-      importance: item.importance,
-      deadline: item.deadline,
-      isDone: item.isDone,
-      createdAt: item.createdAt,
-      changedAt: item.createdAt,
-      color: item.color
-    )
+    let itemObject = item.getSource()
 
     Task {
-      await service?.putItem(item: itemObject)
+      if isDirty {
+        synchronizeData()
+      }
+
+      startRequest()
+      let item = await service?.putItem(item: itemObject)
+      closeRequest()
+
+      if item == nil {
+        isDirty = true
+      }
     }
   }
 
-
-  private func sendTodoItemCreationReponse(_ item: TodoItemModel) async {
-    let itemObject = TodoItem(
-      id: item.id,
-      text: item.text,
-      importance: item.importance,
-      deadline: item.deadline,
-      isDone: item.isDone,
-      createdAt: item.createdAt,
-      changedAt: item.createdAt,
-      color: item.color
-    )
-
-    _ = await service?.createItem(item: itemObject)
+  @MainActor
+  private func makeDirtyFlag() {
+    isDirty = true
   }
 
   @MainActor
@@ -234,5 +241,49 @@ class TodoListDetailsViewModel: ObservableObject {
     withAnimation {
       self.errors = newErrors
     }
+  }
+
+  @MainActor
+  private func synchronizeData() {
+    var dataArray: [TodoItem] = []
+
+    for item in items {
+      dataArray.append(
+        item.getSource()
+      )
+    }
+
+    Task {
+      startRequest()
+      let list = await service?.patchList(list: dataArray)
+      closeRequest()
+
+      guard let serverList = list else {
+        isDirty = true
+        return
+      }
+
+      isDirty = false
+
+      var updatedList: [TodoItemModel] = []
+
+      for item in serverList {
+        updatedList.append(
+          TodoItemModel(from: item)
+        )
+      }
+
+      updateItems(items: updatedList)
+    }
+  }
+
+  @MainActor
+  private func startRequest() {
+    amountOfRequests += 1
+  }
+
+  @MainActor
+  private func closeRequest() {
+    amountOfRequests -= 1
   }
 }
