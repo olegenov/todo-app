@@ -12,67 +12,243 @@ final class TodoItemService {
     case cacheSavingFailure
   }
 
-  private var cacheFilePath: String = "ToDoApp/cache/data.json"
+  private let networkingService: NetworkingService
+  private var currentRevision: Int = 0
 
-  private let cache: FileCache
-
-  init(cache: FileCache) {
-    self.cache = cache
-
-    do {
-      try cache.load(from: cacheFilePath)
-    } catch {
-      return
-    }
+  init(service: NetworkingService) {
+    self.networkingService = service
   }
 
-  func loadCache() throws {
-    do {
-      try cache.load(from: cacheFilePath)
-    } catch {
-      throw TodoItemManagerError.cacheLoadingFailure
+  func getList() async -> [TodoItem]? {
+    var todoList: [TodoItem] = []
+    var revision: Int = 0
+    var error: Bool = false
+
+    await networkingService.get(
+      path: "/list"
+    ) { (result: Result<TodoListResponse, Error>) in
+      switch result {
+      case .success(let response):
+        revision = response.revision
+
+        for item in response.list {
+          let parsedItem = item.getSource()
+
+          todoList.append(parsedItem)
+        }
+      case .failure:
+        Logger.shared.logError("Error loading TodoItem list")
+
+        error = true
+      }
     }
+
+    await setCurrentRevision(revision: revision)
+
+    if error {
+      return nil
+    }
+
+    Logger.shared.logInfo("List loaded successfully")
+
+    return todoList
   }
 
-  func addTodoItem(_ item: any TodoItemData) throws {
-    let newItem = TodoItem(
-      id: item.id,
-      text: item.text,
-      importance: item.importance,
-      isDone: item.isDone,
-      createdAt: item.createdAt
+  func createItem(item: TodoItem) async -> TodoItem? {
+    var revision: Int = 0
+    var parsedItem: TodoItem?
+
+    let itemDto = TodoItemDto(
+      from: item,
+      updatedBy: "0d0970774e284fa8ba9ff70b6b06479a"
     )
 
-    cache.addTodoItem(newItem)
-  }
-
-  func removeTodoItem(by id: String) {
-    cache.removeTodoItem(by: id)
-  }
-
-  func getAllTodoItems() -> [any TodoItemData] {
-    return cache.todoItems
-  }
-
-  func updateTodoItem(_ item: any TodoItemData) throws {
-    let updatedItem = TodoItem(
-      id: item.id,
-      text: item.text,
-      importance: item.importance,
-      isDone: item.isDone,
-      createdAt: item.createdAt,
-      changedAt: Date.now
+    let request = TodoItemRequest(
+      status: "ok",
+      revision: currentRevision,
+      element: itemDto
     )
 
-    cache.removeTodoItem(by: updatedItem.id)
-    cache.addTodoItem(updatedItem)
+    await networkingService.post(
+      path: "/list",
+      requestObject: request
+    ) { (result: Result<TodoItemResponse, Error>) in
+      switch result {
+      case .success(let response):
+        revision = response.revision
+
+        let item = response.element
+
+        parsedItem = item.getSource()
+      case .failure:
+        Logger.shared.logError("Error creating TodoItem")
+      }
+    }
+
+    await setCurrentRevision(revision: revision)
+
+    Logger.shared.logInfo("Item created successfully")
+
+    return parsedItem
   }
 
-  func saveCache() throws {
-    do {
-      try cache.save(to: cacheFilePath)
-    } catch {
-      throw TodoItemManagerError.cacheSavingFailure
+  func deleteItem(by id: String) async -> TodoItem? {
+    var revision: Int = 0
+    var parsedItem: TodoItem?
+
+    let request = TodoItemDeletionRequest(
+      revision: currentRevision
+    )
+
+    await networkingService.delete(
+      path: "/list/\(id)",
+      requestObject: request
+    ) { (result: Result<TodoItemResponse, Error>) in
+      switch result {
+      case .success(let response):
+        revision = response.revision
+
+        let item = response.element
+
+        parsedItem = item.getSource()
+      case .failure:
+        Logger.shared.logError("Error deleting TodoItem")
+      }
+    }
+
+    await setCurrentRevision(revision: revision)
+
+    Logger.shared.logInfo("Item deleted successfully")
+
+    return parsedItem
+  }
+
+  func putItem(item: TodoItem) async -> TodoItem? {
+    var revision: Int = 0
+    var parsedItem: TodoItem?
+
+    let itemDto = TodoItemDto(
+      from: item,
+      updatedBy: "0d0970774e284fa8ba9ff70b6b06479a"
+    )
+
+    let request = TodoItemRequest(
+      status: "ok",
+      revision: currentRevision,
+      element: itemDto
+    )
+
+    await networkingService.put(
+      path: "/list/\(item.id)",
+      requestObject: request
+    ) { (result: Result<TodoItemResponse, Error>) in
+      switch result {
+      case .success(let response):
+        revision = response.revision
+
+        let item = response.element
+
+        parsedItem = item.getSource()
+      case .failure:
+        Logger.shared.logError("Error putting TodoItem")
+      }
+    }
+
+    await setCurrentRevision(revision: revision)
+
+    Logger.shared.logInfo("Item put successfully")
+
+    return parsedItem
+  }
+
+  func getItem(for id: String) async -> TodoItem? {
+    var todoItem: TodoItem?
+    var revision: Int = 0
+    var error: Bool = false
+
+    await networkingService.get(
+      path: "/list/\(id)"
+    ) { (result: Result<TodoItemResponse, Error>) in
+      switch result {
+      case .success(let response):
+        revision = response.revision
+
+        todoItem = response.element.getSource()
+      case .failure:
+        Logger.shared.logError("Error loading TodoItem")
+
+        error = true
+      }
+    }
+
+    await setCurrentRevision(revision: revision)
+
+    if error {
+      return nil
+    }
+
+    Logger.shared.logInfo("TodoItem loaded successfully")
+
+    return todoItem
+  }
+
+  func patchList(list: [TodoItem]) async -> [TodoItem]? {
+    var todoList: [TodoItem] = []
+    var revision: Int = 0
+    var error: Bool = false
+
+    var todoItemDtos: [TodoItemDto] = []
+
+    for item in list {
+      todoItemDtos.append(
+        TodoItemDto(
+          from: item,
+          updatedBy: "0d0970774e284fa8ba9ff70b6b06479a"
+        )
+      )
+    }
+
+    let request = TodoListRequest(
+      status: "ok",
+      revision: currentRevision,
+      list: todoItemDtos
+    )
+
+    await networkingService.patch(
+      path: "/list",
+      requestObject: request
+    ) { (result: Result<TodoListResponse, Error>) in
+      switch result {
+      case .success(let response):
+        revision = response.revision
+
+        for item in response.list {
+          let parsedItem = item.getSource()
+
+          todoList.append(parsedItem)
+        }
+      case .failure:
+        Logger.shared.logError("Error loading TodoItem list")
+
+        error = true
+      }
+    }
+
+    await setCurrentRevision(revision: revision)
+
+    if error {
+      return nil
+    }
+
+    Logger.shared.logInfo("List loaded successfully")
+
+    return todoList
+  }
+
+  @MainActor
+  private func setCurrentRevision(revision: Int) {
+    if revision != 0 {
+      currentRevision = revision
     }
   }
 }

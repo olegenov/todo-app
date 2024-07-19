@@ -33,9 +33,9 @@ final class TodoItemTests: XCTestCase {
       XCTAssertEqual(jsonObject["text"] as? String, text)
       XCTAssertEqual(jsonObject["importance"] as? String, importance.rawValue)
       XCTAssertEqual(jsonObject["deadline"] as? TimeInterval, deadline.timeIntervalSince1970)
-      XCTAssertEqual(jsonObject["isDone"] as? Bool, isDone)
-      XCTAssertEqual(jsonObject["createdAt"] as? TimeInterval, createdAt.timeIntervalSince1970)
-      XCTAssertNil(jsonObject["changedAt"])
+      XCTAssertEqual(jsonObject["done"] as? Bool, isDone)
+      XCTAssertEqual(jsonObject["created_at"] as? TimeInterval, createdAt.timeIntervalSince1970)
+      XCTAssertNil(jsonObject["changed_at"])
     } catch {
       XCTFail("Failed to parse JSON")
     }
@@ -78,7 +78,7 @@ final class TodoItemTests: XCTestCase {
       "text": text,
       "importance": importance.rawValue,
       "deadline": deadline.timeIntervalSince1970,
-      "createdAt": createdAt.timeIntervalSince1970,
+      "created_at": createdAt.timeIntervalSince1970,
       "isDone": isDone
     ]
 

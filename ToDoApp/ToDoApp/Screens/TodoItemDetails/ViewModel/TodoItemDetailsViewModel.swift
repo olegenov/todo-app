@@ -25,6 +25,7 @@ class TodoItemDetailsViewModel: ObservableObject {
 
   var hasChanged: Bool {
     var dateChanged = false
+    var colorChanged = false
 
     if data.isDeadlineEnabled {
       if item.deadline == nil || data.deadline != item.deadline {
@@ -36,15 +37,26 @@ class TodoItemDetailsViewModel: ObservableObject {
       }
     }
 
+    if data.isColorEnabled {
+      if item.color == nil || data.color.toHexString() != item.color {
+        colorChanged = true
+      }
+    } else {
+      if item.color != nil {
+        colorChanged = true
+      }
+    }
+
     return item.text != data.text || (
       data.importance != item.importance
     ) || dateChanged || (
-      data.color.toHexString() != item.color
+      colorChanged
     ) || (
       data.category.id != item.category.id
     )
   }
 
+  @MainActor
   func saveData() {
     item.text = data.text
 
@@ -55,22 +67,37 @@ class TodoItemDetailsViewModel: ObservableObject {
     }
 
     item.importance = data.importance
-    item.color = data.color.toHexString()
+
+    if data.isColorEnabled {
+      item.color = data.color.toHexString()
+    } else {
+      item.color = nil
+    }
+
     item.category = data.category
 
-    if listViewModel.items.contains(where: { $0.id == item.id }) {
-      listViewModel.updateTodoItem(with: item)
-    } else {
-      listViewModel.addTodoItem(item)
+    Task {
+      if listViewModel.items.contains(where: { $0.id == item.id }) {
+        do {
+          try listViewModel.updateTodoItem(item)
+        } catch {
+        }
+      } else {
+        listViewModel.addTodoItem(item)
+      }
     }
   }
 
+  @MainActor
   func deleteData() {
     item.text = ""
     item.deadline = nil
     item.importance = .medium
 
-    listViewModel.removeTodoItem(by: item.id)
+    Task {
+      listViewModel.removeTodoItem(by: item.id)
+    }
+
     close()
   }
 
