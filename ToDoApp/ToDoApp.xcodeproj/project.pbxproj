@@ -70,6 +70,7 @@
 		0DC08F022C4B1637003EC6C0 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC08F012C4B1637003EC6C0 /* ActivityIndicator.swift */; };
 		0DC08F0C2C4B2A25003EC6C0 /* Delayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC08F0B2C4B2A25003EC6C0 /* Delayer.swift */; };
 		0DC08F0E2C4B2F39003EC6C0 /* TokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC08F0D2C4B2F39003EC6C0 /* TokenManager.swift */; };
+		0DC08F2C2C51B231003EC6C0 /* TodoItemDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC08F2B2C51B231003EC6C0 /* TodoItemDataModel.swift */; };
 		0DE4E62C2C242E8D0097A2CE /* TodoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE4E62B2C242E8D0097A2CE /* TodoItem.swift */; };
 		0DE4E6412C24844E0097A2CE /* FileCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE4E6402C24844E0097A2CE /* FileCache.swift */; };
 		7674512A956DEF8F4C088A01 /* Pods_ToDoAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BFAA600ABBCF595149141AF /* Pods_ToDoAppTests.framework */; };
@@ -159,6 +160,7 @@
 		0DC08F012C4B1637003EC6C0 /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		0DC08F0B2C4B2A25003EC6C0 /* Delayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Delayer.swift; sourceTree = "<group>"; };
 		0DC08F0D2C4B2F39003EC6C0 /* TokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenManager.swift; sourceTree = "<group>"; };
+		0DC08F2B2C51B231003EC6C0 /* TodoItemDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoItemDataModel.swift; sourceTree = "<group>"; };
 		0DE4E62B2C242E8D0097A2CE /* TodoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoItem.swift; sourceTree = "<group>"; };
 		0DE4E6402C24844E0097A2CE /* FileCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileCache.swift; sourceTree = "<group>"; };
 		1D5FF5B43199C7575777D077 /* Pods_ToDoApp_ToDoAppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ToDoApp_ToDoAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -540,6 +542,7 @@
 			isa = PBXGroup;
 			children = (
 				0DE4E62B2C242E8D0097A2CE /* TodoItem.swift */,
+				0DC08F2B2C51B231003EC6C0 /* TodoItemDataModel.swift */,
 				0D548FAD2C2C29A4000950D5 /* TodoItemData.swift */,
 			);
 			path = TodoItem;
@@ -915,6 +918,7 @@
 				0DC08EEE2C4A751A003EC6C0 /* TodoItemRequest.swift in Sources */,
 				0D1E9B932C38782900141FC0 /* CategoryModel.swift in Sources */,
 				0DBEAF482C2C9699006E6336 /* ColorExtension.swift in Sources */,
+				0DC08F2C2C51B231003EC6C0 /* TodoItemDataModel.swift in Sources */,
 				0D1E9B772C373B1200141FC0 /* NoDateViewCell.swift in Sources */,
 				0D1E9B9B2C38A61800141FC0 /* SettingsView.swift in Sources */,
 				0DBEAF7F2C2FAB34006E6336 /* CustomColorPicker.swift in Sources */,

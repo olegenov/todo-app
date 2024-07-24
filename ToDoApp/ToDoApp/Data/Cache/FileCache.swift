@@ -4,17 +4,129 @@
 //
 
 import SwiftUI
+import SwiftData
 
 final class FileCache {
   enum FileCacheError: Error {
     case invalidFilename
     case writeFailure
     case loadFailure
+
+    case fetchFailure
+    case updateFailure
   }
 
   private(set) var todoItems: [TodoItem] = []
   private let fileManager = FileManager.default
   private let encoder = JSONEncoder()
+
+  private let modelContainer: ModelContainer?
+
+  init() {
+    do {
+      modelContainer = try ModelContainer(
+        for: TodoItemDataModel.self
+      )
+    } catch {
+      modelContainer = nil
+      Logger.shared.logError(
+        "Enable to create model container for TodoItem"
+      )
+    }
+
+    Logger.shared.logInfo("Model container created successfuly")
+  }
+
+  @MainActor
+  func insert(_ todoItem: TodoItem) {
+    let newModel = TodoItemDataModel(from: todoItem)
+
+    modelContainer?.mainContext.insert(newModel)
+
+    saveContext()
+  }
+
+  @MainActor
+  func fetch() throws -> [TodoItem] {
+    let fetchDescriptor = FetchDescriptor<TodoItemDataModel>(
+      sortBy: [.init(\.createdAt)]
+    )
+
+    guard let fetchItems = try? modelContainer?.mainContext.fetch(
+      fetchDescriptor
+    ) else {
+      Logger.shared.logError(
+        "Failed to fetch model container for TodoItem"
+      )
+      throw FileCacheError.fetchFailure
+    }
+
+    var result: [TodoItem] = []
+
+    for item in fetchItems {
+      result.append(item.getSource())
+    }
+
+    return result
+  }
+
+  @MainActor
+  func delete(_ todoItem: TodoItem) {
+    let model = TodoItemDataModel(from: todoItem)
+
+    modelContainer?.mainContext.delete(model)
+
+    saveContext()
+  }
+
+  @MainActor
+  func update(_ todoItem: TodoItem) throws {
+    let itemId = todoItem.id
+
+    let fetchDescriptor = FetchDescriptor<TodoItemDataModel>(
+      predicate: #Predicate { item in
+        item.id == itemId
+      }
+    )
+
+    guard let fetchItems = try? modelContainer?.mainContext.fetch(
+      fetchDescriptor
+    ) else {
+      Logger.shared.logError(
+        "Failed to fetch model container for TodoItem"
+      )
+      throw FileCacheError.fetchFailure
+    }
+
+    guard let item = fetchItems.first else {
+      Logger.shared.logError(
+        "Failed to update model container for TodoItem:" +
+        " item with id \(todoItem.id) does not exist"
+      )
+      throw FileCacheError.updateFailure
+    }
+
+    item.text = todoItem.text
+    item.deadline = todoItem.deadline
+    item.isDone = todoItem.isDone
+    item.importanceRaw = todoItem.importance.rawValue
+    item.createdAt = todoItem.createdAt
+    item.changedAt = todoItem.changedAt
+    item.color = todoItem.color
+
+    saveContext()
+  }
+
+  @MainActor
+  private func saveContext() {
+    do {
+      try modelContainer?.mainContext.save()
+    } catch {
+      Logger.shared.logWarning(
+        "Failed to save context in TodoItem model container"
+      )
+    }
+  }
 
   func addTodoItem(_ item: TodoItem) {
     if todoItems.contains(where: { $0.id == item.id }) {

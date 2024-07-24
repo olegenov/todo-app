@@ -9,7 +9,7 @@ import CocoaLumberjack
 @main
 struct ToDoAppApp: App {
   init() {
-    _ = TokenManager.shared.save(token: "")
+    _ = TokenManager.shared.save(token: "Elured")
     Logger.shared.logInfo("App started")
   }
 

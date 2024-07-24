@@ -1,53 +1,67 @@
 //
-//  TodoItemModel.swift
+//  TodoItemDataModel.swift
 //  ToDoApp
 //
 
 import Foundation
+import SwiftData
 
-struct TodoItemModel: TodoItemData {
+@Model
+class TodoItemDataModel: TodoItemData {
+  @Attribute(.unique)
   let id: String
-  var text: String = ""
-  var importance: TodoItem.Importance = .medium
+
+  var text: String
   var deadline: Date?
-  var isDone: Bool = false
-  var createdAt = Date.now
+
+  @Attribute(originalName: "done")
+  var isDone: Bool
+
+  @Transient var importance: TodoItem.Importance {
+    return TodoItem.Importance(
+      rawValue: self.importanceRaw
+    ) ?? .medium
+  }
+
+  var importanceRaw: String
+
+  @Attribute(originalName: "created_at")
+  var createdAt: Date
+
+  @Attribute(originalName: "changed_at")
   var changedAt: Date?
+
   var color: String?
-  var category: CategoryModel = .empty
 
   init(
     id: String,
-    text: String = "",
-    importance: TodoItem.Importance = .medium,
-    deadline: Date? = nil,
-    isDone: Bool = false,
-    createdAt: Date = Date.now,
-    changedAt: Date? = nil,
-    color: String? = nil,
-    category: CategoryModel = .empty
+    text: String,
+    deadline: Date?,
+    isDone: Bool,
+    importance: TodoItem.Importance,
+    createdAt: Date,
+    changedAt: Date?,
+    color: String?
   ) {
     self.id = id
     self.text = text
-    self.importance = importance
     self.deadline = deadline
     self.isDone = isDone
+    self.importanceRaw = importance.rawValue
     self.createdAt = createdAt
     self.changedAt = changedAt
     self.color = color
-    self.category = category
   }
 
   init(from item: TodoItem) {
     id = item.id
     text = item.text
-    importance = item.importance
+    importanceRaw = item.importance.rawValue
     deadline = item.deadline
     isDone = item.isDone
     createdAt = item.createdAt
     changedAt = item.changedAt
     color = item.color
-    category = .empty
   }
 
   func getSource() -> TodoItem {

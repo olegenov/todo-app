@@ -97,6 +97,7 @@ class TodoListDetailsViewModel: ObservableObject {
       deadline: item.deadline,
       isDone: !item.isDone,
       createdAt: item.createdAt,
+      changedAt: Date.now,
       color: item.color
     )
 
@@ -116,6 +117,7 @@ class TodoListDetailsViewModel: ObservableObject {
       deadline: item.deadline,
       isDone: true,
       createdAt: item.createdAt,
+      changedAt: Date.now,
       color: item.color,
       category: item.category
     )
@@ -136,6 +138,7 @@ class TodoListDetailsViewModel: ObservableObject {
       deadline: item.deadline,
       isDone: false,
       createdAt: item.createdAt,
+      changedAt: Date.now,
       color: item.color,
       category: item.category
     )

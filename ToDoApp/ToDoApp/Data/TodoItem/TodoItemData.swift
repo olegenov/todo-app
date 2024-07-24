@@ -13,4 +13,6 @@ protocol TodoItemData: Identifiable {
   var isDone: Bool { get }
   var importance: TodoItem.Importance { get }
   var createdAt: Date { get }
+  var changedAt: Date? { get }
+  var color: String? { get }
 }
