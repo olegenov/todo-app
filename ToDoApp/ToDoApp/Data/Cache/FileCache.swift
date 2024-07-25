@@ -16,11 +16,40 @@ final class FileCache {
     case updateFailure
   }
 
+  enum SortingFields {
+    case id
+    case createdAt
+    case deadline
+  }
+
+  enum SortingTypes {
+    case ascending
+    case descending
+  }
+
+  struct SortingType {
+    let field: SortingFields
+    let type: SortingTypes
+  }
+
+  enum FilteringType {
+    case isDone(Bool)
+    case deadline(Date)
+    case importance(TodoItem.Importance.RawValue)
+  }
+
   private(set) var todoItems: [TodoItem] = []
   private let fileManager = FileManager.default
   private let encoder = JSONEncoder()
 
   private let modelContainer: ModelContainer?
+
+  private var applicationDirectory: URL? {
+    return fileManager.urls(
+      for: .applicationDirectory,
+      in: .userDomainMask
+    ).first
+  }
 
   init() {
     do {
@@ -52,8 +81,32 @@ final class FileCache {
       sortBy: [.init(\.createdAt)]
     )
 
+    let result = try doFetch(descriptor: fetchDescriptor)
+
+    return result
+  }
+
+  @MainActor
+  func fetch(sorting: SortingType, filtering: FilteringType) throws -> [TodoItem] {
+    let sortDescriptor = getSortDescriptor(from: sorting)
+    let predicate = getPredicate(from: filtering)
+
+    let fetchDescriptor = FetchDescriptor<TodoItemDataModel>(
+      predicate: predicate,
+      sortBy: [sortDescriptor]
+    )
+
+    let result = try doFetch(descriptor: fetchDescriptor)
+
+    return result
+  }
+
+  @MainActor
+  private func doFetch(
+    descriptor: FetchDescriptor<TodoItemDataModel>
+  ) throws -> [TodoItem] {
     guard let fetchItems = try? modelContainer?.mainContext.fetch(
-      fetchDescriptor
+      descriptor
     ) else {
       Logger.shared.logError(
         "Failed to fetch model container for TodoItem"
@@ -245,10 +298,50 @@ final class FileCache {
     }
   }
 
-  private var applicationDirectory: URL? {
-    return fileManager.urls(
-      for: .applicationDirectory,
-      in: .userDomainMask
-    ).first
+  private func getSortDescriptor(
+    from type: SortingType
+  ) -> SortDescriptor<TodoItemDataModel> {
+    var order: SortOrder
+
+    switch type.type {
+    case .ascending:
+      order = .forward
+    case .descending:
+      order = .reverse
+    }
+
+    switch type.field {
+    case .id:
+      return SortDescriptor<TodoItemDataModel>(
+        \.id, order: order
+      )
+    case .createdAt:
+      return SortDescriptor<TodoItemDataModel>(
+        \.createdAt, order: order
+      )
+    case .deadline:
+      return SortDescriptor<TodoItemDataModel>(
+        \.deadline, order: order
+      )
+    }
+  }
+
+  private func getPredicate(
+    from filtering: FilteringType
+  ) -> Predicate<TodoItemDataModel> {
+    switch filtering {
+    case .isDone(let done):
+      return #Predicate { $0.isDone == done }
+    case .deadline(let date):
+      return #Predicate { item in
+        if let deadline = item.deadline {
+          return deadline == date
+        } else {
+          return false
+        }
+      }
+    case .importance(let importance):
+      return #Predicate { $0.importance.rawValue == importance }
+    }
   }
 }

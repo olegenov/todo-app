@@ -110,3 +110,5 @@ vertical_whitespace:
   max_empty_lines: 2
 
 cyclomatic_complexity: 15
+
+type_body_length: 300
