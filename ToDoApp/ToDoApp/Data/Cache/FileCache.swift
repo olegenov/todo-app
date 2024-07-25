@@ -34,7 +34,7 @@ final class FileCache {
       )
     }
 
-    Logger.shared.logInfo("Model container created successfuly")
+    Logger.shared.logInfo("Filecache: Model container created successfuly")
   }
 
   @MainActor
@@ -67,14 +67,43 @@ final class FileCache {
       result.append(item.getSource())
     }
 
+    Logger.shared.logInfo("Filecache: Items fetched successfuly")
+
     return result
   }
 
   @MainActor
   func delete(_ todoItem: TodoItem) {
-    let model = TodoItemDataModel(from: todoItem)
+    let itemId = todoItem.id
 
-    modelContainer?.mainContext.delete(model)
+    let fetchDescriptor = FetchDescriptor<TodoItemDataModel>(
+      predicate: #Predicate { item in
+        item.id == itemId
+      }
+    )
+
+    guard let fetchItems = try? modelContainer?.mainContext.fetch(
+      fetchDescriptor
+    ) else {
+      Logger.shared.logError(
+        "Failed to fetch model container for TodoItem"
+      )
+
+      return
+    }
+
+    guard let item = fetchItems.first else {
+      Logger.shared.logError(
+        "Failed to delete model container for TodoItem:" +
+        " item with id \(todoItem.id) does not exist"
+      )
+
+      return
+    }
+
+    modelContainer?.mainContext.delete(item)
+
+    Logger.shared.logInfo("Filecache: Item deleted successfuly")
 
     saveContext()
   }
@@ -113,6 +142,8 @@ final class FileCache {
     item.createdAt = todoItem.createdAt
     item.changedAt = todoItem.changedAt
     item.color = todoItem.color
+
+    Logger.shared.logInfo("Filecache: Item updated successfuly")
 
     saveContext()
   }

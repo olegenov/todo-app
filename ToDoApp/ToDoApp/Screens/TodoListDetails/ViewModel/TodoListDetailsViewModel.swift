@@ -19,10 +19,12 @@ class TodoListDetailsViewModel: ObservableObject {
   @Published var amountOfRequests = 0
 
   var service: TodoItemService?
-
+  var fileCache: FileCache?
   var calendarView: CalendarDetailsVCRepresentable?
 
   func loadTodoItems() async {
+    await loadCache()
+
     guard let loadedItems = await service?.getList() else {
       await showErrors(messages: ["Ошибка загрузки с сервера"])
       await makeDirtyFlag()
@@ -52,6 +54,8 @@ class TodoListDetailsViewModel: ObservableObject {
 
     let itemObject = item.getSource()
 
+    fileCache?.insert(itemObject)
+
     Task {
       if isDirty {
         synchronizeData()
@@ -69,7 +73,14 @@ class TodoListDetailsViewModel: ObservableObject {
 
   @MainActor
   func removeTodoItem(by id: String) {
+    guard let itemToDelete = items.first(where: { $0.id == id }) else {
+      Logger.shared.logWarning("Item with id: \(id) does not exist")
+
+      return
+    }
+
     items.removeAll { $0.id == id }
+    fileCache?.delete(itemToDelete.getSource())
 
     Task {
       if isDirty {
@@ -206,6 +217,8 @@ class TodoListDetailsViewModel: ObservableObject {
 
     let itemObject = item.getSource()
 
+    try fileCache?.update(itemObject)
+
     Task {
       if isDirty {
         synchronizeData()
@@ -278,6 +291,22 @@ class TodoListDetailsViewModel: ObservableObject {
 
       updateItems(items: updatedList)
     }
+  }
+
+  @MainActor
+  private func loadCache() {
+    guard let cacheItems = try? fileCache?.fetch() else {
+      showErrors(messages: ["Не удалось загрузить кэш"])
+      return
+    }
+
+    var cacheList: [TodoItemModel] = []
+
+    for item in cacheItems {
+      cacheList.append(TodoItemModel(from: item))
+    }
+
+    items = cacheList
   }
 
   @MainActor

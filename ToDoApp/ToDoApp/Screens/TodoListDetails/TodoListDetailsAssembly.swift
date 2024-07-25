@@ -22,7 +22,9 @@ enum TodoListDetailsAssembly {
     let service = TodoItemService(service: networkingService)
 
     let viewModel = TodoListDetailsViewModel()
+
     viewModel.service = service
+    viewModel.fileCache = FileCache()
 
     return TodoListDetails(viewModel: viewModel)
   }
