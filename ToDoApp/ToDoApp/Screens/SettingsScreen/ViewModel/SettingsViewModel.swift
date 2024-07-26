@@ -3,13 +3,15 @@
 //  ToDoApp
 //
 
-import Foundation
+import SwiftUI
 
 class SettingsViewModel: ObservableObject {
   @Published var data: CategoryFormData
+  @ObservedObject var listViewModel: TodoListDetailsViewModel
 
-  init() {
+  init(listVM: TodoListDetailsViewModel) {
     data = CategoryFormData(text: "", color: .gray)
+    listViewModel = listVM
   }
 
   func saveCategory() {

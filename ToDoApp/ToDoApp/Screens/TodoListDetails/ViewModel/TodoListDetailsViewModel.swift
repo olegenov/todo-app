@@ -18,13 +18,34 @@ class TodoListDetailsViewModel: ObservableObject {
   @Published var isDirty: Bool = false
   @Published var amountOfRequests = 0
 
-  var service: TodoItemService?
+  @Published var isOfflineMode: Bool = false {
+    didSet {
+      Logger.shared.logInfo(
+        "Offline mode is \(isOfflineMode ? "turned on" : "turned off")"
+      )
+    }
+  }
 
+  var service: TodoItemService?
+  var validatedService: TodoItemService? {
+    if isOfflineMode {
+      Logger.shared.logInfo("Offline mode is turned on, service requests disabled")
+      return nil
+    }
+    return service
+  }
+
+  var fileCache: FileCache?
   var calendarView: CalendarDetailsVCRepresentable?
 
   func loadTodoItems() async {
-    guard let loadedItems = await service?.getList() else {
-      await showErrors(messages: ["Ошибка загрузки с сервера"])
+    await loadCache()
+
+    guard let loadedItems = await validatedService?.getList() else {
+      if !isOfflineMode {
+        await showErrors(messages: ["Ошибка загрузки с сервера"])
+      }
+
       await makeDirtyFlag()
       return
     }
@@ -52,13 +73,15 @@ class TodoListDetailsViewModel: ObservableObject {
 
     let itemObject = item.getSource()
 
+    fileCache?.insert(itemObject)
+
     Task {
       if isDirty {
         synchronizeData()
       }
 
       startRequest()
-      let item = await service?.createItem(item: itemObject)
+      let item = await validatedService?.createItem(item: itemObject)
       closeRequest()
 
       if item == nil {
@@ -69,7 +92,14 @@ class TodoListDetailsViewModel: ObservableObject {
 
   @MainActor
   func removeTodoItem(by id: String) {
+    guard let itemToDelete = items.first(where: { $0.id == id }) else {
+      Logger.shared.logWarning("Item with id: \(id) does not exist")
+
+      return
+    }
+
     items.removeAll { $0.id == id }
+    fileCache?.delete(itemToDelete.getSource())
 
     Task {
       if isDirty {
@@ -78,7 +108,7 @@ class TodoListDetailsViewModel: ObservableObject {
 
       startRequest()
 
-      let item = await service?.deleteItem(by: id)
+      let item = await validatedService?.deleteItem(by: id)
 
       closeRequest()
 
@@ -97,6 +127,7 @@ class TodoListDetailsViewModel: ObservableObject {
       deadline: item.deadline,
       isDone: !item.isDone,
       createdAt: item.createdAt,
+      changedAt: Date.now,
       color: item.color
     )
 
@@ -116,6 +147,7 @@ class TodoListDetailsViewModel: ObservableObject {
       deadline: item.deadline,
       isDone: true,
       createdAt: item.createdAt,
+      changedAt: Date.now,
       color: item.color,
       category: item.category
     )
@@ -136,6 +168,7 @@ class TodoListDetailsViewModel: ObservableObject {
       deadline: item.deadline,
       isDone: false,
       createdAt: item.createdAt,
+      changedAt: Date.now,
       color: item.color,
       category: item.category
     )
@@ -173,8 +206,9 @@ class TodoListDetailsViewModel: ObservableObject {
     )
   }
 
+  @MainActor
   func getSettingsView() -> SettingsView {
-    SettingsScreenAssembly.build()
+    SettingsScreenAssembly.build(listVM: self)
   }
 
   func getCalendarView() -> CalendarDetailsVCRepresentable? {
@@ -203,13 +237,15 @@ class TodoListDetailsViewModel: ObservableObject {
 
     let itemObject = item.getSource()
 
+    try fileCache?.update(itemObject)
+
     Task {
       if isDirty {
         synchronizeData()
       }
 
       startRequest()
-      let item = await service?.putItem(item: itemObject)
+      let item = await validatedService?.putItem(item: itemObject)
       closeRequest()
 
       if item == nil {
@@ -255,7 +291,7 @@ class TodoListDetailsViewModel: ObservableObject {
 
     Task {
       startRequest()
-      let list = await service?.patchList(list: dataArray)
+      let list = await validatedService?.patchList(list: dataArray)
       closeRequest()
 
       guard let serverList = list else {
@@ -275,6 +311,22 @@ class TodoListDetailsViewModel: ObservableObject {
 
       updateItems(items: updatedList)
     }
+  }
+
+  @MainActor
+  private func loadCache() {
+    guard let cacheItems = try? fileCache?.fetch() else {
+      showErrors(messages: ["Не удалось загрузить кэш"])
+      return
+    }
+
+    var cacheList: [TodoItemModel] = []
+
+    for item in cacheItems {
+      cacheList.append(TodoItemModel(from: item))
+    }
+
+    items = cacheList
   }
 
   @MainActor

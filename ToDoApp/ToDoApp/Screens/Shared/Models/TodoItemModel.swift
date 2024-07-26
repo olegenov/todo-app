@@ -12,6 +12,7 @@ struct TodoItemModel: TodoItemData {
   var deadline: Date?
   var isDone: Bool = false
   var createdAt = Date.now
+  var changedAt: Date?
   var color: String?
   var category: CategoryModel = .empty
 
@@ -22,6 +23,7 @@ struct TodoItemModel: TodoItemData {
     deadline: Date? = nil,
     isDone: Bool = false,
     createdAt: Date = Date.now,
+    changedAt: Date? = nil,
     color: String? = nil,
     category: CategoryModel = .empty
   ) {
@@ -31,6 +33,7 @@ struct TodoItemModel: TodoItemData {
     self.deadline = deadline
     self.isDone = isDone
     self.createdAt = createdAt
+    self.changedAt = changedAt
     self.color = color
     self.category = category
   }
@@ -42,6 +45,7 @@ struct TodoItemModel: TodoItemData {
     deadline = item.deadline
     isDone = item.isDone
     createdAt = item.createdAt
+    changedAt = item.changedAt
     color = item.color
     category = .empty
   }
@@ -54,7 +58,7 @@ struct TodoItemModel: TodoItemData {
       deadline: self.deadline,
       isDone: self.isDone,
       createdAt: self.createdAt,
-      changedAt: Date.now,
+      changedAt: self.changedAt,
       color: self.color
     )
   }

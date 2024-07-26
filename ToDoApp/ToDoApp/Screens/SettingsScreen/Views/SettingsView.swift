@@ -82,6 +82,27 @@ struct SettingsView: View {
   var body: some View {
     VStack {
       List {
+        Section("Сеть") {
+          Toggle(isOn: viewModel.$listViewModel.isOfflineMode) {
+            Text("Оффлайн режим")
+          }
+          .padding(8)
+        }
+        .listRowBackground(Color.listRowBackground)
+
+        Section("Хранище") {
+          Button(
+            action: {
+              openSettings()
+            },
+            label: {
+              Text("Открыть системные настройки")
+            }
+          )
+          .padding(8)
+        }
+        .listRowBackground(Color.listRowBackground)
+
         Section("Категории") {
           ForEach(CategoryManager.shared.categories) { category in
             HStack(spacing: 8) {
@@ -139,5 +160,13 @@ struct SettingsView: View {
 
     creationMode = false
     pickerShown = false
+  }
+
+  private func openSettings() {
+    if let url = URL(string: UIApplication.openSettingsURLString) {
+      if UIApplication.shared.canOpenURL(url) {
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+      }
+    }
   }
 }

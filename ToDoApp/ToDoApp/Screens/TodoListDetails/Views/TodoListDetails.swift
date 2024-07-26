@@ -163,6 +163,13 @@ struct TodoListDetails: View {
           }
 
           ToolbarItem(placement: .topBarTrailing) {
+            if viewModel.isOfflineMode {
+              Image(systemName: "network.slash")
+                .foregroundStyle(Color.iconColor)
+            }
+          }
+
+          ToolbarItem(placement: .topBarTrailing) {
             Button(
               action: {
                 viewModel.isSettingsPresented.toggle()

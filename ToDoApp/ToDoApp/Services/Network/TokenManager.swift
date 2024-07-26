@@ -26,13 +26,13 @@ class TokenManager {
     SecItemDelete(query as CFDictionary)
 
     let status = SecItemAdd(query as CFDictionary, nil)
-    
+
     if status == errSecSuccess {
       Logger.shared.logInfo("Token saved successfuly")
     } else {
       Logger.shared.logError("Failure in token saving")
     }
-    
+
     return status == errSecSuccess
   }
 
@@ -52,7 +52,7 @@ class TokenManager {
       Logger.shared.logError("Failure in token retrievement")
       return nil
     }
-    
+
     Logger.shared.logInfo("Token retrieved successfuly")
 
     return String(decoding: data, as: UTF8.self)

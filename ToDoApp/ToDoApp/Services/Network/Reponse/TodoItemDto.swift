@@ -45,7 +45,7 @@ struct TodoItemDto: Codable {
     if let changed = item.changedAt?.timeIntervalSince1970 {
       changedAt = Int(changed)
     } else {
-      changedAt = nil
+      changedAt = Int(Date.now.timeIntervalSince1970)
     }
 
     color = item.color

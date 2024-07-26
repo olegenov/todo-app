@@ -81,7 +81,7 @@ final class TodoItemService {
 
         parsedItem = item.getSource()
       case .failure:
-        Logger.shared.logError("Error creating TodoItem")
+        Logger.shared.logError("Error creating TodoItem in network")
       }
     }
 

@@ -6,10 +6,15 @@
 import SwiftUI
 
 enum SettingsScreenAssembly {
-  static func build() -> SettingsView {
-    let viewModel = SettingsViewModel()
+  @MainActor
+  static func build(
+    listVM: TodoListDetailsViewModel
+  ) -> SettingsView {
+    let viewModel = SettingsViewModel(listVM: listVM)
 
-    return SettingsView(viewModel: viewModel)
+    return SettingsView(
+      viewModel: viewModel
+    )
   }
 }
 

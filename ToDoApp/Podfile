@@ -5,7 +5,8 @@ target 'ToDoApp' do
 
   # Pods for ToDoApp
   pod 'SwiftLint'
-  
+  pod 'SQLite.swift', '~> 0.14.0'
+
   target 'ToDoAppTests' do
     inherit! :search_paths
     # Pods for testing
