@@ -91,9 +91,14 @@ struct SettingsView: View {
         .listRowBackground(Color.listRowBackground)
 
         Section("Хранище") {
-          Toggle(isOn: viewModel.$listViewModel.isOfflineMode) {
-            Text("Оффлайн режим")
-          }
+          Button(
+            action: {
+              openSettings()
+            },
+            label: {
+              Text("Открыть системные настройки")
+            }
+          )
           .padding(8)
         }
         .listRowBackground(Color.listRowBackground)
@@ -155,5 +160,13 @@ struct SettingsView: View {
 
     creationMode = false
     pickerShown = false
+  }
+
+  private func openSettings() {
+    if let url = URL(string: UIApplication.openSettingsURLString) {
+      if UIApplication.shared.canOpenURL(url) {
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+      }
+    }
   }
 }

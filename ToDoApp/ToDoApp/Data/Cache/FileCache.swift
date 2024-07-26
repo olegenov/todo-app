@@ -5,6 +5,7 @@
 
 import SwiftUI
 import SwiftData
+import SQLite
 
 final class FileCache {
   enum FileCacheError: Error {
@@ -38,11 +39,17 @@ final class FileCache {
     case importance(TodoItem.Importance.RawValue)
   }
 
+  enum StorageType: String {
+    case swiftData = "swift_data"
+    case sqlite = "sqlite"
+  }
+
   private(set) var todoItems: [TodoItem] = []
   private let fileManager = FileManager.default
   private let encoder = JSONEncoder()
 
   private let modelContainer: ModelContainer?
+  private var currentStorageType: StorageType = .swiftData
 
   private var applicationDirectory: URL? {
     return fileManager.urls(
@@ -66,8 +73,55 @@ final class FileCache {
     Logger.shared.logInfo("Filecache: Model container created successfuly")
   }
 
+
   @MainActor
   func insert(_ todoItem: TodoItem) {
+    loadSettings()
+
+    if currentStorageType == .sqlite {
+      insertByDB(todoItem)
+
+      return
+    }
+
+    insertBySwiftData(todoItem)
+  }
+
+  @MainActor
+  func fetch() throws -> [TodoItem] {
+    loadSettings()
+
+    if currentStorageType == .sqlite {
+      return fetchByDB()
+    }
+
+    return try fetchBySwiftData()
+  }
+
+  @MainActor
+  func delete(_ todoItem: TodoItem) {
+    loadSettings()
+
+    if currentStorageType == .sqlite {
+      deleteByDB(todoItem)
+    }
+
+    return deleteBySwiftData(todoItem)
+  }
+
+  @MainActor
+  func update(_ todoItem: TodoItem) throws {
+    loadSettings()
+
+    if currentStorageType == .sqlite {
+      return updateByDB(todoItem)
+    }
+
+    return try updateBySwiftData(todoItem)
+  }
+
+  @MainActor
+  func insertBySwiftData(_ todoItem: TodoItem) {
     let newModel = TodoItemDataModel(from: todoItem)
 
     modelContainer?.mainContext.insert(newModel)
@@ -76,7 +130,7 @@ final class FileCache {
   }
 
   @MainActor
-  func fetch() throws -> [TodoItem] {
+  func fetchBySwiftData() throws -> [TodoItem] {
     let fetchDescriptor = FetchDescriptor<TodoItemDataModel>(
       sortBy: [.init(\.createdAt)]
     )
@@ -87,7 +141,10 @@ final class FileCache {
   }
 
   @MainActor
-  func fetch(sorting: SortingType, filtering: FilteringType) throws -> [TodoItem] {
+  func fetchBySwiftData(
+    sorting: SortingType,
+    filtering: FilteringType
+  ) throws -> [TodoItem] {
     let sortDescriptor = getSortDescriptor(from: sorting)
     let predicate = getPredicate(from: filtering)
 
@@ -126,7 +183,7 @@ final class FileCache {
   }
 
   @MainActor
-  func delete(_ todoItem: TodoItem) {
+  func deleteBySwiftData(_ todoItem: TodoItem) {
     let itemId = todoItem.id
 
     let fetchDescriptor = FetchDescriptor<TodoItemDataModel>(
@@ -162,7 +219,7 @@ final class FileCache {
   }
 
   @MainActor
-  func update(_ todoItem: TodoItem) throws {
+  func updateBySwiftData(_ todoItem: TodoItem) throws {
     let itemId = todoItem.id
 
     let fetchDescriptor = FetchDescriptor<TodoItemDataModel>(
@@ -199,6 +256,116 @@ final class FileCache {
     Logger.shared.logInfo("Filecache: Item updated successfuly")
 
     saveContext()
+  }
+
+  func insertByDB(_ todoItem: TodoItem) {
+    do {
+      let table = Table("todo_items")
+      let id = Expression<String>("id")
+      let text = Expression<String>("text")
+      let importance = Expression<String>("importance")
+      let deadline = Expression<Date?>("deadline")
+      let isDone = Expression<Bool>("is_done")
+      let createdAt = Expression<Date>("created_at")
+      let changedAt = Expression<Date?>("changed_at")
+      let color = Expression<String?>("color")
+
+      let insert = table.insert(
+        id <- todoItem.id,
+        text <- todoItem.text,
+        importance <- todoItem.importance.rawValue,
+        deadline <- todoItem.deadline,
+        isDone <- todoItem.isDone,
+        createdAt <- todoItem.createdAt,
+        changedAt <- todoItem.changedAt,
+        color <- todoItem.color
+      )
+      try Database.shared.database?.run(insert)
+    } catch {
+      Logger.shared.logError("Failure in database insert")
+    }
+  }
+
+  func fetchByDB() -> [TodoItem] {
+    var result: [TodoItem] = []
+
+    do {
+      let table = Table("todo_items")
+      let id = Expression<String>("id")
+      let text = Expression<String>("text")
+      let importance = Expression<String>("importance")
+      let deadline = Expression<Date?>("deadline")
+      let isDone = Expression<Bool>("is_done")
+      let createdAt = Expression<Date>("created_at")
+      let changedAt = Expression<Date?>("changed_at")
+      let color = Expression<String?>("color")
+
+      guard let preparedTable = try? Database.shared.database?.prepare(
+        table
+      ) else {
+        throw FileCacheError.fetchFailure
+      }
+
+      for item in preparedTable {
+        let importanceValue = TodoItem.Importance(
+          rawValue: item[importance]
+        ) ?? .medium
+
+        let todoItem = TodoItem(
+          id: item[id],
+          text: item[text],
+          importance: importanceValue,
+          deadline: item[deadline],
+          isDone: item[isDone],
+          createdAt: item[createdAt],
+          changedAt: item[changedAt],
+          color: item[color]
+        )
+        result.append(todoItem)
+      }
+    } catch {
+      Logger.shared.logError("Failure in database fetch")
+    }
+
+    return result
+  }
+
+  func deleteByDB(_ todoItem: TodoItem) {
+    do {
+      let table = Table("todo_items")
+      let id = Expression<String>("id")
+      let item = table.filter(id == todoItem.id)
+      try Database.shared.database?.run(item.delete())
+    } catch {
+      Logger.shared.logError("Failure in database delete")
+    }
+  }
+
+  func updateByDB(_ todoItem: TodoItem) {
+    do {
+      let table = Table("todo_items")
+      let id = Expression<String>("id")
+      let text = Expression<String>("text")
+      let importance = Expression<String>("importance")
+      let deadline = Expression<Date?>("deadline")
+      let isDone = Expression<Bool>("is_done")
+      let changedAt = Expression<Date?>("changed_at")
+      let color = Expression<String?>("color")
+
+      let item = table.filter(id == todoItem.id)
+
+      let update = item.update([
+        text <- todoItem.text,
+        importance <- todoItem.importance.rawValue,
+        deadline <- todoItem.deadline,
+        isDone <- todoItem.isDone,
+        changedAt <- todoItem.changedAt,
+        color <- todoItem.color
+      ])
+      try Database.shared.database?.run(update)
+    } catch {
+      Logger.shared.logError("Failure in database update")
+    }
   }
 
   @MainActor
@@ -342,6 +509,14 @@ final class FileCache {
       }
     case .importance(let importance):
       return #Predicate { $0.importance.rawValue == importance }
+    }
+  }
+
+  private func loadSettings() {
+    if let value = UserDefaults.standard.string(forKey: "data_storage") {
+      currentStorageType = StorageType(rawValue: value) ?? .swiftData
+    } else {
+      currentStorageType = .swiftData
     }
   }
 }
