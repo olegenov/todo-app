@@ -29,7 +29,3 @@ enum TodoListDetailsAssembly {
     return TodoListDetails(viewModel: viewModel)
   }
 }
-
-#Preview {
-  TodoListDetailsAssembly.build()
-}

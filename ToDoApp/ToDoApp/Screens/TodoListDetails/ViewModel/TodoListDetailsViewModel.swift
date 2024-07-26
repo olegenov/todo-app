@@ -18,15 +18,34 @@ class TodoListDetailsViewModel: ObservableObject {
   @Published var isDirty: Bool = false
   @Published var amountOfRequests = 0
 
+  @Published var isOfflineMode: Bool = false {
+    didSet {
+      Logger.shared.logInfo(
+        "Offline mode is \(isOfflineMode ? "turned on" : "turned off")"
+      )
+    }
+  }
+
   var service: TodoItemService?
+  var validatedService: TodoItemService? {
+    if isOfflineMode {
+      Logger.shared.logInfo("Offline mode is turned on, service requests disabled")
+      return nil
+    }
+    return service
+  }
+
   var fileCache: FileCache?
   var calendarView: CalendarDetailsVCRepresentable?
 
   func loadTodoItems() async {
     await loadCache()
 
-    guard let loadedItems = await service?.getList() else {
-      await showErrors(messages: ["Ошибка загрузки с сервера"])
+    guard let loadedItems = await validatedService?.getList() else {
+      if !isOfflineMode {
+        await showErrors(messages: ["Ошибка загрузки с сервера"])
+      }
+
       await makeDirtyFlag()
       return
     }
@@ -62,7 +81,7 @@ class TodoListDetailsViewModel: ObservableObject {
       }
 
       startRequest()
-      let item = await service?.createItem(item: itemObject)
+      let item = await validatedService?.createItem(item: itemObject)
       closeRequest()
 
       if item == nil {
@@ -89,7 +108,7 @@ class TodoListDetailsViewModel: ObservableObject {
 
       startRequest()
 
-      let item = await service?.deleteItem(by: id)
+      let item = await validatedService?.deleteItem(by: id)
 
       closeRequest()
 
@@ -187,8 +206,9 @@ class TodoListDetailsViewModel: ObservableObject {
     )
   }
 
+  @MainActor
   func getSettingsView() -> SettingsView {
-    SettingsScreenAssembly.build()
+    SettingsScreenAssembly.build(listVM: self)
   }
 
   func getCalendarView() -> CalendarDetailsVCRepresentable? {
@@ -225,7 +245,7 @@ class TodoListDetailsViewModel: ObservableObject {
       }
 
       startRequest()
-      let item = await service?.putItem(item: itemObject)
+      let item = await validatedService?.putItem(item: itemObject)
       closeRequest()
 
       if item == nil {
@@ -271,7 +291,7 @@ class TodoListDetailsViewModel: ObservableObject {
 
     Task {
       startRequest()
-      let list = await service?.patchList(list: dataArray)
+      let list = await validatedService?.patchList(list: dataArray)
       closeRequest()
 
       guard let serverList = list else {

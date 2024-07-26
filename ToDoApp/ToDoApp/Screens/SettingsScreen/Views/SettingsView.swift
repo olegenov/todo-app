@@ -82,6 +82,22 @@ struct SettingsView: View {
   var body: some View {
     VStack {
       List {
+        Section("Сеть") {
+          Toggle(isOn: viewModel.$listViewModel.isOfflineMode) {
+            Text("Оффлайн режим")
+          }
+          .padding(8)
+        }
+        .listRowBackground(Color.listRowBackground)
+
+        Section("Хранище") {
+          Toggle(isOn: viewModel.$listViewModel.isOfflineMode) {
+            Text("Оффлайн режим")
+          }
+          .padding(8)
+        }
+        .listRowBackground(Color.listRowBackground)
+
         Section("Категории") {
           ForEach(CategoryManager.shared.categories) { category in
             HStack(spacing: 8) {
